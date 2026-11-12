@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		6CDA347330A5E2D300F2C9E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CDA345D30A5E2D200F2C9E1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6CDA346430A5E2D200F2C9E1;
+			remoteInfo = rokko;
+		};
+		6CDA347D30A5E2D300F2C9E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CDA345D30A5E2D200F2C9E1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6CDA346430A5E2D200F2C9E1;
+			remoteInfo = rokko;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6CDA346530A5E2D200F2C9E1 /* rokko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rokko.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CDA347230A5E2D300F2C9E1 /* rokkoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rokkoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CDA347C30A5E2D300F2C9E1 /* rokkoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rokkoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6CDA346730A5E2D200F2C9E1 /* rokko */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = rokko;
+			sourceTree = "<group>";
+		};
+		6CDA347530A5E2D300F2C9E1 /* rokkoTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = rokkoTests;
+			sourceTree = "<group>";
+		};
+		6CDA347F30A5E2D300F2C9E1 /* rokkoUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = rokkoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6CDA346230A5E2D200F2C9E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		6CDA346F30A5E2D300F2C9E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		6CDA347930A5E2D300F2C9E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6CDA345C30A5E2D200F2C9E1 = {
+			isa = PBXGroup;
+			children = (
+				6CDA346730A5E2D200F2C9E1 /* rokko */,
+				6CDA347530A5E2D300F2C9E1 /* rokkoTests */,
+				6CDA347F30A5E2D300F2C9E1 /* rokkoUITests */,
+				6CDA346630A5E2D200F2C9E1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6CDA346630A5E2D200F2C9E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6CDA346530A5E2D200F2C9E1 /* rokko.app */,
+				6CDA347230A5E2D300F2C9E1 /* rokkoTests.xctest */,
+				6CDA347C30A5E2D300F2C9E1 /* rokkoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6CDA346430A5E2D200F2C9E1 /* rokko */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CDA348430A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokko" */;
+			buildPhases = (
+				6CDA346130A5E2D200F2C9E1 /* Sources */,
+				6CDA346230A5E2D200F2C9E1 /* Frameworks */,
+				6CDA346330A5E2D200F2C9E1 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				6CDA346730A5E2D200F2C9E1 /* rokko */,
+			);
+			name = rokko;
+			productName = rokko;
+			productReference = 6CDA346530A5E2D200F2C9E1 /* rokko.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6CDA347130A5E2D300F2C9E1 /* rokkoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CDA348730A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokkoTests" */;
+			buildPhases = (
+				6CDA346E30A5E2D300F2C9E1 /* Sources */,
+				6CDA346F30A5E2D300F2C9E1 /* Frameworks */,
+				6CDA347030A5E2D300F2C9E1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6CDA347430A5E2D300F2C9E1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6CDA347530A5E2D300F2C9E1 /* rokkoTests */,
+			);
+			name = rokkoTests;
+			productName = rokkoTests;
+			productReference = 6CDA347230A5E2D300F2C9E1 /* rokkoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6CDA347B30A5E2D300F2C9E1 /* rokkoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CDA348A30A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokkoUITests" */;
+			buildPhases = (
+				6CDA347830A5E2D300F2C9E1 /* Sources */,
+				6CDA347930A5E2D300F2C9E1 /* Frameworks */,
+				6CDA347A30A5E2D300F2C9E1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6CDA347E30A5E2D300F2C9E1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6CDA347F30A5E2D300F2C9E1 /* rokkoUITests */,
+			);
+			name = rokkoUITests;
+			productName = rokkoUITests;
+			productReference = 6CDA347C30A5E2D300F2C9E1 /* rokkoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6CDA345D30A5E2D200F2C9E1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2710;
+				LastUpgradeCheck = 2710;
+				TargetAttributes = {
+					6CDA346430A5E2D200F2C9E1 = {
+						CreatedOnToolsVersion = 27.1;
+					};
+					6CDA347130A5E2D300F2C9E1 = {
+						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 6CDA346430A5E2D200F2C9E1;
+					};
+					6CDA347B30A5E2D300F2C9E1 = {
+						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 6CDA346430A5E2D200F2C9E1;
+					};
+				};
+			};
+			buildConfigurationList = 6CDA346030A5E2D200F2C9E1 /* Build configuration list for PBXProject "rokko" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6CDA345C30A5E2D200F2C9E1;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6CDA346630A5E2D200F2C9E1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6CDA346430A5E2D200F2C9E1 /* rokko */,
+				6CDA347130A5E2D300F2C9E1 /* rokkoTests */,
+				6CDA347B30A5E2D300F2C9E1 /* rokkoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6CDA346330A5E2D200F2C9E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		6CDA347030A5E2D300F2C9E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		6CDA347A30A5E2D300F2C9E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6CDA346130A5E2D200F2C9E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		6CDA346E30A5E2D300F2C9E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		6CDA347830A5E2D300F2C9E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6CDA347430A5E2D300F2C9E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6CDA346430A5E2D200F2C9E1 /* rokko */;
+			targetProxy = 6CDA347330A5E2D300F2C9E1 /* PBXContainerItemProxy */;
+		};
+		6CDA347E30A5E2D300F2C9E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6CDA346430A5E2D200F2C9E1 /* rokko */;
+			targetProxy = 6CDA347D30A5E2D300F2C9E1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6CDA348230A5E2D300F2C9E1 /* Debug configuration for PBXProject "rokko" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6CDA348330A5E2D300F2C9E1 /* Release configuration for PBXProject "rokko" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6CDA348530A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokko" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6CDA348630A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokko" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6CDA348830A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokkoTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokkoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rokko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/rokko";
+			};
+			name = Debug;
+		};
+		6CDA348930A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokkoTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokkoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rokko.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/rokko";
+			};
+			name = Release;
+		};
+		6CDA348B30A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokkoUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokkoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = rokko;
+			};
+			name = Debug;
+		};
+		6CDA348C30A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokkoUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMN9RWVFLZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bhanageviraj.rokkoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = rokko;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CDA346030A5E2D200F2C9E1 /* Build configuration list for PBXProject "rokko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CDA348230A5E2D300F2C9E1 /* Debug configuration for PBXProject "rokko" */,
+				6CDA348330A5E2D300F2C9E1 /* Release configuration for PBXProject "rokko" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		6CDA348430A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CDA348530A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokko" */,
+				6CDA348630A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokko" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		6CDA348730A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokkoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CDA348830A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokkoTests" */,
+				6CDA348930A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokkoTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		6CDA348A30A5E2D300F2C9E1 /* Build configuration list for PBXNativeTarget "rokkoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CDA348B30A5E2D300F2C9E1 /* Debug configuration for PBXNativeTarget "rokkoUITests" */,
+				6CDA348C30A5E2D300F2C9E1 /* Release configuration for PBXNativeTarget "rokkoUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6CDA345D30A5E2D200F2C9E1 /* Project object */;
+	validationLevel = 1;
+}
