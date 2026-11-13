@@ -1,0 +1,289 @@
+{
+  "source": "Lesson 1 Exercise Types v6",
+  "codeFormat": "LLL-M-TT-EE-V-III",
+  "exercises": [
+    {
+      "code": "001-1-01-01",
+      "type": 1,
+      "target": "king",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "king"
+    },
+    {
+      "code": "001-1-01-02",
+      "type": 1,
+      "target": "rook",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "rook"
+    },
+    {
+      "code": "001-1-01-03",
+      "type": 1,
+      "target": "knight",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "knight"
+    },
+    {
+      "code": "001-1-02-04",
+      "type": 2,
+      "target": "king",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "king"
+    },
+    {
+      "code": "001-1-02-05",
+      "type": 2,
+      "target": "rook",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "rook"
+    },
+    {
+      "code": "001-1-02-06",
+      "type": 2,
+      "target": "knight",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "knight"
+    },
+    {
+      "code": "001-2-01-01",
+      "type": 1,
+      "target": "queen",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "queen"
+    },
+    {
+      "code": "001-2-01-02",
+      "type": 1,
+      "target": "bishop",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "bishop"
+    },
+    {
+      "code": "001-2-01-03",
+      "type": 1,
+      "target": "pawn",
+      "shown": "character",
+      "choose": "piece",
+      "targetColour": "white",
+      "skill": "pawn"
+    },
+    {
+      "code": "001-2-02-04",
+      "type": 2,
+      "target": "queen",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "queen"
+    },
+    {
+      "code": "001-2-02-05",
+      "type": 2,
+      "target": "bishop",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "bishop"
+    },
+    {
+      "code": "001-2-02-06",
+      "type": 2,
+      "target": "pawn",
+      "shown": "piece",
+      "choose": "character",
+      "targetColour": "white",
+      "skill": "pawn"
+    },
+    {
+      "code": "001-3-03-01",
+      "type": 3,
+      "colour": "white",
+      "level1Set": [
+        "knight",
+        "rook",
+        "bishop",
+        "pawn"
+      ],
+      "skill": "pieces"
+    },
+    {
+      "code": "001-3-03-02",
+      "type": 3,
+      "colour": "black",
+      "level1Set": [
+        "king",
+        "queen",
+        "bishop",
+        "knight"
+      ],
+      "skill": "pieces"
+    },
+    {
+      "code": "001-3-06-03",
+      "type": 6,
+      "colour": "white",
+      "slots": "character",
+      "figures": "character",
+      "skill": "teamMakeup"
+    },
+    {
+      "code": "001-3-06-04",
+      "type": 6,
+      "colour": "black",
+      "slots": "piece",
+      "figures": "piece",
+      "skill": "teamMakeup"
+    },
+    {
+      "code": "001-3-08-05",
+      "type": 8,
+      "figures": "character",
+      "skill": "colour"
+    },
+    {
+      "code": "001-3-08-06",
+      "type": 8,
+      "figures": "piece",
+      "skill": "colour"
+    }
+  ],
+  "levels": {
+    "type1_2": {
+      "1": {
+        "options": 3,
+        "colours": "same",
+        "shapes": "veryDifferent"
+      },
+      "2": {
+        "options": 3,
+        "colours": "same",
+        "shapes": "includeLookAlike"
+      },
+      "3": {
+        "options": 4,
+        "colours": "same",
+        "shapes": "any"
+      },
+      "4": {
+        "options": 6,
+        "colours": "same",
+        "shapes": "allSix"
+      },
+      "5": {
+        "options": 4,
+        "colours": "mixed",
+        "excludeOppositeTwin": true
+      },
+      "6": {
+        "options": 5,
+        "colours": "mixed",
+        "includeOppositeTwin": true
+      }
+    },
+    "type3": {
+      "1": {
+        "pairs": 4,
+        "colours": "exercise"
+      },
+      "2": {
+        "pairs": 6,
+        "colours": "exercise"
+      },
+      "3": {
+        "pairs": 8,
+        "colours": "mixed"
+      },
+      "4": {
+        "pairs": 10,
+        "colours": "mixed",
+        "parts": 2
+      },
+      "5": {
+        "pairs": 12,
+        "layout": "whiteLeftBlackRight_piecesTopBottom"
+      },
+      "6": {
+        "pairs": 12,
+        "layout": "shadedCharacters_piecesTopBottom"
+      }
+    },
+    "type6": {
+      "1": {
+        "prefilled": [
+          "king",
+          "queen",
+          "pawn*8"
+        ],
+        "place": 6
+      },
+      "2": {
+        "prefilled": [
+          "pawn*8"
+        ],
+        "place": 8
+      },
+      "3": {
+        "prefilled": [
+          "rook*2",
+          "bishop*2",
+          "knight*2"
+        ],
+        "place": 10
+      },
+      "4": {
+        "prefilled": [
+          "rook",
+          "bishop",
+          "knight"
+        ],
+        "place": 13
+      },
+      "5": {
+        "prefilled": [],
+        "place": 16
+      },
+      "6": {
+        "prefilled": [],
+        "place": 16,
+        "oppositeColourExtras": 6
+      }
+    },
+    "type8": {
+      "1": {
+        "placeEach": 4
+      },
+      "2": {
+        "placeEach": 6
+      },
+      "3": {
+        "placeEach": 8
+      },
+      "4": {
+        "placeEach": 10
+      },
+      "5": {
+        "placeEach": 12
+      },
+      "6": {
+        "placeEach": 15,
+        "prefilled": "kingsOnly"
+      }
+    }
+  }
+}

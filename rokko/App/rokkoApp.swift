@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct rokkoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RokkoRoot()
         }
+        .modelContainer(for: Store.models)
     }
 }

@@ -1,0 +1,136 @@
+{
+  "lesson": 1,
+  "versions": [
+    "calm",
+    "standard"
+  ],
+  "clips": [
+    {
+      "id": "L1_OP01",
+      "files": {
+        "calm": "L1_OP01_calm.mp4",
+        "standard": "L1_OP01_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP02",
+      "files": {
+        "calm": "L1_OP02_calm.mp4",
+        "standard": "L1_OP02_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP03",
+      "files": {
+        "calm": "L1_OP03_calm.mp4",
+        "standard": "L1_OP03_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP04",
+      "files": {
+        "calm": "L1_OP04_calm.mp4",
+        "standard": "L1_OP04_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP05",
+      "files": {
+        "calm": "L1_OP05_calm.mp4",
+        "standard": "L1_OP05_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP06",
+      "files": {
+        "calm": "L1_OP06_calm.mp4",
+        "standard": "L1_OP06_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_OP07",
+      "files": {
+        "calm": "L1_OP07_calm.mp4",
+        "standard": "L1_OP07_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_KING",
+      "files": {
+        "calm": "L1_TR_KING_calm.mp4",
+        "standard": "L1_TR_KING_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_ROOK",
+      "files": {
+        "calm": "L1_TR_ROOK_calm.mp4",
+        "standard": "L1_TR_ROOK_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_KNIGHT",
+      "files": {
+        "calm": "L1_TR_KNIGHT_calm.mp4",
+        "standard": "L1_TR_KNIGHT_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_QUEEN",
+      "files": {
+        "calm": "L1_TR_QUEEN_calm.mp4",
+        "standard": "L1_TR_QUEEN_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_BISHOP",
+      "files": {
+        "calm": "L1_TR_BISHOP_calm.mp4",
+        "standard": "L1_TR_BISHOP_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_TR_PAWN",
+      "files": {
+        "calm": "L1_TR_PAWN_calm.mp4",
+        "standard": "L1_TR_PAWN_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    },
+    {
+      "id": "L1_CH01",
+      "files": {
+        "calm": "L1_CH01_calm.mp4",
+        "standard": "L1_CH01_standard.mp4"
+      },
+      "seconds": null,
+      "status": "video team"
+    }
+  ],
+  "_note": "Videos are delivered by the video team with these exact names. HEVC 1080p, 30 fps. Fill seconds after delivery. Transformation clips play in SKVideoNode."
+}

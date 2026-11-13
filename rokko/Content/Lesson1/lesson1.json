@@ -1,0 +1,227 @@
+{
+  "lesson": 1,
+  "title": "The Day the Jungle Changed",
+  "steps": [
+    {
+      "id": "film_op01",
+      "kind": "film",
+      "clip": "L1_OP01"
+    },
+    {
+      "id": "film_op02",
+      "kind": "film",
+      "clip": "L1_OP02"
+    },
+    {
+      "id": "film_op03",
+      "kind": "film",
+      "clip": "L1_OP03"
+    },
+    {
+      "id": "film_op04",
+      "kind": "film",
+      "clip": "L1_OP04"
+    },
+    {
+      "id": "film_op05",
+      "kind": "film",
+      "clip": "L1_OP05"
+    },
+    {
+      "id": "film_op06",
+      "kind": "film",
+      "clip": "L1_OP06"
+    },
+    {
+      "id": "film_op07",
+      "kind": "film",
+      "clip": "L1_OP07"
+    },
+    {
+      "id": "meet_king",
+      "kind": "meet",
+      "animal": "lion",
+      "voice": "l1_meet_king"
+    },
+    {
+      "id": "transform_king",
+      "kind": "transform",
+      "clip": "L1_TR_KING",
+      "voice": "l1_tr_king",
+      "again": true
+    },
+    {
+      "id": "guardian_king",
+      "kind": "guardianShow",
+      "piece": "king",
+      "firstVisitSteps": true
+    },
+    {
+      "id": "meet_rook",
+      "kind": "meet",
+      "animal": "elephant",
+      "voice": "l1_meet_rook"
+    },
+    {
+      "id": "transform_rook",
+      "kind": "transform",
+      "clip": "L1_TR_ROOK",
+      "voice": "l1_tr_rook",
+      "again": true
+    },
+    {
+      "id": "guardian_rook",
+      "kind": "guardianShow",
+      "piece": "rook",
+      "firstVisitSteps": false
+    },
+    {
+      "id": "meet_knight",
+      "kind": "meet",
+      "animal": "horse",
+      "voice": "l1_meet_knight"
+    },
+    {
+      "id": "transform_knight",
+      "kind": "transform",
+      "clip": "L1_TR_KNIGHT",
+      "voice": "l1_tr_knight",
+      "again": true
+    },
+    {
+      "id": "guardian_knight",
+      "kind": "guardianShow",
+      "piece": "knight",
+      "firstVisitSteps": false
+    },
+    {
+      "id": "game_m1",
+      "kind": "gameBlock",
+      "module": 1,
+      "intro": "l1_m1_start",
+      "gate": "module2",
+      "insertsOnce": {
+        "charcoalIntro": "charcoal_intro"
+      }
+    },
+    {
+      "id": "guardian_m1",
+      "kind": "guardianModule",
+      "pieces": [
+        "king",
+        "rook",
+        "knight"
+      ]
+    },
+    {
+      "id": "break_1",
+      "kind": "break",
+      "planned": true
+    },
+    {
+      "id": "meet_queen",
+      "kind": "meet",
+      "animal": "lioness",
+      "voice": "l1_meet_queen"
+    },
+    {
+      "id": "transform_queen",
+      "kind": "transform",
+      "clip": "L1_TR_QUEEN",
+      "voice": "l1_tr_queen",
+      "again": true
+    },
+    {
+      "id": "guardian_queen",
+      "kind": "guardianShow",
+      "piece": "queen",
+      "firstVisitSteps": false
+    },
+    {
+      "id": "meet_bishop",
+      "kind": "meet",
+      "animal": "fox",
+      "voice": "l1_meet_bishop"
+    },
+    {
+      "id": "transform_bishop",
+      "kind": "transform",
+      "clip": "L1_TR_BISHOP",
+      "voice": "l1_tr_bishop",
+      "again": true
+    },
+    {
+      "id": "guardian_bishop",
+      "kind": "guardianShow",
+      "piece": "bishop",
+      "firstVisitSteps": false
+    },
+    {
+      "id": "meet_pawn",
+      "kind": "meet",
+      "animal": "squirrel",
+      "voice": "l1_meet_pawn"
+    },
+    {
+      "id": "transform_pawn",
+      "kind": "transform",
+      "clip": "L1_TR_PAWN",
+      "voice": "l1_tr_pawn",
+      "again": true
+    },
+    {
+      "id": "guardian_pawn",
+      "kind": "guardianShow",
+      "piece": "pawn",
+      "firstVisitSteps": false
+    },
+    {
+      "id": "game_m2",
+      "kind": "gameBlock",
+      "module": 2,
+      "intro": "l1_m2_start",
+      "gate": "module3"
+    },
+    {
+      "id": "guardian_m2",
+      "kind": "guardianModule",
+      "pieces": [
+        "queen",
+        "bishop",
+        "pawn"
+      ]
+    },
+    {
+      "id": "game_m3",
+      "kind": "gameBlock",
+      "module": 3,
+      "intro": "l1_m3_start",
+      "gate": "lessonComplete"
+    },
+    {
+      "id": "play_together",
+      "kind": "playTogether",
+      "voice": "l1_play_01"
+    },
+    {
+      "id": "complete",
+      "kind": "complete",
+      "voice": [
+        "l1_done_01",
+        "l1_done_02"
+      ]
+    }
+  ],
+  "inserted": {
+    "charcoal_intro": {
+      "kind": "charcoalIntro",
+      "clip": "L1_CH01",
+      "voice": [
+        "l1_ch_01",
+        "l1_ch_02",
+        "l1_ch_03",
+        "l1_ch_04"
+      ]
+    }
+  }
+}

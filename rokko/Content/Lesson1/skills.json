@@ -1,0 +1,42 @@
+{
+  "skills": [
+    {
+      "id": "king",
+      "animal": "lion",
+      "name": "King"
+    },
+    {
+      "id": "queen",
+      "animal": "lioness",
+      "name": "Queen"
+    },
+    {
+      "id": "rook",
+      "animal": "elephant",
+      "name": "Rook"
+    },
+    {
+      "id": "bishop",
+      "animal": "fox",
+      "name": "Bishop"
+    },
+    {
+      "id": "knight",
+      "animal": "horse",
+      "name": "Knight"
+    },
+    {
+      "id": "pawn",
+      "animal": "squirrel",
+      "name": "Pawn"
+    },
+    {
+      "id": "colour",
+      "name": "White and black"
+    },
+    {
+      "id": "teamMakeup",
+      "name": "A team has 16"
+    }
+  ]
+}

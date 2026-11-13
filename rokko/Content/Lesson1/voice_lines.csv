@@ -1,0 +1,95 @@
+id,file,speaker,voice_id,text,used_in,status
+l1_meet_king,l1_meet_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the lion. He is the leader. We keep him safe.,meet step (king),to make
+l1_tr_king,l1_tr_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,The lion becomes the King. He keeps his crown with the cross.,transform step (king),to make
+l1_meet_rook,l1_meet_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the elephant. It walks in straight lines.,meet step (rook),to make
+l1_tr_rook,l1_tr_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,The elephant becomes the Rook. It keeps the notches on top.,transform step (rook),to make
+l1_meet_knight,l1_meet_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the horse. It jumps.,meet step (knight),to make
+l1_tr_knight,l1_tr_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,The horse becomes the Knight. It keeps its head and mane.,transform step (knight),to make
+l1_meet_queen,l1_meet_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the lioness. She is the queen.,meet step (queen),to make
+l1_tr_queen,l1_tr_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,The lioness becomes the Queen. She keeps her crown.,transform step (queen),to make
+l1_meet_bishop,l1_meet_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,"This is the fox. It has tall, pointed ears.",meet step (bishop),to make
+l1_tr_bishop,l1_tr_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,The fox becomes the Bishop. It keeps its pointed ears.,transform step (bishop),to make
+l1_meet_pawn,l1_meet_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the squirrel. It is small and brave.,meet step (pawn),to make
+l1_tr_pawn,l1_tr_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,The squirrel becomes the Pawn. It keeps its round head.,transform step (pawn),to make
+l1_ch_01,l1_ch_01.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is King Duskmane's team from Charcoal Ridge.,charcoal intro,to make
+l1_ch_02,l1_ch_02.m4a,narrator,w2CTE3MYza6FgBnETYNT,"They are the same animals, in charcoal colours.",charcoal intro,to make
+l1_ch_03,l1_ch_03.m4a,lion_charcoal,w32tZFm9MHs6Mkjdo6Tl,My team is ready too!,charcoal intro,to make
+l1_ch_04,l1_ch_04.m4a,narrator,w2CTE3MYza6FgBnETYNT,Now there are two teams: white and black.,charcoal intro,to make
+l1_m1_start,l1_m1_start.m4a,narrator,w2CTE3MYza6FgBnETYNT,"Let’s play with the King, the Rook and the Knight.",Module 1 start,to make
+l1_m2_start,l1_m2_start.m4a,narrator,w2CTE3MYza6FgBnETYNT,"Let’s play with the Queen, the Bishop and the Pawn.",Module 2 start,to make
+l1_m3_start,l1_m3_start.m4a,narrator,w2CTE3MYza6FgBnETYNT,Now let’s meet the whole team.,Module 3 start,to make
+l1_q_t1_king,l1_q_t1_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the King.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_king,l1_q_t1w_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white King.,"Type 1 question, levels 5–6",to make
+l1_q_t2_lion,l1_q_t2_lion.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the lion.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_lion,l1_q_t2w_lion.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white lion.,"Type 2 question, levels 5–6",to make
+l1_q_t1_queen,l1_q_t1_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the Queen.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_queen,l1_q_t1w_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white Queen.,"Type 1 question, levels 5–6",to make
+l1_q_t2_lioness,l1_q_t2_lioness.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the lioness.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_lioness,l1_q_t2w_lioness.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white lioness.,"Type 2 question, levels 5–6",to make
+l1_q_t1_rook,l1_q_t1_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the Rook.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_rook,l1_q_t1w_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white Rook.,"Type 1 question, levels 5–6",to make
+l1_q_t2_elephant,l1_q_t2_elephant.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the elephant.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_elephant,l1_q_t2w_elephant.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white elephant.,"Type 2 question, levels 5–6",to make
+l1_q_t1_bishop,l1_q_t1_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the Bishop.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_bishop,l1_q_t1w_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white Bishop.,"Type 1 question, levels 5–6",to make
+l1_q_t2_fox,l1_q_t2_fox.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the fox.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_fox,l1_q_t2w_fox.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white fox.,"Type 2 question, levels 5–6",to make
+l1_q_t1_knight,l1_q_t1_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the Knight.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_knight,l1_q_t1w_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white Knight.,"Type 1 question, levels 5–6",to make
+l1_q_t2_horse,l1_q_t2_horse.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the horse.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_horse,l1_q_t2w_horse.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white horse.,"Type 2 question, levels 5–6",to make
+l1_q_t1_pawn,l1_q_t1_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the Pawn.,"Type 1 question, levels 1–4",to make
+l1_q_t1w_pawn,l1_q_t1w_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white Pawn.,"Type 1 question, levels 5–6",to make
+l1_q_t2_squirrel,l1_q_t2_squirrel.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the squirrel.,"Type 2 question, levels 1–4",to make
+l1_q_t2w_squirrel,l1_q_t2w_squirrel.m4a,narrator,w2CTE3MYza6FgBnETYNT,Find the white squirrel.,"Type 2 question, levels 5–6",to make
+l1_h1_lookagain,l1_h1_lookagain.m4a,narrator,w2CTE3MYza6FgBnETYNT,Let’s look again.,Hint 1 (before the question line),to make
+l1_h2_lookhere,l1_h2_lookhere.m4a,narrator,w2CTE3MYza6FgBnETYNT,Look here.,Hint 2 (before the question line),to make
+l1_h3_piece_king,l1_h3_piece_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the King.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_lion,l1_h3_animal_lion.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the lion.,"Hint 3, Type 2",to make
+l1_rw_king,l1_rw_king.m4a,lion,cnq6HZP9Mrjsf97pVK6b,I’m the King!,"correct, Types 1 and 2",to make
+l1_ln_king,l1_ln_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,The lion is the King.,Type 3 correct link,to make
+l1_h3_piece_queen,l1_h3_piece_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the Queen.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_lioness,l1_h3_animal_lioness.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the lioness.,"Hint 3, Type 2",to make
+l1_rw_queen,l1_rw_queen.m4a,lioness,vFLqXa8bgbofGarf6fZh,I’m the Queen!,"correct, Types 1 and 2",to make
+l1_ln_queen,l1_ln_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,The lioness is the Queen.,Type 3 correct link,to make
+l1_h3_piece_rook,l1_h3_piece_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the Rook.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_elephant,l1_h3_animal_elephant.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the elephant.,"Hint 3, Type 2",to make
+l1_rw_rook,l1_rw_rook.m4a,elephant,t1yzxMpe9zK42bXmI1T2,I’m the Rook!,"correct, Types 1 and 2",to make
+l1_ln_rook,l1_ln_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,The elephant is the Rook.,Type 3 correct link,to make
+l1_h3_piece_bishop,l1_h3_piece_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the Bishop.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_fox,l1_h3_animal_fox.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the fox.,"Hint 3, Type 2",to make
+l1_rw_bishop,l1_rw_bishop.m4a,fox,Wu9A8zlwvFHoEpuX7MGo,I’m the Bishop!,"correct, Types 1 and 2",to make
+l1_ln_bishop,l1_ln_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,The fox is the Bishop.,Type 3 correct link,to make
+l1_h3_piece_knight,l1_h3_piece_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the Knight.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_horse,l1_h3_animal_horse.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the horse.,"Hint 3, Type 2",to make
+l1_rw_knight,l1_rw_knight.m4a,horse,YPRmL2oHPibcUwJtQnPM,I’m the Knight!,"correct, Types 1 and 2",to make
+l1_ln_knight,l1_ln_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,The horse is the Knight.,Type 3 correct link,to make
+l1_h3_piece_pawn,l1_h3_piece_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the Pawn.,"Hint 3, Types 1, 3, 6",to make
+l1_h3_animal_squirrel,l1_h3_animal_squirrel.m4a,narrator,w2CTE3MYza6FgBnETYNT,This is the squirrel.,"Hint 3, Type 2",to make
+l1_rw_pawn,l1_rw_pawn.m4a,squirrel,,I’m the Pawn!,"correct, Types 1 and 2 — squirrel voice not chosen",blocked: no voice
+l1_ln_pawn,l1_ln_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,The squirrel is the Pawn.,Type 3 correct link,to make
+l1_t3_intro,l1_t3_intro.m4a,narrator,w2CTE3MYza6FgBnETYNT,Match each animal to its piece.,Type 3 instruction,to make
+l1_t6_intro_white,l1_t6_intro_white.m4a,narrator,w2CTE3MYza6FgBnETYNT,Fill the white team’s shelf.,Type 6 Ex 03,to make
+l1_t6_intro_black,l1_t6_intro_black.m4a,narrator,w2CTE3MYza6FgBnETYNT,Fill the black team’s shelf.,Type 6 Ex 04,to make
+l1_t6_count_king,l1_t6_count_king.m4a,narrator,w2CTE3MYza6FgBnETYNT,One King!,Type 6 group filled,to make
+l1_t6_count_queen,l1_t6_count_queen.m4a,narrator,w2CTE3MYza6FgBnETYNT,One Queen!,Type 6 group filled,to make
+l1_t6_count_rook,l1_t6_count_rook.m4a,narrator,w2CTE3MYza6FgBnETYNT,Two Rooks!,Type 6 group filled,to make
+l1_t6_count_bishop,l1_t6_count_bishop.m4a,narrator,w2CTE3MYza6FgBnETYNT,Two Bishops!,Type 6 group filled,to make
+l1_t6_count_knight,l1_t6_count_knight.m4a,narrator,w2CTE3MYza6FgBnETYNT,Two Knights!,Type 6 group filled,to make
+l1_t6_count_pawn,l1_t6_count_pawn.m4a,narrator,w2CTE3MYza6FgBnETYNT,Eight Pawns!,Type 6 group filled,to make
+l1_t6_done,l1_t6_done.m4a,narrator,w2CTE3MYza6FgBnETYNT,Sixteen! The whole team is home.,Type 6 end,to make
+l1_t8_intro,l1_t8_intro.m4a,narrator,w2CTE3MYza6FgBnETYNT,Help each king find his team.,Type 8 instruction,to make
+l1_t8_white,l1_t8_white.m4a,narrator,w2CTE3MYza6FgBnETYNT,White team!,Type 8 correct drop,to make
+l1_t8_black,l1_t8_black.m4a,narrator,w2CTE3MYza6FgBnETYNT,Black team!,Type 8 correct drop,to make
+l1_t8_h3_white,l1_t8_h3_white.m4a,narrator,w2CTE3MYza6FgBnETYNT,This one goes to the white team.,Type 8 hint 3,to make
+l1_t8_h3_black,l1_t8_h3_black.m4a,narrator,w2CTE3MYza6FgBnETYNT,This one goes to the black team.,Type 8 hint 3,to make
+l1_t8_done,l1_t8_done.m4a,narrator,w2CTE3MYza6FgBnETYNT,Both teams are home.,Type 8 end,to make
+l1_br_start,l1_br_start.m4a,narrator,w2CTE3MYza6FgBnETYNT,Time for a break.,break start,to make
+l1_br_move,l1_br_move.m4a,elephant,t1yzxMpe9zK42bXmI1T2,Stomp like the elephant!,break: move like the animals,to make
+l1_br_gallop,l1_br_gallop.m4a,horse,YPRmL2oHPibcUwJtQnPM,Gallop like the horse!,break: move like the animals (alternate),to make
+l1_br_breathe,l1_br_breathe.m4a,lion,cnq6HZP9Mrjsf97pVK6b,Breathe with me. In… and out.,break: breathe with the lion,to make
+l1_br_quiet,l1_br_quiet.m4a,narrator,w2CTE3MYza6FgBnETYNT,Quiet time. Rest your eyes.,break: quiet time,to make
+l1_br_end,l1_br_end.m4a,narrator,w2CTE3MYza6FgBnETYNT,Break time is over.,break end,to make
+l1_play_01,l1_play_01.m4a,narrator,w2CTE3MYza6FgBnETYNT,Now find the real pieces with your Guardian.,play together,to make
+l1_done_01,l1_done_01.m4a,narrator,w2CTE3MYza6FgBnETYNT,Lesson one is done! You met the whole team.,lesson complete,to make
+l1_done_02,l1_done_02.m4a,lion,cnq6HZP9Mrjsf97pVK6b,"Well done, friend!",lesson complete,to make

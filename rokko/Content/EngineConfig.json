@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "bkt": {
+    "pL0": 0.1,
+    "transit": 0.15,
+    "slip": 0.1,
+    "slipWobbly": 0.3,
+    "clampMin": 0.001,
+    "clampMax": 0.999,
+    "hint1GuessMultiplier": 2.0,
+    "hint1GuessMax": 0.6,
+    "type8Guess": 0.5
+  },
+  "fastTap": {
+    "ratio": 0.4,
+    "warmupResponses": 10,
+    "rollingWindow": 20
+  },
+  "levels": {
+    "bands": [
+      {
+        "level": 1,
+        "min": 0.0
+      },
+      {
+        "level": 2,
+        "min": 0.3
+      },
+      {
+        "level": 3,
+        "min": 0.45
+      },
+      {
+        "level": 4,
+        "min": 0.6
+      },
+      {
+        "level": 5,
+        "min": 0.75
+      },
+      {
+        "level": 6,
+        "min": 0.88
+      }
+    ],
+    "mastered": 0.95,
+    "buffer": 0.05,
+    "maxStepPerRound": 1,
+    "wobblyLevelDrop": 1,
+    "level5RequiresCharcoalIntro": true,
+    "level6RequiresColour": 0.5
+  },
+  "gates": {
+    "module2": {
+      "skills": [
+        "king",
+        "rook",
+        "knight"
+      ],
+      "min": 0.6
+    },
+    "module3": {
+      "skills": [
+        "king",
+        "queen",
+        "rook",
+        "bishop",
+        "knight",
+        "pawn"
+      ],
+      "min": 0.75
+    },
+    "lessonComplete": {
+      "skills": [
+        "king",
+        "queen",
+        "rook",
+        "bishop",
+        "knight",
+        "pawn",
+        "colour",
+        "teamMakeup"
+      ],
+      "min": 0.95
+    }
+  },
+  "planner": {
+    "reviewEvery": 4,
+    "neverSamePieceTwiceInARow": true,
+    "alternateTypes12": true,
+    "blocks": {
+      "module1": {
+        "minRounds": 6,
+        "maxRoundsPerSitting": 14
+      },
+      "module2": {
+        "minRounds": 6,
+        "maxRoundsPerSitting": 14
+      },
+      "module3": {
+        "minRounds": 6,
+        "maxRoundsPerSitting": 10
+      }
+    },
+    "module3Cycle": [
+      "03-01",
+      "03-02",
+      "06-03",
+      "06-04",
+      "08-05",
+      "08-06"
+    ]
+  },
+  "hints": {
+    "idleSeconds": 12,
+    "idleSecondsCalmOrWobbly": 18,
+    "pairGapMs": 250
+  },
+  "signal": {
+    "wrongInLast": 4,
+    "wrongCount": 3,
+    "slowdownRatio": 1.5
+  },
+  "generator": {
+    "variationsPerLevel": 12,
+    "seedHash": "fnv1a64",
+    "prng": "splitmix64",
+    "avoidSameAnswerSlot": true
+  },
+  "lookAlikes": {
+    "king": [
+      "queen"
+    ],
+    "queen": [
+      "king"
+    ],
+    "bishop": [
+      "pawn"
+    ],
+    "pawn": [
+      "bishop"
+    ],
+    "rook": [
+      "king"
+    ],
+    "knight": [
+      "bishop"
+    ],
+    "_note": "rook and knight look-alikes are placeholders; confirm with the chess coach"
+  },
+  "layout": {
+    "choiceCardMin": [
+      200,
+      240
+    ],
+    "choiceCardLevel4": [
+      168,
+      210
+    ],
+    "dragCardMin": [
+      120,
+      140
+    ],
+    "snapDistance": 44,
+    "type8BatchSize": 4,
+    "type3Level4Parts": 2
+  },
+  "motion": {
+    "screenFadeMs": 300,
+    "pressMs": 120,
+    "correctMs": 350,
+    "bouncePt": 8,
+    "tryAgainSinkPt": 16,
+    "tryAgainMs": 300,
+    "dragLiftScale": 1.08,
+    "snapMs": 220,
+    "springBackMs": 300,
+    "arrowBobPt": 6,
+    "arrowBobMs": 1200,
+    "breatheSeconds": 4
+  },
+  "audio": {
+    "calmEffectsGainDb": -4.4
+  },
+  "breaks": {
+    "minutes": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "defaultMinutes": 2,
+    "activities": [
+      "move",
+      "breathe",
+      "quiet",
+      "ownIdea"
+    ]
+  },
+  "storage": {
+    "maxSessionEvents": 2000
+  }
+}
