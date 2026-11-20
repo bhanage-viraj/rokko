@@ -1,5 +1,5 @@
 {
-  "source": "Lesson 1 Exercise Types v6",
+  "source": "Lesson 1 Exercise Types v6 + Lesson_1_Exercise_Pool (13 Nov 2026)",
   "codeFormat": "LLL-M-TT-EE-V-III",
   "exercises": [
     {
@@ -114,51 +114,39 @@
       "code": "001-3-03-01",
       "type": 3,
       "colour": "white",
-      "level1Set": [
-        "knight",
-        "rook",
-        "bishop",
-        "pawn"
-      ],
       "skill": "pieces"
     },
     {
       "code": "001-3-03-02",
       "type": 3,
       "colour": "black",
-      "level1Set": [
-        "king",
-        "queen",
-        "bishop",
-        "knight"
-      ],
       "skill": "pieces"
     },
     {
-      "code": "001-3-06-03",
-      "type": 6,
+      "code": "001-3-04-03",
+      "type": 4,
       "colour": "white",
       "slots": "character",
       "figures": "character",
       "skill": "teamMakeup"
     },
     {
-      "code": "001-3-06-04",
-      "type": 6,
+      "code": "001-3-04-04",
+      "type": 4,
       "colour": "black",
       "slots": "piece",
       "figures": "piece",
       "skill": "teamMakeup"
     },
     {
-      "code": "001-3-08-05",
-      "type": 8,
+      "code": "001-3-05-05",
+      "type": 5,
       "figures": "character",
       "skill": "colour"
     },
     {
-      "code": "001-3-08-06",
-      "type": 8,
+      "code": "001-3-05-06",
+      "type": 5,
       "figures": "piece",
       "skill": "colour"
     }
@@ -199,7 +187,8 @@
     "type3": {
       "1": {
         "pairs": 4,
-        "colours": "exercise"
+        "colours": "exercise",
+        "set": "any4"
       },
       "2": {
         "pairs": 6,
@@ -207,12 +196,14 @@
       },
       "3": {
         "pairs": 8,
-        "colours": "mixed"
+        "colours": "mixed",
+        "split": "3-6 of one colour"
       },
       "4": {
         "pairs": 10,
         "colours": "mixed",
-        "parts": 2
+        "parts": 2,
+        "split": "4-6 of one colour"
       },
       "5": {
         "pairs": 12,
@@ -223,7 +214,7 @@
         "layout": "shadedCharacters_piecesTopBottom"
       }
     },
-    "type6": {
+    "type4": {
       "1": {
         "prefilled": [
           "king",
@@ -261,10 +252,11 @@
       "6": {
         "prefilled": [],
         "place": 16,
-        "oppositeColourExtras": 6
+        "oppositeColourExtras": 6,
+        "distractorsStayOff": true
       }
     },
-    "type8": {
+    "type5": {
       "1": {
         "placeEach": 4
       },
@@ -285,5 +277,6 @@
         "prefilled": "kingsOnly"
       }
     }
-  }
+  },
+  "pool": "exercise_pool.json"
 }

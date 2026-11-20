@@ -31,7 +31,7 @@ struct GuardianButton: View {
                         Circle().stroke(RokkoColor.honey.opacity(0.7), lineWidth: 8).blur(radius: 4)
                     }
                 }
-            Image(systemName: "person.2.fill")
+            Image(systemName: GuardianSymbol.name)
                 .font(.system(size: 30, weight: .semibold))
                 .foregroundStyle(RokkoColor.ink)
             Circle()
@@ -104,3 +104,16 @@ struct HoldProgress: Equatable {
     /// The ring empties faster than it filled: 0.12–0.4 s depending on how far it got.
     var rewindSeconds: Double { min(max(fraction * 0.5, 0.12), 0.4) }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Guardian button") {
+    HStack(spacing: 60) {
+        GuardianButton()
+        GuardianButton(glows: true)
+    }
+    .padding(60)
+    .background(RokkoColor.paper)
+}
+#endif

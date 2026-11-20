@@ -1,0 +1,101 @@
+{
+  "clip": "L1_02_kings",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:04.100",
+      "end": "00:05.760",
+      "text": "Listen… who is coming?",
+      "speech": [
+        [
+          4.1,
+          4.487
+        ],
+        [
+          4.955,
+          5.713
+        ]
+      ]
+    },
+    {
+      "start": "00:06.560",
+      "end": "00:21.250",
+      "text": "Every kingdom has a leader. Meet the lion kings! The king is the most important animal in the kingdom. If the king gets trapped, his kingdom loses the game. So keeping the king safe is always your most important job.",
+      "speech": [
+        [
+          6.565,
+          8.14
+        ],
+        [
+          8.551,
+          8.781
+        ],
+        [
+          8.925,
+          10.079
+        ],
+        [
+          10.675,
+          13.627
+        ],
+        [
+          14.091,
+          15.327
+        ],
+        [
+          15.576,
+          17.131
+        ],
+        [
+          17.596,
+          19.127
+        ],
+        [
+          19.293,
+          21.177
+        ]
+      ]
+    },
+    {
+      "start": "00:21.750",
+      "end": "00:26.416",
+      "text": "King Sunny: \"I am the king. I take one step at a time. Please keep me safe!\"",
+      "speech": [
+        [
+          21.753,
+          22.641
+        ],
+        [
+          23.131,
+          24.742
+        ],
+        [
+          25.242,
+          26.249
+        ]
+      ]
+    },
+    {
+      "start": "00:27.116",
+      "end": "00:29.506",
+      "text": "Look at the gold cross on the king's mane!",
+      "speech": [
+        [
+          27.123,
+          29.501
+        ]
+      ]
+    },
+    {
+      "start": "00:30.806",
+      "end": "00:32.666",
+      "text": "The Moonlight Kingdom has one too!",
+      "speech": [
+        [
+          30.811,
+          32.657
+        ]
+      ]
+    }
+  ]
+}

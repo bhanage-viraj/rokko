@@ -74,3 +74,16 @@ extension Mood {
         }
     }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Mood sheet") {
+    HStack(alignment: .top, spacing: 40) {
+        MoodSheet(selected: nil) { _ in }
+        MoodSheet(selected: .wobbly) { _ in }
+    }
+    .padding(40)
+    .background(RokkoColor.paper)
+}
+#endif

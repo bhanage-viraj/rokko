@@ -1,4 +1,12 @@
 {
-  "images" : [ { "filename" : "char_squirrel_ivory.png", "idiom" : "universal" } ],
-  "info" : { "author" : "xcode", "version" : 1 }
+  "images" : [
+    {
+      "filename" : "char_squirrel_ivory.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
 }

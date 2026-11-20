@@ -6,6 +6,11 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6CDA34A430A5F00000F2C9E1 /* RokkoContent in Frameworks */ = {isa = PBXBuildFile; productRef = 6CDA34A230A5F00000F2C9E1 /* RokkoContent */; };
+		6CDA34A530A5F00000F2C9E1 /* RokkoEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 6CDA34A330A5F00000F2C9E1 /* RokkoEngine */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6CDA347330A5E2D300F2C9E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -51,6 +56,8 @@
 		6CDA346230A5E2D200F2C9E1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				6CDA34A430A5F00000F2C9E1 /* RokkoContent in Frameworks */,
+				6CDA34A530A5F00000F2C9E1 /* RokkoEngine in Frameworks */,
 			);
 		};
 		6CDA346F30A5E2D300F2C9E1 /* Frameworks */ = {
@@ -103,6 +110,10 @@
 				6CDA346730A5E2D200F2C9E1 /* rokko */,
 			);
 			name = rokko;
+			packageProductDependencies = (
+				6CDA34A230A5F00000F2C9E1 /* RokkoContent */,
+				6CDA34A330A5F00000F2C9E1 /* RokkoEngine */,
+			);
 			productName = rokko;
 			productReference = 6CDA346530A5E2D200F2C9E1 /* rokko.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +192,10 @@
 			);
 			mainGroup = 6CDA345C30A5E2D200F2C9E1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6CDA34A030A5F00000F2C9E1 /* XCLocalSwiftPackageReference "Packages/RokkoContent" */,
+				6CDA34A130A5F00000F2C9E1 /* XCLocalSwiftPackageReference "Packages/RokkoEngine" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6CDA346630A5E2D200F2C9E1 /* Products */;
 			projectDirPath = "";
@@ -550,6 +565,28 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		6CDA34A030A5F00000F2C9E1 /* XCLocalSwiftPackageReference "Packages/RokkoContent" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/RokkoContent;
+		};
+		6CDA34A130A5F00000F2C9E1 /* XCLocalSwiftPackageReference "Packages/RokkoEngine" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/RokkoEngine;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6CDA34A230A5F00000F2C9E1 /* RokkoContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RokkoContent;
+		};
+		6CDA34A330A5F00000F2C9E1 /* RokkoEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RokkoEngine;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6CDA345D30A5E2D200F2C9E1 /* Project object */;
 	validationLevel = 1;

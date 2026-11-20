@@ -9,7 +9,7 @@
     "clampMax": 0.999,
     "hint1GuessMultiplier": 2.0,
     "hint1GuessMax": 0.6,
-    "type8Guess": 0.5
+    "type5Guess": 0.5
   },
   "fastTap": {
     "ratio": 0.4,
@@ -43,6 +43,8 @@
         "min": 0.88
       }
     ],
+    "maxLevel": 1,
+    "_maxLevelNote": "16 Nov: level 1 only for now (levels 2–6 off; was 3 on 15 Nov).",
     "mastered": 0.95,
     "buffer": 0.05,
     "maxStepPerRound": 1,
@@ -77,9 +79,7 @@
         "rook",
         "bishop",
         "knight",
-        "pawn",
-        "colour",
-        "teamMakeup"
+        "pawn"
       ],
       "min": 0.95
     }
@@ -88,32 +88,36 @@
     "reviewEvery": 4,
     "neverSamePieceTwiceInARow": true,
     "alternateTypes12": true,
+    "_blocksNote": "15 Nov: each module is 3–6 rounds. It ends after minRounds once its gate is met, and always after maxRounds.",
     "blocks": {
       "module1": {
-        "minRounds": 6,
+        "minRounds": 3,
+        "maxRounds": 6,
         "maxRoundsPerSitting": 14
       },
       "module2": {
-        "minRounds": 6,
+        "minRounds": 3,
+        "maxRounds": 6,
         "maxRoundsPerSitting": 14
       },
       "module3": {
-        "minRounds": 6,
+        "minRounds": 3,
+        "maxRounds": 6,
         "maxRoundsPerSitting": 10
       }
     },
+    "_module3Note": "Shelf (Type 4: 04-03, 04-04) and both teams (Type 5: 05-05, 05-06) left out for now (15 Nov). To bring them back, add them here and put teamMakeup / colour back in gates.lessonComplete.",
     "module3Cycle": [
       "03-01",
-      "03-02",
-      "06-03",
-      "06-04",
-      "08-05",
-      "08-06"
+      "03-02"
     ]
   },
   "hints": {
+    "idleHints": false,
     "idleSeconds": 12,
     "idleSecondsCalmOrWobbly": 18,
+    "freeTries": 1,
+    "lockMs": 1000,
     "pairGapMs": 250
   },
   "signal": {
@@ -122,10 +126,16 @@
     "slowdownRatio": 1.5
   },
   "generator": {
-    "variationsPerLevel": 12,
+    "rounds": "pool",
+    "pool": "Lesson1/exercise_pool.json",
+    "variantPick": "playsModPoolSize",
     "seedHash": "fnv1a64",
     "prng": "splitmix64",
-    "avoidSameAnswerSlot": true
+    "avoidSameAnswerSlot": true,
+    "_shelfFullTeamNote": "16 Nov: Type 4 shelves in these forms show the whole team of 16 (2 Rooks, 2 Bishops, 2 Knights, 8 Pawns). Other forms show one of each.",
+    "shelfFullTeamForms": [
+      "piece"
+    ]
   },
   "lookAlikes": {
     "king": [
@@ -134,19 +144,21 @@
     "queen": [
       "king"
     ],
-    "bishop": [
+    "rook": [
       "pawn"
     ],
     "pawn": [
+      "rook",
       "bishop"
     ],
-    "rook": [
-      "king"
+    "bishop": [
+      "knight",
+      "pawn"
     ],
     "knight": [
       "bishop"
     ],
-    "_note": "rook and knight look-alikes are placeholders; confirm with the chess coach"
+    "_note": "from Lesson_1_Exercise_Pool level 2 rounds (13 Nov 2026)"
   },
   "layout": {
     "choiceCardMin": [
@@ -161,9 +173,13 @@
       120,
       140
     ],
-    "snapDistance": 44,
-    "type8BatchSize": 4,
-    "type3Level4Parts": 2
+    "snapDistance": 64,
+    "touchSlop": 16,
+    "dragStartDistance": 10,
+    "type5BatchSize": 4,
+    "type3Level4Parts": 2,
+    "linkWaitingBlur": 10,
+    "linkWaitingAlpha": 0.45
   },
   "motion": {
     "screenFadeMs": 300,
@@ -173,6 +189,11 @@
     "tryAgainSinkPt": 16,
     "tryAgainMs": 300,
     "dragLiftScale": 1.08,
+    "hoverScale": 1.05,
+    "captionCharMs": 60,
+    "linkDemoMs": 1400,
+    "linkDemoRepeats": 2,
+    "linkDemoDelayMs": 900,
     "snapMs": 220,
     "springBackMs": 300,
     "arrowBobPt": 6,
@@ -190,6 +211,7 @@
       5
     ],
     "defaultMinutes": 2,
+    "addMinutes": 1,
     "activities": [
       "move",
       "breathe",
@@ -199,5 +221,14 @@
   },
   "storage": {
     "maxSessionEvents": 2000
+  },
+  "story": {
+    "_note": "A clip not delivered yet is skipped (0); set a length (e.g. 2.4) to show its blank slot for that long instead. Lines in a row: each stays this long after it has typed out.",
+    "clipPlaceholderSeconds": 0,
+    "captionHoldMs": 1400,
+    "_subtitleNote": "Film subtitles follow the clip time: checked this often, words appear as the voice says them.",
+    "subtitleTickMs": 50,
+    "_voiceNote": "Recorded lines in a row play with this gap (docs/VOICE.md: 250 ms).",
+    "voiceGapMs": 250
   }
 }

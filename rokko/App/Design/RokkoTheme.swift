@@ -33,6 +33,15 @@ enum RokkoColor {
     static let sageWash      = Color(hex: 0xEEF2E6)   // quiet image well on Guardian cards
     static let mossWash      = Color(hex: 0xF3F6EC)   // ticked piece tile
     static let honeyWash     = Color(hex: 0xFBF4E2)   // piece name tag after a transformation
+
+    // Team tints for game art (SpriteKit colour blend). Charcoal is slate, never pure black.
+    static let charcoalTint  = Color(hex: 0x46505A)   // black team: tints ivory art until the charcoal PNGs arrive
+    static let shadeTint     = Color(hex: 0x8C8073)   // Type 3 level 6: neutral grey-brown, colour hidden
+}
+
+extension RokkoColor {
+    /// SpriteKit needs UIColor; same tokens, no new hex.
+    static func ui(_ color: Color) -> UIColor { UIColor(color) }
 }
 
 // MARK: - Type
@@ -64,6 +73,8 @@ enum RokkoMotion {
     static let screenFade: Double = 0.300
     /// Mirrors EngineConfig.json › motion.pressMs (120).
     static let press: Double = 0.120
+    /// Reduce Motion / Calm: every movement becomes a plain fade this long.
+    static let stillFade: Double = 0.200
 
     // Launch / ready castling (circles): king 0.7 s; rook starts 0.15 s later and takes 0.85 s.
     static let castleKing: Double = 0.70
@@ -86,3 +97,40 @@ enum RokkoLayout {
     static let primaryButtonHeight: CGFloat = 100
     static let primaryButtonBottom: CGFloat = 834 - 698 - 100
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Colour tokens & fonts") {
+    let colours: [(String, Color)] = [
+        ("paper", RokkoColor.paper), ("mistBlue", RokkoColor.mistBlue), ("card", RokkoColor.card),
+        ("cardEdge", RokkoColor.cardEdge), ("leaf", RokkoColor.leaf), ("ink", RokkoColor.ink),
+        ("inkSoft", RokkoColor.inkSoft), ("honey", RokkoColor.honey), ("moss", RokkoColor.moss),
+        ("lilac", RokkoColor.lilac), ("sageDone", RokkoColor.sageDone), ("teal", RokkoColor.teal),
+        ("bark", RokkoColor.bark), ("mistEdge", RokkoColor.mistEdge), ("mistEdgeSoft", RokkoColor.mistEdgeSoft),
+        ("mistTrack", RokkoColor.mistTrack), ("tealWash", RokkoColor.tealWash), ("sageWash", RokkoColor.sageWash),
+        ("mossWash", RokkoColor.mossWash), ("honeyWash", RokkoColor.honeyWash),
+        ("charcoalTint", RokkoColor.charcoalTint), ("shadeTint", RokkoColor.shadeTint),
+    ]
+    ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 12)], spacing: 12) {
+                ForEach(colours, id: \.0) { name, colour in
+                    VStack(spacing: 6) {
+                        RoundedRectangle(cornerRadius: 12).fill(colour).frame(height: 64)
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(RokkoColor.cardEdge))
+                        Text(name).font(RokkoFont.nunito(14, .bold)).foregroundStyle(RokkoColor.ink)
+                    }
+                }
+            }
+            Text("Find the King.").font(RokkoFont.fredoka(34))
+            Text("Fredoka 30 · buttons").font(RokkoFont.fredoka(30))
+            Text("Nunito 26 Bold · captions").font(RokkoFont.nunito(26, .bold))
+            Text("Nunito 20 · Guardian body").font(RokkoFont.nunito(20))
+        }
+        .foregroundStyle(RokkoColor.ink)
+        .padding(32)
+    }
+    .background(RokkoColor.paper)
+}
+#endif

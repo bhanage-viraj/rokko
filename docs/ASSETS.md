@@ -6,25 +6,26 @@ Status: **have** = usable now · **draft** = exists but not final art · **make*
 Final art must be on a commercial licence (paid Recraft plan, or redrawn). Drafts made on a free plan cannot ship.
 
 ## 1. Characters (12 + optional owl)
-PNG, transparent, standing, three-quarter view. Ivory faces right; charcoal is the same pose mirrored (faces left), slate recolour, same gold anchors.
+PNG, transparent, standing, three-quarter view. Both teams face right (14 Nov sheet); charcoal is the same pose in slate, same gold anchors.
+14 Nov: 1024 px transparent exports, trimmed to the character, for all 12 characters.
 Size: tallest (elephant) 1400 px high; others scaled by DESIGN_SYSTEM heights. Put them in `Characters.spriteatlas`.
 
 | File | Animal / piece | Status | Note |
 |---|---|---|---|
-| `char_lion_ivory.png` | lion · King | draft | final pose made; match king scale |
+| `char_lion_ivory.png` | lion · King | draft | 1024 px export, 14 Nov |
 | `char_lioness_ivory.png` | lioness · Queen | draft | |
-| `char_elephant_ivory.png` | elephant · Rook | make | gold notched headpiece replaces the tower on the back |
+| `char_elephant_ivory.png` | elephant · Rook | draft | from 14 Nov sheet; keeps the tower on its back (the Rook clue cuts through it) |
 | `char_horse_ivory.png` | horse · Knight | draft | |
-| `char_fox_ivory.png` | fox · Bishop | draft | or `char_owl_ivory.png` if the owl wins (DECISIONS O1) |
+| `char_kangaroo_ivory.png` | kangaroo · Bishop | draft | 1024 px export, 14 Nov (replaces the fox, DECISIONS O1) |
 | `char_squirrel_ivory.png` | squirrel · Pawn | draft | new squirrel chosen for both teams |
 | `char_lion_charcoal.png` | King Duskmane | draft | |
 | `char_lioness_charcoal.png` | | draft | |
-| `char_elephant_charcoal.png` | | make | |
+| `char_elephant_charcoal.png` | | draft | from 14 Nov sheet |
 | `char_horse_charcoal.png` | | draft | |
-| `char_fox_charcoal.png` | | draft | |
+| `char_kangaroo_charcoal.png` | | draft | 1024 px export, 14 Nov |
 | `char_squirrel_charcoal.png` | | draft | |
 
-Shaded characters (Type 3 level 6) and slot silhouettes (Type 6, 8) are **code**: tint the same PNG with `colorBlendFactor`.
+Shaded characters (Type 3 level 6) and slot silhouettes (Type 4, 5) are **code**: tint the same PNG with `colorBlendFactor`.
 
 ## 2. Chess pieces (12)
 PNG, transparent, side view, same style as the launch screen King and Rook. Height: King 1000 px, others in real Staunton proportion.
@@ -37,7 +38,15 @@ PNG, transparent, side view, same style as the launch screen King and Rook. Heig
 | `piece_knight_ivory.png`, `piece_queen_ivory.png`, `piece_bishop_ivory.png`, `piece_pawn_ivory.png` | make (match the launch King and Rook) |
 | `piece_<name>_charcoal.png` × 6 | make (same set, slate charcoal, gold-free) |
 
+## 2b. Matching vine (1)
+The Type 3 link line is a little vine: a moss stem drawn in code with leaves along it. Until this file exists the leaves are drawn in code.
+
+| File | Spec | Status |
+|---|---|---|
+| `vine_leaf.png` | One small leaf, side view, pointing RIGHT: stalk end at the left edge (vertically centred), tip at the right edge. Moss green (#5E9A5A) with a lighter vein, same warm-brown outline and grain as the characters. Transparent, about 160 × 90 px, no shadow. Shown 22 pt long, rotated along the vine. | make |
+
 ## 3. Hint 1 clue cards (12)
+Not needed for now (14 Nov): the clue is drawn in code as half animal / half piece from the art in §1–2. The files below are no longer loaded.
 Still frame from each animal's transformation clip (the moment the piece shape is visible on the animal). Export once the video team delivers the clips, or ask them to export these stills. 600 × 720 px PNG, honey edge drawn in code.
 
 | File | Status |
@@ -48,9 +57,9 @@ Still frame from each animal's transformation clip (the moment the piece shape i
 ## 4. Game props
 | File | Use | Status |
 |---|---|---|
-| `prop_shelf.png` | Type 6 team shelf, 3 tiers (back row 8 slots, pawns 2 × 4) | make |
-| `prop_basket.png` | Type 8 batch basket | make |
-| `prop_house_ivory.png`, `prop_house_charcoal.png` | Type 8 houses behind the 2 × 8 slots (soft, low contrast) | make (optional; code fallback = rounded panel) |
+| `prop_shelf.png` | Type 4 team shelf, 1 tier of 6 slots (K Q R B N P) | make |
+| `prop_basket.png` | Type 5 batch basket | make |
+| `prop_house_ivory.png`, `prop_house_charcoal.png` | Type 5 houses behind the 2 × 8 slots (soft, low contrast) | make (optional; code fallback = rounded panel) |
 | `prop_scroll_open.png` | Pip's scroll | have |
 | Slots, link lines, arrows, rings | | code |
 
@@ -70,11 +79,15 @@ Still frame from each animal's transformation clip (the moment the piece shape i
 | `pip_glide.png` | have |
 
 ## 7. Video: not in this list
-All video (opening film L1_OP01–OP07, transformation clips L1_TR_*, charcoal intro L1_CH01, Calm and Standard versions) is made by the video team, not from this list.
+**Opening film (delivered 17 Nov, v5 19 Nov):** "The Day the Jungle Changed", 1920×1080, 24 fps, cut into 8 clips by `Tools/cut_lesson1_film.sh` from `Media/Source/Lesson1_The_Day_the_Jungle_Changed_v6.mp4` (source not shipped). v6 is animated from the original character art split into rig layers (`Tools/film/rokkoparts.py`), keyframed in Figma (file "Rokko – Lesson 1 Animals (animation)") and played by `Tools/film/rokkoplayer.py` and living scenery (`Tools/film/life.py`: wind, light, pollen, butterflies); scene times are the same as v2, so the subtitle files are unchanged:
+`Resources/Video/L1_01_story.mp4`, `L1_02_kings`, `L1_03_queens`, `L1_04_elephants`, `L1_05_kangaroos`, `L1_06_horses`, `L1_07_squirrels`, `L1_08_ending` (.mp4). One file serves Calm and Standard.
+Subtitles: `Content/Lesson1/Subtitles/<clip>.subtitles.json` (times relative to the clip start), named in `manifest.json › subtitles`.
+
+Transformation clips (19 Nov): `L1_TR_<PIECE>_standard.mp4` (2.8 s: honey glow, the animal dissolves into the piece, one soft settle) and `L1_TR_<PIECE>_calm.mp4` (2.4 s plain cross-fade), 1080p 30 fps, no sound, made from the app art by `Tools/make_transform_clips.py`. Still to make: the charcoal intro L1_CH01.
 The code only needs the files to arrive with the names in `Content/Lesson1/manifest.json` (HEVC 1080p, 30 fps). Until then it shows a placeholder.
 
 ## 8. Audio
-Voice: 94 in-app lines in `Content/Lesson1/voice_lines.csv` (93 to make, 1 blocked: squirrel voice). Film narration belongs to the video team. `Resources/Audio/Voice/<id>.m4a`.
+Voice: 95 in-app lines in `Content/Lesson1/voice_lines.csv` (94 to make, 1 blocked: squirrel voice). Film narration belongs to the video team. `Resources/Audio/Voice/<id>.m4a`.
 
 Sound effects (`Resources/Audio/SFX/`, soft, under 0.6 s, no buzzers):
 | File | Use | Status |
@@ -109,7 +122,7 @@ Child-facing icons are custom; Guardian screens may use SF Symbols.
 `Fredoka-SemiBold.ttf`, `Nunito-Regular/SemiBold/Bold.ttf` (OFL). have.
 
 ## 12. Reward motions (code, ≤ 1 s each, both teams)
-lion: crown glints · lioness: crown settles · elephant: lifts trunk · horse: nods mane · fox: ears twitch · squirrel: tail flick. Calm/Reduce Motion: soft fade of the piece symbol only.
+lion: crown glints · lioness: crown settles · elephant: lifts trunk · horse: nods mane · kangaroo: ears twitch · squirrel: tail flick. Calm/Reduce Motion: soft fade of the piece symbol only.
 
 ## Counts
 | Group | Files | To make |
@@ -118,6 +131,6 @@ lion: crown glints · lioness: crown settles · elephant: lifts trunk · horse: 
 | Pieces | 12 | 10 |
 | Clue cards | 12 | 12 |
 | Props | 4 | 3 |
-| Voice | 94 | 93 + 1 blocked |
+| Voice | 95 | 94 + 1 blocked |
 | SFX | 8 | 8 |
 | Icons | 21 + leaves | export + 3 |

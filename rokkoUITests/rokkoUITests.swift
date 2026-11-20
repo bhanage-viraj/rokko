@@ -1,41 +1,36 @@
 //
 //  rokkoUITests.swift
-//  rokkoUITests
-//
-//  Created by Viraj Bhanage on 12/11/26.
+//  Launch tests: the castling animation and how long a cold launch takes.
 //
 
 import XCTest
 
-final class rokkoUITests: XCTestCase {
+final class rokkoUITests: RokkoUITestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    @MainActor
+    func testLaunchAnimationLeadsToSetup() {
+        let app = launchApp()
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // The launch view is one accessibility element labelled "Rokko".
+        XCTAssertTrue(app.descendants(matching: .any)["Rokko"].waitForExistence(timeout: 3))
+        // …and when it ends, a fresh install lands on setup.
+        OnboardingScreen(app: app).waitForWelcome()
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+    func testTapSkipsLaunchAnimation() {
+        let app = launchApp()
+        let launch = app.descendants(matching: .any)["Rokko"]
+        XCTAssertTrue(launch.waitForExistence(timeout: 3))
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        launch.tap()   // tap anywhere = skip to the logo
+
+        // Skipping is quicker than the full ~3.3 s story.
+        XCTAssertTrue(OnboardingScreen(app: app).welcomeTitle.waitForExistence(timeout: 2.5))
     }
 
     @MainActor
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }

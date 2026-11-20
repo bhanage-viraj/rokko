@@ -58,16 +58,16 @@ Full step list: `Content/Lesson1/lesson1.json`. Games: `docs/EXERCISES.md`.
 experience, look, two hands-on practice steps, ready) → Lesson map. Spec: `docs/ONBOARDING.md`.
 
 **Lesson 1 path**
-1. **Opening film** (L1_OP01–OP07): Sixty-Four Wood, Ivory Hollow and Charcoal Ridge, Pip's scroll, the one rule.
+1. **Opening film** (8 clips, L1_01_story … L1_08_ending): the Checkerwood Jungle, the two kingdoms, the one rule; then the six animals one by one; then everyone on the 64 squares. Each clip ends and waits for Next; Again (↻) replays it. Subtitles appear in the usual caption, one line at a time.
 2. **Meet King, Rook, Knight**: for each: meet the animal → animal becomes piece (clip) → Guardian's turn (show the real piece).
 3. **Module 1 games**: Types 1 and 2 for King, Rook, Knight. Adaptive.
-   Charcoal intro (CH01) plays once, just before the first round at level 5.
+   Level 1 only for now (DECISIONS, 16 Nov).
 4. **Guardian's turn: Module 1** (hold up the three pieces, child points to each).
 5. **Planned break**.
 6. **Meet Queen, Bishop, Pawn**: same three-part pattern.
 7. **Module 2 games**: Types 1 and 2 for Queen, Bishop, Pawn, with review rounds of Module 1 pieces.
 8. **Guardian's turn: Module 2**.
-9. **Module 3 games**: Type 3 (linking), Type 6 (team shelf), Type 8 (both teams), white and black.
+9. **Module 3 games**: Type 3 (linking), Type 4 (team shelf), Type 5 (both teams), white and black.
 10. **Play together** at the real board.
 11. **Lesson complete** + Guardian summary in words.
 
@@ -77,8 +77,7 @@ Colour and Team make-up reach 0.95. If a sitting ends before a gate, the next si
 resumes in the same game block.
 
 **Any time:** long press (2 s, one finger) on the Guardian button → mood check (Ready / Wobbly /
-Needs a break). Guardian menu (Calm/Standard, sound, tips,
-Run setup again) from Settings on the lesson map.
+Needs a break). Guardian menu (Calm/Standard, sound, tips) from Settings on the lesson map.
 
 ## 6. Functional requirements
 All are required for Lesson 1 unless marked Later.
@@ -87,7 +86,7 @@ All are required for Lesson 1 unless marked Later.
 - FR-01 Launch animation: king and rook castle into the Rokko logo, under 4 s, tap to skip; Calm/Reduce Motion = logo fade.
 - FR-02 First-run setup, shown once (`docs/ONBOARDING.md`): welcome → chess experience (sets full or short Guardian's-turn tips) → look (Calm/Standard) → try a Guardian's turn → try the long-press check-in → ready. Pieces checklist moves into the lesson, once, before the first Guardian's turn. Back and Skip on every step except ready; Continue waits for each step's action.
 - FR-03 The practice steps use the real lesson frame in practice mode: no engine, no BKT, no SessionEvents, no progress saved.
-- FR-04 Saved: Calm, tips mode, setup done. Changeable in the Guardian menu, which also offers "Run setup again".
+- FR-04 Saved: Calm, tips mode, setup done. Changeable in the Guardian menu.
 - FR-05 Lesson map: Lesson 1 active; Lessons 2–3 shown as "Coming soon".
 
 ### Lesson frame
@@ -100,7 +99,7 @@ All are required for Lesson 1 unless marked Later.
 - FR-10 Opening film plays in the family's chosen version (Calm or Standard); first clip starts only on the Guardian's tap.
 - FR-11 Captions match the voice word for word. No replay button; Again replays a transformation clip.
 - FR-12 Each piece: meet the animal → becomes piece (clip, then "after" state with Again) → Guardian's turn.
-- FR-13 Charcoal intro: one short scene showing the charcoal team as the same animals, before the first level-5 round.
+- FR-13 Black team intro: before the first round with anything black: white animals with their black twins, then white and black pieces, then a Guardian's turn to put the black pieces out (DECISIONS, 15 Nov).
 
 ### Guardian's turn
 - FR-14 Show the real piece: three steps on first visit, one line after ("Show steps ›" expands). Done only (no Skip).
@@ -110,9 +109,9 @@ All are required for Lesson 1 unless marked Later.
 - FR-16 Type 1: character shown, child taps its piece. Levels 1–6.
 - FR-17 Type 2: piece shown, child taps its character. Levels 1–6.
 - FR-18 Type 3: drag a character card onto its piece card; the line draws itself. Levels 1–6.
-- FR-19 Type 6: team shelf, drag figures into silhouette slots, 1·1·2·2·2·8 spoken as groups fill. Levels 1–6.
-- FR-20 Type 8: two kings, two houses (2 × 8), figures come from a basket in batches. Levels 1–6.
-- FR-21 Wrong tap: card sinks 16 pt, dims, lilac dashed outline. Wrong drop: springs back softly. No voice on a wrong answer except the hint line.
+- FR-19 Type 4: team shelf, drag figures into silhouette slots, one slot per piece (K Q R B N P), "One Rook!" spoken as each lands. Levels 1–6.
+- FR-20 Type 5: two kings, two houses (2 × 8), figures come from a basket in batches. Levels 1–6.
+- FR-21 Wrong tap: card sinks 16 pt, dims, lilac dashed outline. Wrong drop: springs back softly. Voice: a calm supporting line that changes each time ("That’s okay. Try again." …), or the hint line when a hint is due (DECISIONS, 15 Nov).
 - FR-22 Hint ladder: 1 clue card (story still) → 2 arrow → 3 result (answer lights up, names itself, exercise ends without a tap).
 - FR-23 Hints step up after a wrong answer or after 12 s idle (18 s in Calm or Wobbly).
 - FR-24 Correct: moss ring + one 8 pt bounce + the animal says "I'm the King!" (or the type's correct line); Guardian taps Next.
@@ -156,7 +155,7 @@ Summary; full spec in `docs/ENGINE.md`.
 
 ## 9. Content
 - Story world: Sixty-Four Wood; Ivory Hollow (King Sunmane) and Charcoal Ridge (King Duskmane); Pip the parrot carries the scroll.
-- Cast (both teams): lion = King, lioness = Queen, elephant = Rook (gold notched headpiece), horse = Knight, fox = Bishop (owl under review), squirrel = Pawn.
+- Cast (both teams): lion = King, lioness = Queen, elephant = Rook (gold notched headpiece), horse = Knight, kangaroo = Bishop (was fox; changed 14 Nov), squirrel = Pawn.
 - Voice: ElevenLabs, bundled files only. Cast and settings in `docs/VOICE.md`; every line in `Content/Lesson1/voice_lines.csv`.
 - Art: full list in `docs/ASSETS.md`. All video (film, transformation clips, charcoal intro) is made by the video team and delivered with the names in `manifest.json`.
 - No word "Amazon" anywhere.

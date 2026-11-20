@@ -8,18 +8,23 @@ import SwiftUI
 // MARK: - Canvas
 
 /// Lays content out on the fixed 1194 × 834 design canvas and scales it to fit the iPad.
+/// `fills: true` (lesson screens): the canvas grows to the iPad's own shape instead of leaving empty
+/// bands, at the same scale. Views read the grown size from `\.canvasSize`.
 struct DesignCanvas<Content: View>: View {
     var background: Color = RokkoColor.mistBlue
+    var fills = false
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         GeometryReader { geo in
-            let size = RokkoLayout.canvas
-            let scale = min(geo.size.width / size.width, geo.size.height / size.height)
+            let design = RokkoLayout.canvas
+            let scale = min(geo.size.width / design.width, geo.size.height / design.height)
+            let size = fills ? CGSize(width: geo.size.width / scale, height: geo.size.height / scale) : design
             ZStack {
                 background
                 PaperGrain()
                 content()
+                    .environment(\.canvasSize, size)
                     .frame(width: size.width, height: size.height, alignment: .topLeading)
                     .scaleEffect(scale)
                     .frame(width: geo.size.width, height: geo.size.height)
@@ -27,6 +32,12 @@ struct DesignCanvas<Content: View>: View {
         }
         .ignoresSafeArea()
     }
+}
+
+extension EnvironmentValues {
+    /// Size of the design canvas in design points: 1194 × 834, or larger on iPads of another shape
+    /// when the canvas fills the screen.
+    @Entry var canvasSize: CGSize = RokkoLayout.canvas
 }
 
 /// Paper grain overlay (`tex_noise`) used on every surface in the design.
@@ -43,18 +54,32 @@ struct PaperGrain: View {
 
 // MARK: - Text
 
-/// "FOR THE GUARDIAN" pill above every Guardian title.
+/// The Guardian's symbol: the same glyph as the Guardian button, so a Guardian screen is
+/// recognisable before anyone reads it.
+enum GuardianSymbol {
+    static let name = "person.2.fill"
+}
+
+/// "👥 GUARDIAN" pill above every Guardian title and on every Guardian's turn.
 struct GuardianLabel: View {
-    let text: String
+    var text: String = "Guardian"
+    var fontSize: CGFloat = 16
+    var fill: Color = RokkoColor.card
     var body: some View {
-        Text(text.uppercased())
-            .font(RokkoFont.nunito(16, .black))
-            .tracking(1.3)
-            .foregroundStyle(RokkoColor.teal)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 7)
-            .background(Capsule().fill(RokkoColor.card))
-            .overlay(Capsule().strokeBorder(RokkoColor.mistEdge, lineWidth: 2))
+        HStack(spacing: fontSize * 0.5) {
+            Image(systemName: GuardianSymbol.name)
+                .font(.system(size: fontSize * 1.1, weight: .bold))
+                .accessibilityHidden(true)
+            Text(text.uppercased())
+                .tracking(fontSize * 0.08)
+        }
+        .font(RokkoFont.nunito(fontSize, .black))
+        .foregroundStyle(RokkoColor.teal)
+        .padding(.horizontal, fontSize)
+        .padding(.vertical, fontSize * 0.45)
+        .background(Capsule().fill(fill))
+        .overlay(Capsule().strokeBorder(RokkoColor.mistEdge, lineWidth: 2))
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -235,3 +260,24 @@ struct GroundShadow: View {
             .accessibilityHidden(true)
     }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Guardian components", traits: .landscapeLeft) {
+    DesignCanvas {
+        VStack(alignment: .leading, spacing: 24) {
+            GuardianHeader(label: "For the Guardian", title: "Your lessons",
+                           detail: "Sit next to your child with the real board.")
+            GuardianBody(text: "Guardian body text, 20 pt.")
+            HStack(spacing: 16) {
+                PrimaryButton(title: "Start lesson") {}.frame(width: 320)
+                SecondaryButton(title: "Run setup again", systemImage: "arrow.counterclockwise") {}.frame(width: 320)
+                GuardianIconButton(systemName: "gearshape.fill", label: "Settings") {}
+            }
+            GroundShadow()
+        }
+        .padding(64)
+    }
+}
+#endif

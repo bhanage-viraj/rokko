@@ -30,15 +30,21 @@ struct RokkoRoot: View {
             case .lessonMap:
                 if let settings {
                     LessonMapView(settings: settings,
-                                  onStartLesson: { show(.lesson) },
-                                  onRunSetupAgain: { show(.onboarding) })
+                                  onStartLesson: { show(.lesson) })
                         .transition(.opacity)
                 }
             case .lesson:
-                LessonPlaceholderView { show(.lessonMap) }
-                    .transition(.opacity)
+                if let settings, case .success(let library) = ContentLibrary.shared {
+                    LessonContainer(coordinator: LessonCoordinator(library: library, settings: settings, context: context,
+                                                                   onExit: { show(.lessonMap) }))
+                        .transition(.opacity)
+                } else {
+                    LessonPlaceholderView { show(.lessonMap) }
+                        .transition(.opacity)
+                }
             }
         }
+        .environment(\.rokkoCalm, settings?.calm ?? false)
         .onAppear {
             settings = Store.settings(in: context)
         }
@@ -48,6 +54,7 @@ struct RokkoRoot: View {
         #if DEBUG
         // `-RokkoScreen lessonMap` / `-RokkoOnboardingStep <step>` jump straight there.
         if UserDefaults.standard.string(forKey: "RokkoScreen") == "lessonMap" { return .lessonMap }
+        if UserDefaults.standard.string(forKey: "RokkoScreen") == "lesson" { return .lesson }
         if Self.debugStartStep != .welcome { return .onboarding }
         #endif
         return settings?.onboardingDone == true ? .lessonMap : .onboarding
@@ -69,17 +76,17 @@ struct RokkoRoot: View {
     }
 }
 
-/// Stand-in until the lesson (opening film onward) is built.
+/// Shown only if the bundled content cannot be read (ContentValidationTests catch that first).
 private struct LessonPlaceholderView: View {
     let onBack: () -> Void
 
     var body: some View {
         DesignCanvas(background: RokkoColor.paper) {
             VStack(spacing: 24) {
-                Text("Lesson 1 opens here")
+                Text("Lesson 1 could not open")
                     .font(RokkoFont.fredoka(44))
                     .foregroundStyle(RokkoColor.ink)
-                Text("Not built yet.")
+                Text("The lesson files are missing.")
                     .font(RokkoFont.nunito(21))
                     .foregroundStyle(RokkoColor.inkSoft)
                 SecondaryButton(title: "Back to lessons", action: onBack)

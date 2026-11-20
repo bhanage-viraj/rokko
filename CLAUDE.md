@@ -5,7 +5,7 @@ side by side, next to a real board. This repo is Lesson 1 only.
 
 Read these before writing code, in this order:
 1. `docs/PRD.md` – what we build and why
-2. `docs/EXERCISES.md` – the games (source of truth: Exercise Types v6)
+2. `docs/EXERCISES.md` – the games (source of truth: Exercise Types v6 + Lesson_1_Exercise_Pool)
 3. `docs/ENGINE.md` – BKT + level selection + round planner
 4. `docs/ARCHITECTURE.md` – modules, folders, data flow
 5. `docs/DESIGN_SYSTEM.md` – tokens, layout, motion
@@ -28,7 +28,8 @@ Scenes/         SpriteKit: GameHost, LessonScene (base), ChoiceScene, LinkScene,
 Scenes/Nodes/   CardNode, CharacterNode, PieceNode, ClueCardNode, HintArrowNode, SlotNode, BasketNode
 Packages/RokkoEngine/   BKTModel, LevelSelector, RoundPlanner, RoundGenerator, HintLadder, SignalMonitor, Dials
 Packages/RokkoContent/  Lesson, Step, ExerciseCode, ExerciseRules, Skill, EngineConfig, VoiceLine models
-Content/        EngineConfig.json, Lesson1/{lesson1.json, exercises.json, skills.json, voice_lines.csv, manifest.json}
+Content/        EngineConfig.json, Lesson1/{lesson1.json, exercises.json, exercise_pool.json, skills.json, voice_lines.csv, manifest.json}
+Tools/          import_exercise_pool.py (dev only, not shipped)
 Services/       Store (SwiftData), AudioService, CaptionService, Haptics(off), AccessibilityService
 Resources/      Art.xcassets (atlases), Audio/, Video/, Fonts/
 Tests/          RokkoEngineTests, RoundGeneratorTests, ContentValidationTests
@@ -47,13 +48,14 @@ Tests/          RokkoEngineTests, RoundGeneratorTests, ContentValidationTests
 - Adaptive changes happen only between rounds, one level step at a time.
 - No AI at runtime. Child-facing content is identical every time for the same seed.
 - No Skip button, no speaker/replay button, no round dots (removed in design).
-- Guardian screens say "Guardian's turn".
+- Guardian screens are labelled with the Guardian symbol (`person.2.fill`, same as the Guardian button) + "Guardian" (`GuardianLabel`).
 
 ## Code rules
 - Scenes draw and report events (tap, drag start, drop, idle). All decisions live in view models and `RokkoEngine`.
 - Every tuning number comes from `Content/EngineConfig.json`. No magic numbers in code.
 - Exercise IDs use the v6 code `LLL-M-TT-EE-V-III` everywhere (files, logs, voice keys). See `docs/EXERCISES.md`.
-- `RoundGenerator` is deterministic: same code + variation → same round. Seed = FNV-1a hash of the full code.
+- Rounds come from `Content/Lesson1/exercise_pool.json` (imported from Lesson_1_Exercise_Pool with `Tools/import_exercise_pool.py`); never invent rounds or edit the pool by hand.
+- `RoundGenerator` is deterministic: same code → same round. Seed = FNV-1a hash of the full code; it sets positions and order only.
 - Lock input while feedback, hints or clips play.
 - Any change to `RokkoEngine` or `RoundGenerator` needs unit tests. Run `ContentValidationTests` after editing any JSON.
 - Asset and voice file names follow `docs/ASSETS.md` exactly. A missing asset must fail a test, not crash at runtime.
@@ -63,6 +65,7 @@ Tests/          RokkoEngineTests, RoundGeneratorTests, ContentValidationTests
 - Build: `xcodebuild -scheme Rokko -destination 'platform=iOS Simulator,name=iPad Pro 11-inch (M4)' build`
 - Test:  `xcodebuild test -scheme Rokko -destination 'platform=iOS Simulator,name=iPad Pro 11-inch (M4)'`
 - Engine only (fast): `swift test --package-path Packages/RokkoEngine`
+- UI tests only: add `-only-testing:rokkoUITests` to the test command. Guide: `docs/UI_TESTING.md`. UI tests launch with `-RokkoUITesting YES` (in-memory store).
 
 ## Don't
 - Add analytics, ads, accounts, network calls, export, or third-party SDKs.

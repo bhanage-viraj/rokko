@@ -3,39 +3,52 @@
   "title": "The Day the Jungle Changed",
   "steps": [
     {
-      "id": "film_op01",
+      "id": "film_01_story",
       "kind": "film",
-      "clip": "L1_OP01"
+      "clip": "L1_01_story",
+      "again": true
     },
     {
-      "id": "film_op02",
+      "id": "film_02_kings",
       "kind": "film",
-      "clip": "L1_OP02"
+      "clip": "L1_02_kings",
+      "again": true
     },
     {
-      "id": "film_op03",
+      "id": "film_03_queens",
       "kind": "film",
-      "clip": "L1_OP03"
+      "clip": "L1_03_queens",
+      "again": true
     },
     {
-      "id": "film_op04",
+      "id": "film_04_elephants",
       "kind": "film",
-      "clip": "L1_OP04"
+      "clip": "L1_04_elephants",
+      "again": true
     },
     {
-      "id": "film_op05",
+      "id": "film_05_kangaroos",
       "kind": "film",
-      "clip": "L1_OP05"
+      "clip": "L1_05_kangaroos",
+      "again": true
     },
     {
-      "id": "film_op06",
+      "id": "film_06_horses",
       "kind": "film",
-      "clip": "L1_OP06"
+      "clip": "L1_06_horses",
+      "again": true
     },
     {
-      "id": "film_op07",
+      "id": "film_07_squirrels",
       "kind": "film",
-      "clip": "L1_OP07"
+      "clip": "L1_07_squirrels",
+      "again": true
+    },
+    {
+      "id": "film_08_ending",
+      "kind": "film",
+      "clip": "L1_08_ending",
+      "again": true
     },
     {
       "id": "meet_king",
@@ -99,10 +112,7 @@
       "kind": "gameBlock",
       "module": 1,
       "intro": "l1_m1_start",
-      "gate": "module2",
-      "insertsOnce": {
-        "charcoalIntro": "charcoal_intro"
-      }
+      "gate": "module2"
     },
     {
       "id": "guardian_m1",
@@ -140,7 +150,7 @@
     {
       "id": "meet_bishop",
       "kind": "meet",
-      "animal": "fox",
+      "animal": "kangaroo",
       "voice": "l1_meet_bishop"
     },
     {

@@ -1,0 +1,94 @@
+{
+  "clip": "L1_07_squirrels",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:00.600",
+      "end": "00:07.880",
+      "text": "Meet the squirrels! They are the smallest animals in the kingdom, but they are very brave. They always walk at the front.",
+      "speech": [
+        [
+          0.604,
+          1.744
+        ],
+        [
+          2.134,
+          4.406
+        ],
+        [
+          4.614,
+          6.045
+        ],
+        [
+          6.403,
+          6.507
+        ],
+        [
+          6.636,
+          7.871
+        ]
+      ]
+    },
+    {
+      "start": "00:08.380",
+      "end": "00:13.215",
+      "text": "Squirrels: \"We are small. We step forward. Step, step, step!\"",
+      "speech": [
+        [
+          8.42,
+          9.316
+        ],
+        [
+          9.786,
+          10.126
+        ],
+        [
+          10.332,
+          10.819
+        ],
+        [
+          11.289,
+          11.607
+        ],
+        [
+          11.959,
+          12.275
+        ],
+        [
+          12.601,
+          13.09
+        ]
+      ]
+    },
+    {
+      "start": "00:13.915",
+      "end": "00:16.655",
+      "text": "Look at the little round ball on the squirrel's hat!",
+      "speech": [
+        [
+          13.915,
+          16.64
+        ]
+      ]
+    },
+    {
+      "start": "00:17.855",
+      "end": "00:22.555",
+      "text": "The squirrels have a big secret. We will find out what it is in a later lesson!",
+      "speech": [
+        [
+          17.861,
+          18.839
+        ],
+        [
+          19.042,
+          19.895
+        ],
+        [
+          20.296,
+          22.554
+        ]
+      ]
+    }
+  ]
+}

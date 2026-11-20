@@ -6,67 +6,92 @@
   ],
   "clips": [
     {
-      "id": "L1_OP01",
+      "id": "L1_01_story",
       "files": {
-        "calm": "L1_OP01_calm.mp4",
-        "standard": "L1_OP01_standard.mp4"
+        "calm": "L1_01_story.mp4",
+        "standard": "L1_01_story.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 76.583,
+      "subtitles": "L1_01_story.subtitles.json",
+      "status": "delivered",
+      "endStill": 76.166
     },
     {
-      "id": "L1_OP02",
+      "id": "L1_02_kings",
       "files": {
-        "calm": "L1_OP02_calm.mp4",
-        "standard": "L1_OP02_standard.mp4"
+        "calm": "L1_02_kings.mp4",
+        "standard": "L1_02_kings.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 37.583,
+      "subtitles": "L1_02_kings.subtitles.json",
+      "status": "delivered",
+      "endStill": 37.083
     },
     {
-      "id": "L1_OP03",
+      "id": "L1_03_queens",
       "files": {
-        "calm": "L1_OP03_calm.mp4",
-        "standard": "L1_OP03_standard.mp4"
+        "calm": "L1_03_queens.mp4",
+        "standard": "L1_03_queens.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 17.083,
+      "subtitles": "L1_03_queens.subtitles.json",
+      "status": "delivered",
+      "endStill": 16.666
     },
     {
-      "id": "L1_OP04",
+      "id": "L1_04_elephants",
       "files": {
-        "calm": "L1_OP04_calm.mp4",
-        "standard": "L1_OP04_standard.mp4"
+        "calm": "L1_04_elephants.mp4",
+        "standard": "L1_04_elephants.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 16.5,
+      "subtitles": "L1_04_elephants.subtitles.json",
+      "status": "delivered",
+      "endStill": 16.083
     },
     {
-      "id": "L1_OP05",
+      "id": "L1_05_kangaroos",
       "files": {
-        "calm": "L1_OP05_calm.mp4",
-        "standard": "L1_OP05_standard.mp4"
+        "calm": "L1_05_kangaroos.mp4",
+        "standard": "L1_05_kangaroos.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 14.333,
+      "subtitles": "L1_05_kangaroos.subtitles.json",
+      "status": "delivered",
+      "endStill": 13.833
     },
     {
-      "id": "L1_OP06",
+      "id": "L1_06_horses",
       "files": {
-        "calm": "L1_OP06_calm.mp4",
-        "standard": "L1_OP06_standard.mp4"
+        "calm": "L1_06_horses.mp4",
+        "standard": "L1_06_horses.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 14.417,
+      "subtitles": "L1_06_horses.subtitles.json",
+      "status": "delivered",
+      "endStill": 14.0
     },
     {
-      "id": "L1_OP07",
+      "id": "L1_07_squirrels",
       "files": {
-        "calm": "L1_OP07_calm.mp4",
-        "standard": "L1_OP07_standard.mp4"
+        "calm": "L1_07_squirrels.mp4",
+        "standard": "L1_07_squirrels.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 24.167,
+      "subtitles": "L1_07_squirrels.subtitles.json",
+      "status": "delivered",
+      "endStill": 23.75
+    },
+    {
+      "id": "L1_08_ending",
+      "files": {
+        "calm": "L1_08_ending.mp4",
+        "standard": "L1_08_ending.mp4"
+      },
+      "seconds": 16.583,
+      "subtitles": "L1_08_ending.subtitles.json",
+      "status": "delivered",
+      "endStill": 16.166
     },
     {
       "id": "L1_TR_KING",
@@ -74,8 +99,9 @@
         "calm": "L1_TR_KING_calm.mp4",
         "standard": "L1_TR_KING_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_TR_ROOK",
@@ -83,8 +109,9 @@
         "calm": "L1_TR_ROOK_calm.mp4",
         "standard": "L1_TR_ROOK_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_TR_KNIGHT",
@@ -92,8 +119,9 @@
         "calm": "L1_TR_KNIGHT_calm.mp4",
         "standard": "L1_TR_KNIGHT_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_TR_QUEEN",
@@ -101,8 +129,9 @@
         "calm": "L1_TR_QUEEN_calm.mp4",
         "standard": "L1_TR_QUEEN_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_TR_BISHOP",
@@ -110,8 +139,9 @@
         "calm": "L1_TR_BISHOP_calm.mp4",
         "standard": "L1_TR_BISHOP_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_TR_PAWN",
@@ -119,8 +149,9 @@
         "calm": "L1_TR_PAWN_calm.mp4",
         "standard": "L1_TR_PAWN_standard.mp4"
       },
-      "seconds": null,
-      "status": "video team"
+      "seconds": 2.8,
+      "status": "delivered",
+      "endStill": 2.35
     },
     {
       "id": "L1_CH01",
@@ -132,5 +163,5 @@
       "status": "video team"
     }
   ],
-  "_note": "Videos are delivered by the video team with these exact names. HEVC 1080p, 30 fps. Fill seconds after delivery. Transformation clips play in SKVideoNode."
+  "_note": "Film clips: Tools/cut_lesson1_film.sh. Transformation clips L1_TR_*: Tools/make_transform_clips.py (1080p, 30 fps; standard 2.8 s honey glow + dissolve, calm 2.4 s plain cross-fade, no sound, the voice line plays after). L1_CH01 still to make. Transformation clips play in SKVideoNode."
 }

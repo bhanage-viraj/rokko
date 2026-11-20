@@ -1,0 +1,207 @@
+{
+  "clip": "L1_01_story",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:04.800",
+      "end": "00:06.785",
+      "text": "This is the Checkerwood Jungle.",
+      "speech": [
+        [
+          4.848,
+          6.728
+        ]
+      ]
+    },
+    {
+      "start": "00:08.985",
+      "end": "00:10.455",
+      "text": "Two kingdoms live here.",
+      "speech": [
+        [
+          8.985,
+          10.443
+        ]
+      ]
+    },
+    {
+      "start": "00:11.355",
+      "end": "00:15.825",
+      "text": "On this side is the Sunrise Kingdom. Its king is King Sunny.",
+      "speech": [
+        [
+          11.355,
+          13.632
+        ],
+        [
+          14.157,
+          15.816
+        ]
+      ]
+    },
+    {
+      "start": "00:16.825",
+      "end": "00:21.175",
+      "text": "On this side is the Moonlight Kingdom. Its king is King Moony.",
+      "speech": [
+        [
+          16.83,
+          19.1
+        ],
+        [
+          19.569,
+          21.174
+        ]
+      ]
+    },
+    {
+      "start": "00:22.175",
+      "end": "00:31.535",
+      "text": "Both kings want their kingdom to be the best in the jungle. But who is the wisest? Who is the best leader? The kings do not agree.",
+      "speech": [
+        [
+          22.175,
+          24.303
+        ],
+        [
+          24.477,
+          25.564
+        ],
+        [
+          26.18,
+          27.705
+        ],
+        [
+          28.192,
+          29.373
+        ],
+        [
+          29.932,
+          31.527
+        ]
+      ]
+    },
+    {
+      "start": "00:33.035",
+      "end": "00:40.015",
+      "text": "One morning, a special message arrived for the whole jungle. All the animals came to the big clearing to see it.",
+      "speech": [
+        [
+          33.041,
+          33.789
+        ],
+        [
+          33.91,
+          36.728
+        ],
+        [
+          37.276,
+          38.651
+        ],
+        [
+          38.79,
+          40.011
+        ]
+      ]
+    },
+    {
+      "start": "00:40.915",
+      "end": "00:51.685",
+      "text": "This is a very old story. It is about a game played on sixty-four squares. The kingdom that learns to play this game well will become the Guardian of the Jungle!",
+      "speech": [
+        [
+          40.924,
+          43.003
+        ],
+        [
+          43.499,
+          46.466
+        ],
+        [
+          47.065,
+          49.32
+        ],
+        [
+          49.466,
+          51.678
+        ]
+      ]
+    },
+    {
+      "start": "00:52.585",
+      "end": "00:55.031",
+      "text": "King Sunny: \"My kingdom has a strong team!\"",
+      "speech": [
+        [
+          52.63,
+          54.998
+        ]
+      ]
+    },
+    {
+      "start": "00:55.831",
+      "end": "00:58.414",
+      "text": "King Moony: \"My kingdom has a clever team!\"",
+      "speech": [
+        [
+          55.877,
+          58.278
+        ]
+      ]
+    },
+    {
+      "start": "00:59.414",
+      "end": "01:09.354",
+      "text": "There is one important rule. Being strong is not enough. To win, a kingdom must think carefully, keep its king safe, and work together.",
+      "speech": [
+        [
+          59.421,
+          61.116
+        ],
+        [
+          61.709,
+          63.508
+        ],
+        [
+          64.032,
+          64.587
+        ],
+        [
+          64.899,
+          66.597
+        ],
+        [
+          66.886,
+          68.075
+        ],
+        [
+          68.32,
+          69.35
+        ]
+      ]
+    },
+    {
+      "start": "01:10.354",
+      "end": "01:15.154",
+      "text": "And so, the greatest game the jungle had ever seen was about to begin.",
+      "speech": [
+        [
+          70.354,
+          70.979
+        ],
+        [
+          71.205,
+          72.915
+        ],
+        [
+          73.062,
+          73.83
+        ],
+        [
+          73.951,
+          75.152
+        ]
+      ]
+    }
+  ]
+}

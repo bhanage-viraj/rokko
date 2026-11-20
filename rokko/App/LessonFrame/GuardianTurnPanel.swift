@@ -30,14 +30,7 @@ struct GuardianTurnPanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            Text("GUARDIAN'S TURN")
-                .font(RokkoFont.nunito(18, .black))
-                .tracking(1.4)
-                .foregroundStyle(RokkoColor.teal)
-                .padding(.horizontal, 18)
-                .padding(.vertical, 8)
-                .background(Capsule().fill(RokkoColor.tealWash))
-                .overlay(Capsule().strokeBorder(RokkoColor.mistEdge, lineWidth: 3))
+            GuardianLabel(fontSize: 18, fill: RokkoColor.tealWash)
 
             Text(content.title)
                 .font(RokkoFont.fredoka(54))
@@ -69,3 +62,14 @@ struct GuardianTurnPanel: View {
         .coachTarget(.guardianTurn)
     }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Guardian's turn · full tips", traits: .landscapeLeft) {
+    DesignCanvas { GuardianTurnPanel(content: .king, tipsMode: .full) }
+}
+#Preview("Guardian's turn · short tips", traits: .landscapeLeft) {
+    DesignCanvas { GuardianTurnPanel(content: .king, tipsMode: .short) }
+}
+#endif

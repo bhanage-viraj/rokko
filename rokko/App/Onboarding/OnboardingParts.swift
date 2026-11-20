@@ -12,6 +12,7 @@ struct OnboardingTopBar: View {
     let model: OnboardingViewModel
     /// A practice step is done and about to move on: a moss tick shows by the step count.
     var advancing = false
+    @MotionStill private var still
 
     var body: some View {
         HStack(spacing: 22) {
@@ -27,16 +28,17 @@ struct OnboardingTopBar: View {
                 HStack(spacing: 8) {
                     TickCircle(on: true, size: 24)
                         .opacity(advancing ? 1 : 0)
-                        .scaleEffect(advancing ? 1 : 0.6)
+                        .scaleEffect(advancing || still ? 1 : 0.6)
                     Text(model.progressLabel)
                         .font(RokkoFont.nunito(15, .heavy, scales: true))
                         .foregroundStyle(RokkoColor.teal)
                 }
                 .frame(minWidth: 140, alignment: .trailing)
-                .animation(.spring(duration: 0.4, bounce: 0.2), value: advancing)
+                .motionSafeAnimation(.spring(duration: 0.4, bounce: 0.2), value: advancing)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(advancing ? "Done. \(model.progressLabel)" : model.progressLabel)
+            .accessibilityIdentifier("onboarding.progress")
 
             GuardianIconButton(systemName: "forward.end.fill", label: "Skip setup") { model.skip() }
                 .modifier(SkipAvailability(available: model.canSkip))
@@ -126,6 +128,7 @@ struct OnboardingCTA: View {
         }
         .buttonStyle(PressScaleStyle())
         .disabled(!enabled)
+        .accessibilityIdentifier("onboarding.continue")
     }
 }
 

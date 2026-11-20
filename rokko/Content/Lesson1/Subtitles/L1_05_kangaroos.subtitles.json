@@ -1,0 +1,47 @@
+{
+  "clip": "L1_05_kangaroos",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:00.600",
+      "end": "00:03.900",
+      "text": "Meet the kangaroos! They are quick and graceful.",
+      "speech": [
+        [
+          0.605,
+          1.949
+        ],
+        [
+          2.233,
+          3.889
+        ]
+      ]
+    },
+    {
+      "start": "00:05.750",
+      "end": "00:09.007",
+      "text": "Kangaroo: \"I hop on the slanty path, from corner to corner!\"",
+      "speech": [
+        [
+          5.799,
+          7.359
+        ],
+        [
+          7.645,
+          8.869
+        ]
+      ]
+    },
+    {
+      "start": "00:09.707",
+      "end": "00:12.697",
+      "text": "Look at the kangaroo's tall pointed ears!",
+      "speech": [
+        [
+          9.708,
+          12.69
+        ]
+      ]
+    }
+  ]
+}

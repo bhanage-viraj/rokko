@@ -57,11 +57,11 @@ extension View {
                                        bubbleWidth: bubbleWidth,
                                        placement: placement,
                                        bubble: bubble)
-                        .transition(.opacity.combined(with: .scale(scale: 0.97)))
+                        .motionSafeTransition(.opacity.combined(with: .scale(scale: 0.97)))
                 }
             }
-            .animation(.spring(duration: 0.45, bounce: 0.1), value: isPresented)
-            .animation(.spring(duration: 0.45, bounce: 0.1), value: target)
+            .motionSafeAnimation(.spring(duration: 0.45, bounce: 0.1), value: isPresented)
+            .motionSafeAnimation(.spring(duration: 0.45, bounce: 0.1), value: target)
         }
     }
 }
@@ -76,7 +76,9 @@ private struct CoachOverlayLayout<Bubble: View>: View {
     let placement: CoachPlacement
     let bubble: () -> Bubble
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    /// Reduce Motion or Calm: the highlight ring holds still instead of pulsing.
+    @MotionStill private var still
     @State private var pulse = false
 
     private let ringGap: CGFloat = 12
@@ -100,7 +102,13 @@ private struct CoachOverlayLayout<Bubble: View>: View {
                         p.addRoundedRect(in: ring, cornerSize: CGSize(width: radius, height: radius), style: .continuous)
                     }
                     Group {
-                        if blurs { surround.fill(.thinMaterial, style: FillStyle(eoFill: true)) }
+                        if blurs {
+                            if reduceTransparency {
+                                surround.fill(RokkoColor.paper.opacity(0.92), style: FillStyle(eoFill: true))
+                            } else {
+                                surround.fill(.thinMaterial, style: FillStyle(eoFill: true))
+                            }
+                        }
                         surround.fill(RokkoColor.ink.opacity(blurs ? 0.14 : 0.2), style: FillStyle(eoFill: true))
                     }
                     .allowsHitTesting(false)
@@ -146,7 +154,7 @@ private struct CoachOverlayLayout<Bubble: View>: View {
         }
         .frame(width: container.width, height: container.height, alignment: .topLeading)
         .onAppear {
-            guard !reduceMotion else { return }
+            guard !still else { return }
             withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) { pulse = true }
         }
     }
@@ -237,3 +245,16 @@ enum CoachText {
         return result
     }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Coach mark", traits: .landscapeLeft) {
+    DesignCanvas(background: RokkoColor.paper, fills: true) {
+        LessonFrame(surface: .child(calm: true), caption: "Find the King.") { Color.clear }
+            .coachOverlay(target: nil, highlight: false, fallback: .center) {
+                CoachMessage(text: "Hold the **Guardian** button to tell Rokko how your child feels.")
+            }
+    }
+}
+#endif

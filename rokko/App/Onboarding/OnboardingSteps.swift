@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RokkoContent
 
 // MARK: - welcome
 
@@ -132,6 +133,8 @@ private struct SummaryItem: View {
 /// Six piece tiles that tick on tap. The lesson shows it once before its first Guardian's turn.
 struct PiecesChecklist: View {
     let selected: Set<OnboardingViewModel.Piece>
+    /// The black pieces (Guardian's turn after the black team intro).
+    var black = false
     let onToggle: (OnboardingViewModel.Piece) -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -142,9 +145,13 @@ struct PiecesChecklist: View {
                 let on = selected.contains(piece)
                 Button { onToggle(piece) } label: {
                     VStack(spacing: 10) {
-                        Image(piece.imageName)
-                            .resizable()
-                            .scaledToFit()
+                        Group {
+                            if black, let p = Piece(rawValue: piece.rawValue) {
+                                PieceImage(piece: p, black: true)
+                            } else {
+                                Image(piece.imageName).resizable().scaledToFit()
+                            }
+                        }
                             .frame(height: 150)
                             .offset(y: on && !reduceMotion ? -6 : 0)
                             .accessibilityHidden(true)

@@ -1,0 +1,67 @@
+{
+  "clip": "L1_04_elephants",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:00.600",
+      "end": "00:05.960",
+      "text": "Meet the elephants! They are strong and steady, and they always protect their kingdom.",
+      "speech": [
+        [
+          0.6,
+          1.831
+        ],
+        [
+          2.203,
+          3.855
+        ],
+        [
+          4.048,
+          4.286
+        ],
+        [
+          4.448,
+          5.185
+        ],
+        [
+          5.309,
+          5.959
+        ]
+      ]
+    },
+    {
+      "start": "00:07.200",
+      "end": "00:12.080",
+      "text": "Elephant: \"I walk in straight lines. Forward, backward, or to the side!\"",
+      "speech": [
+        [
+          7.24,
+          9.032
+        ],
+        [
+          9.337,
+          9.933
+        ],
+        [
+          10.105,
+          10.688
+        ],
+        [
+          10.828,
+          11.955
+        ]
+      ]
+    },
+    {
+      "start": "00:12.780",
+      "end": "00:14.900",
+      "text": "Look at the tower on the elephant's back!",
+      "speech": [
+        [
+          12.785,
+          14.891
+        ]
+      ]
+    }
+  ]
+}

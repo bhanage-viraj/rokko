@@ -1,14 +1,15 @@
 //
 //  GuardianMenu.swift
-//  Guardian menu: how the lesson feels, sound, Guardian's turn tips, and "Run setup again".
+//  Guardian menu: how the lesson feels, sound and Guardian's turn tips.
 //  Opened from the gear on the lesson map. Sized to its content.
+//  The developer screens (all exercises, UI/UX check) open only from DEBUG launch arguments.
 //
 
 import SwiftUI
+import SwiftData
 
 struct GuardianMenu: View {
     @Bindable var settings: AppSettings
-    let onRunSetupAgain: () -> Void
     let onClose: () -> Void
 
     var body: some View {
@@ -46,25 +47,6 @@ struct GuardianMenu: View {
                     .padding(16)
             }
 
-            Button(action: onRunSetupAgain) {
-                HStack(spacing: 14) {
-                    Image(systemName: "arrow.counterclockwise")
-                        .font(.system(size: 20, weight: .bold))
-                    Text("Run setup again")
-                        .font(RokkoFont.nunito(20, .bold, scales: true))
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(RokkoColor.inkSoft)
-                }
-                .foregroundStyle(RokkoColor.teal)
-                .padding(.horizontal, 20)
-                .frame(minHeight: 64)
-                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(RokkoColor.card))
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(PressScaleStyle())
-            .padding(.top, 28)
         }
         .foregroundStyle(RokkoColor.ink)
         .padding(32)
@@ -99,29 +81,45 @@ private struct MenuDivider: View {
     }
 }
 
-/// Two-option segmented control in the app's type and colours. Each half is ≥ 56 pt tall.
+/// Two-option switch: the system segmented control, so its thumb is real Liquid Glass (it lifts
+/// into glass and slides as the Guardian drags or taps). Fonts and colours come from RokkoTheme.
 private struct TwoWayPicker<Value: Hashable>: View {
     @Binding var selection: Value
     let options: [(Value, String)]
 
     var body: some View {
-        HStack(spacing: 6) {
+        Picker("", selection: $selection) {
             ForEach(options, id: \.0) { value, title in
-                let on = selection == value
-                Button { selection = value } label: {
-                    Text(title)
-                        .font(RokkoFont.nunito(19, on ? .heavy : .semibold, scales: true))
-                        .foregroundStyle(on ? RokkoColor.card : RokkoColor.ink)
-                        .frame(maxWidth: .infinity, minHeight: 56)
-                        .background(Capsule().fill(on ? RokkoColor.teal : .clear))
-                        .contentShape(Capsule())
-                }
-                .buttonStyle(.plain)
-                .accessibilityAddTraits(on ? [.isButton, .isSelected] : .isButton)
-                .animation(.easeOut(duration: 0.2), value: on)
+                Text(title).tag(value)
             }
         }
-        .padding(6)
-        .background(Capsule().fill(RokkoColor.tealWash))
+        .pickerStyle(.segmented)
+        .labelsHidden()
+        .controlSize(.extraLarge)
+        .onAppear(perform: Self.styleOnce)
+    }
+
+    /// Rokko type on the segments: Nunito, ink, white on the teal thumb.
+    private static func styleOnce() {
+        let look = UISegmentedControl.appearance(whenContainedInInstancesOf: [UIViewController.self])
+        look.selectedSegmentTintColor = UIColor(RokkoColor.teal)
+        func nunito(_ weight: UIFont.Weight) -> UIFont {
+            let d = UIFontDescriptor(fontAttributes: [.family: "Nunito", .traits: [UIFontDescriptor.TraitKey.weight: weight]])
+            return UIFont.familyNames.contains("Nunito") ? UIFont(descriptor: d, size: 19)
+                                                          : .systemFont(ofSize: 19, weight: weight)
+        }
+        let font = nunito(.semibold)
+        let bold = nunito(.heavy)
+        look.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(RokkoColor.ink)], for: .normal)
+        look.setTitleTextAttributes([.font: bold, .foregroundColor: UIColor(RokkoColor.card)], for: .selected)
     }
 }
+
+// MARK: - Previews (Xcode canvas: ⌥⌘↩)
+
+#if DEBUG
+#Preview("Guardian menu", traits: .landscapeLeft) {
+    GuardianMenu(settings: PreviewData.settings(), onClose: {})
+        .modelContainer(PreviewData.container)
+}
+#endif

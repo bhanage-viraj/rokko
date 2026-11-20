@@ -68,4 +68,4 @@ The full-screen steps use the real lesson frame components (`rokko/App/LessonFra
 - `tipsMode` decides full steps vs one line on every Guardian's turn (`GuardianTurnPanel`).
 - Pieces are not part of setup: the lesson shows the pieces checklist once before its first Guardian's turn
   (`AppSettings.needsPiecesReminder`, `PiecesChecklist`). Wire in when the LessonCoordinator lands.
-- Guardian menu (gear, top-right of the lesson map): Calm/Standard, sound, Guardian's-turn tips, "Run setup again".
+- Guardian menu (gear, top-right of the lesson map): Calm/Standard, sound, Guardian's-turn tips. Setup is not offered again from the menu.

@@ -10,8 +10,8 @@ RokkoApp (SwiftUI shell + SpriteKit games · iPadOS 26 · landscape · offline)
 │   │   ├─ MeetScene       meet the animal + transformation (SKVideoNode) + after state
 │   │   ├─ ChoiceScene     Types 1 & 2
 │   │   ├─ LinkScene       Type 3
-│   │   ├─ ShelfScene      Type 6
-│   │   └─ TeamsScene      Type 8
+│   │   ├─ ShelfScene      Type 4
+│   │   └─ TeamsScene      Type 5
 │   ├─ Overlay (SwiftUI)  top bar · caption bar · Next · Again
 │   └─ Guardian views     Guardian's turn · break picker / running · mood check · Guardian menu · play together · summary
 ├─ RokkoEngine (package)  BKTModel · LevelSelector · RoundPlanner · RoundGenerator · HintLadder · SignalMonitor · Dials
@@ -63,7 +63,7 @@ Scenes never decide correctness. The view model checks the answer against `Round
 | `ClueCardNode` | half-transparent story still with honey edge |
 | `HintArrowNode` | honey arrow, 6 pt bob |
 | `SlotNode` | silhouette slot (character or piece) for shelf and houses |
-| `BasketNode` | Type 8 batch source |
+| `BasketNode` | Type 5 batch source |
 | `LinkLineNode` | line between linked cards (moss, 6 pt, round caps) |
 | `LeafEmitter` | SKEmitterNode; off in Calm and Reduce Motion |
 

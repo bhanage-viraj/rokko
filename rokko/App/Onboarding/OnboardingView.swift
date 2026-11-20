@@ -45,6 +45,7 @@ struct OnboardingView: View {
             .animation(.easeInOut(duration: RokkoMotion.screenFade), value: model.step)
         }
         .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+        .environment(\.rokkoCalm, model.look != .standard)
         // Practice steps move on by themselves once done: tick, short pause, next step.
         .task(id: AdvanceKey(step: model.step, done: model.canContinue)) {
             advancing = false
@@ -102,6 +103,21 @@ private struct AdvanceKey: Equatable {
     let done: Bool
 }
 
-#Preview(traits: .landscapeLeft) {
+#Preview("Onboarding · welcome", traits: .landscapeLeft) {
+    OnboardingView(model: OnboardingViewModel(startAt: .welcome)) { _ in }
+}
+#Preview("Onboarding · chess", traits: .landscapeLeft) {
+    OnboardingView(model: OnboardingViewModel(startAt: .chess)) { _ in }
+}
+#Preview("Onboarding · look", traits: .landscapeLeft) {
+    OnboardingView(model: OnboardingViewModel(startAt: .look)) { _ in }
+}
+#Preview("Onboarding · try Guardian", traits: .landscapeLeft) {
     OnboardingView(model: OnboardingViewModel(startAt: .tryGuardian)) { _ in }
+}
+#Preview("Onboarding · try check-in", traits: .landscapeLeft) {
+    OnboardingView(model: OnboardingViewModel(startAt: .tryCheckIn)) { _ in }
+}
+#Preview("Onboarding · ready", traits: .landscapeLeft) {
+    OnboardingView(model: OnboardingViewModel(startAt: .ready)) { _ in }
 }

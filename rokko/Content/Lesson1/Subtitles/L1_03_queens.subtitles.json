@@ -1,0 +1,63 @@
+{
+  "clip": "L1_03_queens",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:00.600",
+      "end": "00:06.180",
+      "text": "Meet the queens! They are powerful and clever, and they can move in many directions.",
+      "speech": [
+        [
+          0.605,
+          0.823
+        ],
+        [
+          0.946,
+          1.769
+        ],
+        [
+          2.093,
+          3.899
+        ],
+        [
+          4.106,
+          6.161
+        ]
+      ]
+    },
+    {
+      "start": "00:06.680",
+      "end": "00:12.443",
+      "text": "Queen: \"I can go straight, and I can go on the slanty path. I can go very far!\"",
+      "speech": [
+        [
+          6.721,
+          7.904
+        ],
+        [
+          8.129,
+          10.219
+        ],
+        [
+          10.698,
+          12.284
+        ]
+      ]
+    },
+    {
+      "start": "00:13.143",
+      "end": "00:15.483",
+      "text": "Look at the queen's golden crown!",
+      "speech": [
+        [
+          13.145,
+          14.295
+        ],
+        [
+          14.416,
+          15.477
+        ]
+      ]
+    }
+  ]
+}

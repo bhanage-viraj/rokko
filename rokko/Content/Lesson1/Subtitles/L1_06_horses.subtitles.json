@@ -1,0 +1,51 @@
+{
+  "clip": "L1_06_horses",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:00.600",
+      "end": "00:04.790",
+      "text": "Meet the horses! They are adventurous, and they love to jump.",
+      "speech": [
+        [
+          0.606,
+          1.82
+        ],
+        [
+          2.148,
+          4.772
+        ]
+      ]
+    },
+    {
+      "start": "00:05.400",
+      "end": "00:09.782",
+      "text": "Horse: \"I jump in an L shape. I can even jump over other animals!\"",
+      "speech": [
+        [
+          5.441,
+          6.732
+        ],
+        [
+          7.258,
+          9.649
+        ]
+      ]
+    },
+    {
+      "start": "00:10.482",
+      "end": "00:12.752",
+      "text": "Look at the horse's beautiful mane!",
+      "speech": [
+        [
+          10.482,
+          11.471
+        ],
+        [
+          11.598,
+          12.749
+        ]
+      ]
+    }
+  ]
+}

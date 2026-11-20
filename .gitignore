@@ -7,3 +7,7 @@ build/
 *.xcuserstate
 *.zip
 Rokko 2/
+.claude/settings.local.json
+
+# Master video and art sources (large; not bundled in the app)
+Media/Source/

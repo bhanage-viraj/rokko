@@ -1,0 +1,29 @@
+{
+  "clip": "L1_08_ending",
+  "timesAre": "relative to the clip start, mm:ss.mmm",
+  "cues": [
+    {
+      "start": "00:01.000",
+      "end": "00:10.535",
+      "text": "Look! All our friends are standing on the sixty-four squares. Every animal has its own special way to move. Next time, we will learn how they play together!",
+      "speech": [
+        [
+          1.002,
+          1.426
+        ],
+        [
+          1.746,
+          4.453
+        ],
+        [
+          4.92,
+          7.621
+        ],
+        [
+          8.074,
+          10.408
+        ]
+      ]
+    }
+  ]
+}
