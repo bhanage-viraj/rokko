@@ -638,7 +638,9 @@ def s_title(t, fr):
     a = ease((t - 0.4) / 0.8)
     paste_center(fr, title_sprite("", "The Day the Jungle Changed"), W / 2, H / 2 - 30 + 12 * (1 - a), a)
     return camera(fr, 1.0 + 0.03 * t / 4, W / 2, H / 2)
-SHOTS.append(Shot(4.0, s_title))
+# Title card removed from the opening clip (23 Nov 2026): the lesson starts straight in the jungle.
+# L1_01_story.mp4 was cut 4.0 s at the start to match; subtitles and manifest moved back 4.0 s.
+# SHOTS.append(Shot(4.0, s_title))
 
 # ---- A: jungle push-in (N1)
 def s_A(t, fr):

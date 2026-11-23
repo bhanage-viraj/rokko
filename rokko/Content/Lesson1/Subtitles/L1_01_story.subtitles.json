@@ -3,203 +3,203 @@
   "timesAre": "relative to the clip start, mm:ss.mmm",
   "cues": [
     {
-      "start": "00:04.800",
-      "end": "00:06.785",
+      "start": "00:00.800",
+      "end": "00:02.785",
       "text": "This is the Checkerwood Jungle.",
       "speech": [
         [
-          4.848,
-          6.728
+          0.848,
+          2.728
         ]
       ]
     },
     {
-      "start": "00:08.985",
-      "end": "00:10.455",
+      "start": "00:04.985",
+      "end": "00:06.455",
       "text": "Two kingdoms live here.",
       "speech": [
         [
-          8.985,
-          10.443
+          4.985,
+          6.443
         ]
       ]
     },
     {
-      "start": "00:11.355",
-      "end": "00:15.825",
+      "start": "00:07.355",
+      "end": "00:11.825",
       "text": "On this side is the Sunrise Kingdom. Its king is King Sunny.",
       "speech": [
         [
-          11.355,
-          13.632
+          7.355,
+          9.632
         ],
         [
-          14.157,
-          15.816
+          10.157,
+          11.816
         ]
       ]
     },
     {
-      "start": "00:16.825",
-      "end": "00:21.175",
+      "start": "00:12.825",
+      "end": "00:17.175",
       "text": "On this side is the Moonlight Kingdom. Its king is King Moony.",
       "speech": [
         [
-          16.83,
-          19.1
+          12.83,
+          15.1
         ],
         [
-          19.569,
-          21.174
+          15.569,
+          17.174
         ]
       ]
     },
     {
-      "start": "00:22.175",
-      "end": "00:31.535",
+      "start": "00:18.175",
+      "end": "00:27.535",
       "text": "Both kings want their kingdom to be the best in the jungle. But who is the wisest? Who is the best leader? The kings do not agree.",
       "speech": [
         [
-          22.175,
-          24.303
+          18.175,
+          20.303
         ],
         [
-          24.477,
-          25.564
+          20.477,
+          21.564
         ],
         [
-          26.18,
-          27.705
+          22.18,
+          23.705
         ],
         [
-          28.192,
-          29.373
+          24.192,
+          25.373
         ],
         [
-          29.932,
-          31.527
+          25.932,
+          27.527
         ]
       ]
     },
     {
-      "start": "00:33.035",
-      "end": "00:40.015",
+      "start": "00:29.035",
+      "end": "00:36.015",
       "text": "One morning, a special message arrived for the whole jungle. All the animals came to the big clearing to see it.",
       "speech": [
         [
-          33.041,
-          33.789
+          29.041,
+          29.789
         ],
         [
-          33.91,
-          36.728
+          29.91,
+          32.728
         ],
         [
-          37.276,
-          38.651
+          33.276,
+          34.651
         ],
         [
-          38.79,
-          40.011
+          34.79,
+          36.011
         ]
       ]
     },
     {
-      "start": "00:40.915",
-      "end": "00:51.685",
+      "start": "00:36.915",
+      "end": "00:47.685",
       "text": "This is a very old story. It is about a game played on sixty-four squares. The kingdom that learns to play this game well will become the Guardian of the Jungle!",
       "speech": [
         [
-          40.924,
-          43.003
+          36.924,
+          39.003
         ],
         [
-          43.499,
-          46.466
+          39.499,
+          42.466
         ],
         [
-          47.065,
-          49.32
+          43.065,
+          45.32
         ],
         [
-          49.466,
-          51.678
+          45.466,
+          47.678
         ]
       ]
     },
     {
-      "start": "00:52.585",
-      "end": "00:55.031",
+      "start": "00:48.585",
+      "end": "00:51.031",
       "text": "King Sunny: \"My kingdom has a strong team!\"",
       "speech": [
         [
-          52.63,
-          54.998
+          48.63,
+          50.998
         ]
       ]
     },
     {
-      "start": "00:55.831",
-      "end": "00:58.414",
+      "start": "00:51.831",
+      "end": "00:54.414",
       "text": "King Moony: \"My kingdom has a clever team!\"",
       "speech": [
         [
-          55.877,
-          58.278
+          51.877,
+          54.278
         ]
       ]
     },
     {
-      "start": "00:59.414",
-      "end": "01:09.354",
+      "start": "00:55.414",
+      "end": "01:05.354",
       "text": "There is one important rule. Being strong is not enough. To win, a kingdom must think carefully, keep its king safe, and work together.",
       "speech": [
         [
-          59.421,
-          61.116
+          55.421,
+          57.116
         ],
         [
-          61.709,
-          63.508
+          57.709,
+          59.508
         ],
         [
-          64.032,
-          64.587
+          60.032,
+          60.587
         ],
         [
-          64.899,
-          66.597
+          60.899,
+          62.597
         ],
         [
-          66.886,
-          68.075
+          62.886,
+          64.075
         ],
         [
-          68.32,
-          69.35
+          64.32,
+          65.35
         ]
       ]
     },
     {
-      "start": "01:10.354",
-      "end": "01:15.154",
+      "start": "01:06.354",
+      "end": "01:11.154",
       "text": "And so, the greatest game the jungle had ever seen was about to begin.",
       "speech": [
         [
-          70.354,
-          70.979
+          66.354,
+          66.979
         ],
         [
-          71.205,
-          72.915
+          67.205,
+          68.915
         ],
         [
-          73.062,
-          73.83
+          69.062,
+          69.83
         ],
         [
-          73.951,
-          75.152
+          69.951,
+          71.152
         ]
       ]
     }

@@ -198,7 +198,13 @@
     "springBackMs": 300,
     "arrowBobPt": 6,
     "arrowBobMs": 1200,
-    "breatheSeconds": 4
+    "breatheSeconds": 4,
+    "homeParallaxFar": 0.25,
+    "homeParallaxMid": 0.55,
+    "homeParallaxCardArt": 0.12,
+    "stepSlideMs": 450,
+    "stepSlideShare": 0.3,
+    "stepParallaxBackground": 0.25
   },
   "audio": {
     "calmEffectsGainDb": -4.4

@@ -23,6 +23,9 @@ final class VoicePlayer: NSObject, AVAudioPlayerDelegate {
     private var onDone: (() -> Void)?
     private var gapTask: Task<Void, Never>?
     private var generation = 0
+    private var isPaused = false
+    /// The gap ended while paused: the next line starts on resume.
+    private var lineWaiting = false
 
     private override init() {
         super.init()
@@ -60,11 +63,18 @@ final class VoicePlayer: NSObject, AVAudioPlayerDelegate {
     }
 
     func pause() {
+        isPaused = true
         player?.pause()
     }
 
     func resume() {
-        player?.play()
+        isPaused = false
+        if lineWaiting {
+            lineWaiting = false
+            startLine()
+        } else {
+            player?.play()
+        }
     }
 
     func stop() {
@@ -74,6 +84,7 @@ final class VoicePlayer: NSObject, AVAudioPlayerDelegate {
         player?.stop()
         player = nil
         queue = []
+        lineWaiting = false
         onLine = nil
         onDone = nil
     }
@@ -97,7 +108,7 @@ final class VoicePlayer: NSObject, AVAudioPlayerDelegate {
         gapTask = Task { @MainActor [weak self] in
             try? await Task.sleep(for: .seconds(self?.gap ?? 0))
             guard let self, !Task.isCancelled, g == self.generation else { return }
-            self.startLine()
+            if self.isPaused { self.lineWaiting = true } else { self.startLine() }
         }
     }
 

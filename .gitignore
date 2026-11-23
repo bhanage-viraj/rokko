@@ -11,3 +11,6 @@ Rokko 2/
 
 # Master video and art sources (large; not bundled in the app)
 Media/Source/
+
+# Raw simulator captures (rotated copies live in Marketing/AppStore/screens)
+Marketing/AppStore/raw/

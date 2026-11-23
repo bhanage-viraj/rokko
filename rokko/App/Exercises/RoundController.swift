@@ -59,6 +59,17 @@ final class RoundController: GameSceneDelegate {
     @ObservationIgnored private let idleSeconds: Double?
     @ObservationIgnored private var idleTask: Task<Void, Never>?
 
+    /// Set by the coordinator while the lesson is paused or on a break: a hint that falls due then
+    /// waits (no voice under the pause screen or the break), and runs on return.
+    @ObservationIgnored var isSuspended = false {
+        didSet {
+            guard !isSuspended, let pending = pendingAfterLock else { return }
+            pendingAfterLock = nil
+            pending()
+        }
+    }
+    @ObservationIgnored private var pendingAfterLock: (() -> Void)?
+
     /// Tests: feedback finishes at once (no input lock, no waiting).
     @ObservationIgnored private let instantFeedback: Bool
 
@@ -115,8 +126,12 @@ final class RoundController: GameSceneDelegate {
         Task { @MainActor [weak self] in
             try? await Task.sleep(for: .seconds(seconds))
             guard let self else { return }
-            if !self.isFinished { self.scene.inputLocked = false }
-            then?()
+            let release = { [weak self] in
+                guard let self else { return }
+                if !self.isFinished { self.scene.inputLocked = false }
+                then?()
+            }
+            if self.isSuspended { self.pendingAfterLock = release } else { release() }
         }
     }
 
@@ -155,7 +170,7 @@ final class RoundController: GameSceneDelegate {
         idleTask = Task { @MainActor [weak self] in
             try? await Task.sleep(for: .seconds(idleSeconds))
             guard !Task.isCancelled, let self, !self.isFinished else { return }
-            if self.scene.inputLocked { self.restartIdle(); return }
+            if self.scene.inputLocked || self.isSuspended { self.restartIdle(); return }
             self.stepUp(.idle)
         }
     }

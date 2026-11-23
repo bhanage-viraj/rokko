@@ -199,7 +199,7 @@ struct CoachChoice: View {
     }
 }
 
-/// Skip stays blurred and inert until chess and look are answered.
+/// Skip stays blurred and inert until the look is answered.
 struct SkipAvailability: ViewModifier {
     let available: Bool
     func body(content: Content) -> some View {
@@ -208,7 +208,7 @@ struct SkipAvailability: ViewModifier {
             .blur(radius: available ? 0 : 3)
             .opacity(available ? 1 : 0.45)
             .animation(.easeOut(duration: 0.3), value: available)
-            .accessibilityHint(available ? "" : "Available after the first two questions")
+            .accessibilityHint(available ? "" : "Available after the look question")
     }
 }
 

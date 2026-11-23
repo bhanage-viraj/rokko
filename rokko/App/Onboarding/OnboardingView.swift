@@ -1,8 +1,8 @@
 //
 //  OnboardingView.swift
 //  First-run setup, shown once after the launch animation (docs/ONBOARDING.md).
-//  welcome → chess → look → tryGuardian → tryCheckIn → ready. Next is the main button from the start.
-//  welcome, chess and ready are pages (top bar + Continue). look and the three practice steps
+//  welcome → look → tryGuardian → tryCheckIn → ready. Next is the main button from the start.
+//  welcome and ready are pages (top bar + Continue). look and the three practice steps
 //  show the real app full screen; their coach card carries Back / Skip / Continue.
 //
 
@@ -71,7 +71,6 @@ struct OnboardingView: View {
         let calm = model.look != .standard
         switch model.step {
         case .welcome: WelcomeStep()
-        case .chess: ChessStep(model: model)
         case .look: LookStep(model: model)
         case .tryGuardian: TryGuardianStep(model: model)
         case .tryCheckIn: TryCheckInStep(model: model, calm: calm)
@@ -105,9 +104,6 @@ private struct AdvanceKey: Equatable {
 
 #Preview("Onboarding · welcome", traits: .landscapeLeft) {
     OnboardingView(model: OnboardingViewModel(startAt: .welcome)) { _ in }
-}
-#Preview("Onboarding · chess", traits: .landscapeLeft) {
-    OnboardingView(model: OnboardingViewModel(startAt: .chess)) { _ in }
 }
 #Preview("Onboarding · look", traits: .landscapeLeft) {
     OnboardingView(model: OnboardingViewModel(startAt: .look)) { _ in }

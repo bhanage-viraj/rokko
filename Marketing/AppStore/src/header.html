@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- App Store product page header (rendered at 5244×2950 and 3840×1646 by Marketing/AppStore/render.sh).
+     The App Store on iPad shows only about the top half of a 16:9 header, with its tab bar floating over the
+     top ~12%; in portrait it also crops the sides. So the logo and tagline sit centred in a band from 15% to
+     50% of the height, inside the middle half of the width; below it is meadow only.
+     Sizes are in vh/vw so one layout fits both sizes. Colours: docs/DESIGN_SYSTEM.md. -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Fredoka"; src: url("Fredoka-SemiBold.ttf"); font-weight: 600; }
+  @font-face { font-family: "Nunito"; src: url("Nunito.ttf"); font-weight: 200 1000; }
+  html, body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; }
+  body { position: relative; background: linear-gradient(180deg, #DCE7EA 0%, #E6EDE6 40%, #EEF2E6 60%, #F4F0E3 100%); }
+  svg { position: absolute; left: 0; width: 100%; }
+  svg.sky { top: 0; height: 50%; }
+  svg.land { top: 36%; height: 64%; }
+
+  /* Content band: 15%–50% of the height. */
+  /* Logo + tagline only, centred in the band, kept inside the middle half of the width so the
+     portrait iPad view (which also crops the sides) still shows all of it. */
+  .band { position: absolute; left: 0; right: 0; top: 15vh; height: 35vh;
+          display: flex; align-items: center; justify-content: center; }
+  .brand { display: flex; flex-direction: column; align-items: center; gap: 2.4vh; max-width: 46vw; }
+  .logo { display: flex; align-items: flex-end; gap: 1.4vw; }
+  .logo svg { position: static; height: min(12vh, 8vw); width: auto; }
+  .word { font-family: "Fredoka"; font-weight: 600; color: #2F4A3E; font-size: min(13vh, 8.6vw); line-height: 0.8; letter-spacing: -0.02em; }
+  .tag { font-family: "Nunito"; font-weight: 800; color: #2D3A31; font-size: min(5vh, 3.2vw); white-space: nowrap; }
+
+  .cast { display: flex; align-items: flex-end; gap: 0.9vw; }
+  .cast img { height: min(19vh, 7.4vw); width: auto; filter: drop-shadow(0 1vh 0.8vh rgba(45,58,49,0.16)); }
+  .cast img.big { height: min(23vh, 9vw); }
+  .cast img.small { height: min(15vh, 5.8vw); }
+</style>
+</head>
+<body>
+  <!-- Clouds, kept clear of the top tab bar. -->
+  <svg class="sky" viewBox="0 0 1600 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="#F7F9F6">
+      <g transform="translate(120 130) scale(0.8)"><rect x="0" y="40" width="230" height="58" rx="29"/><circle cx="62" cy="48" r="40"/><circle cx="130" cy="34" r="56"/><circle cx="190" cy="58" r="34"/></g>
+      <g transform="translate(1290 120) scale(0.75)"><rect x="0" y="40" width="230" height="58" rx="29"/><circle cx="62" cy="48" r="40"/><circle cx="130" cy="34" r="56"/><circle cx="190" cy="58" r="34"/></g>
+      <g transform="translate(700 70) scale(0.5)"><rect x="0" y="40" width="230" height="58" rx="29"/><circle cx="62" cy="48" r="40"/><circle cx="130" cy="34" r="56"/><circle cx="190" cy="58" r="34"/></g>
+    </g>
+  </svg>
+  <!-- Hills below the logo band. -->
+  <svg class="land" viewBox="0 0 1600 640" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#C9DADC" d="M0 70 Q 180 10 380 60 T 780 45 T 1180 55 T 1600 30 V 640 H 0 Z"/>
+    <path fill="#CFDDC6" d="M0 125 Q 220 75 460 112 T 920 100 T 1340 108 T 1600 92 V 640 H 0 Z"/>
+    <path fill="#C3D5AC" d="M0 205 Q 300 175 620 192 T 1180 186 T 1600 178 V 640 H 0 Z"/>
+  </svg>
+
+  <div class="band">
+    <div class="brand">
+      <div class="logo">
+        <!-- Brand mark: big leaf circle, small honey circle, honey arc floating above (as the app icon). -->
+        <svg viewBox="0 0 200 150" aria-hidden="true">
+          <circle cx="62" cy="96" r="52" fill="#2F4A3E"/>
+          <circle cx="150" cy="118" r="31" fill="#E2B24A"/>
+          <path d="M 52 30 Q 132 -30 168 72" fill="none" stroke="#E2B24A" stroke-width="10" stroke-linecap="round"/>
+        </svg>
+        <span class="word">rokko</span>
+      </div>
+      <div class="tag">Learn chess, side by side.</div>
+    </div>
+  </div>
+</body>
+</html>

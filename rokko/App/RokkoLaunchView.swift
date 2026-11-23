@@ -102,10 +102,16 @@ private enum Geo {
                   p1: CGPoint(x: x(2) - 20, y: groundY - kingHeight - 150),
                   p2: CGPoint(x: rookTo,   y: groundY - rookHeight - 34))
     }
+    /// As in the app icon: the arc floats clear of both circles. It starts just above the big
+    /// circle's top, rises over the gap and comes down just above the small circle's top-right,
+    /// never touching either one.
     static var logoArc: ArcPoints {
-        ArcPoints(p0: CGPoint(x: big.x - bigR * 0.35, y: big.y - bigR - 14),
-                  p1: CGPoint(x: (big.x + small.x) / 2 + 30, y: big.y - bigR - 95),
-                  p2: CGPoint(x: small.x + smallR * 0.95, y: small.y - 8))
+        let start = CGPoint(x: big.x - bigR * 0.17, y: big.y - bigR * 1.15)
+        let end = CGPoint(x: small.x + smallR * 0.5, y: small.y - smallR * 1.34)
+        let peak = CGPoint(x: big.x + bigR * 1.04, y: big.y - bigR * 1.69)
+        // Quadratic control point so the curve passes through `peak` halfway.
+        let control = CGPoint(x: 2 * peak.x - (start.x + end.x) / 2, y: 2 * peak.y - (start.y + end.y) / 2)
+        return ArcPoints(p0: start, p1: control, p2: end)
     }
 }
 
@@ -267,7 +273,7 @@ struct RokkoLaunchView: View {
     private var trailView: some View {
         MorphArc(arc: trail)
             .trim(from: 0, to: trailTrim)
-            .stroke(RokkoBrand.honey, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+            .stroke(RokkoBrand.honey, style: StrokeStyle(lineWidth: 7, lineCap: .round))
     }
 
     private var logo: some View {

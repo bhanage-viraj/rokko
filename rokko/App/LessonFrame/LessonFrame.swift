@@ -29,6 +29,11 @@ struct LessonFrame<Content: View>: View {
     var pathDone = 1
     var pathTotal = 8
     var pathDimmed = false
+    /// Live lesson: the path as symbols, one per part, with ‹ › and taps to move back and forth
+    /// (Guardian). Empty = the plain dots (first-run practice, previews).
+    var path: LessonPathModel? = nil
+    /// Lesson step position, in steps: the clearing pans with it for depth (0 = no pan).
+    var scenePan: CGFloat = 0
     var caption: String? = nil
     /// Film: the video fills the screen down to the caption row; the top bar floats over it.
     var video: AVPlayer? = nil
@@ -87,10 +92,16 @@ struct LessonFrame<Content: View>: View {
             RoundIconButton(systemName: "pause.fill", label: "Pause", action: onPause)
                 .frame(width: 64, height: 64)
                 .offset(x: 24, y: 24)
-            LessonPath(done: pathDone, total: pathTotal)
-                .opacity(pathDimmed ? 0.6 : 1)
-                .frame(width: W, alignment: .center)
-                .offset(y: 26)
+            Group {
+                if let path {
+                    LessonPathBar(model: path)
+                } else {
+                    LessonPath(done: pathDone, total: pathTotal)
+                }
+            }
+            .opacity(pathDimmed ? 0.6 : 1)
+            .frame(width: W, alignment: .center)
+            .offset(y: path == nil ? 26 : 20)
 
             // Bottom band: one calm strip holding the caption (plain text, no pill), Again and Next.
             BottomBand()
@@ -160,15 +171,23 @@ struct LessonFrame<Content: View>: View {
         case .child(let calm):
             ZStack {
                 RokkoColor.paper
-                Image("bg_clearing")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: W, height: H)
-                    // Calm: the same clearing, blurred as far as it goes (only soft colour fields
-                    // remain, no shapes to look at) and desaturated −30% (DESIGN_SYSTEM).
-                    .saturation(calm ? Self.calmSaturation : 1)
-                    .blur(radius: calm ? Self.calmBlurRadius : 0, opaque: true)
-                    .clipped()
+                if calm || reduceMotion {
+                    Image("bg_clearing")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: W, height: H)
+                        // Calm: the same clearing, blurred as far as it goes (only soft colour fields
+                        // remain, no shapes to look at) and desaturated −30% (DESIGN_SYSTEM).
+                        .saturation(calm ? Self.calmSaturation : 1)
+                        .blur(radius: calm ? Self.calmBlurRadius : 0, opaque: true)
+                        .clipped()
+                } else {
+                    // Standard: the clearing drifts a little with each step, slower than the step
+                    // itself slides in, so the jungle reads as far away.
+                    PanningClearing(pan: scenePan * W * RokkoMotion.stepSlideShare * RokkoMotion.stepParallaxBackground,
+                                    size: CGSize(width: W, height: H))
+                        .animation(.easeInOut(duration: RokkoMotion.stepSlide), value: scenePan)
+                }
                 RokkoColor.paper.opacity(calm ? Self.calmPaperWash : 0.55)
             }
             .animation(.easeInOut(duration: 0.4), value: calm)
@@ -220,6 +239,145 @@ struct LessonPath: View {
         .frame(width: 560, height: 60)
         .background(Capsule().fill(RokkoColor.card.opacity(0.9)))
         .accessibilityHidden(true)
+    }
+}
+
+/// The clearing as an endless strip: the picture alternates with its mirror image, so it joins
+/// without a seam and can pan forever. `pan` is animatable, so a step change glides.
+struct PanningClearing: View, Animatable {
+    var pan: CGFloat
+    let size: CGSize
+
+    var animatableData: CGFloat {
+        get { pan }
+        set { pan = newValue }
+    }
+
+    var body: some View {
+        let period = size.width * 2
+        // Left edge of the strip, kept within one period: −period < x ≤ 0.
+        var x = (-pan).truncatingRemainder(dividingBy: period)
+        if x > 0 { x -= period }
+        return HStack(spacing: 0) {
+            ForEach(0..<4, id: \.self) { i in
+                Image("bg_clearing")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .scaleEffect(x: i.isMultiple(of: 2) ? 1 : -1, y: 1)
+            }
+        }
+        .frame(width: size.width * 4, height: size.height, alignment: .leading)
+        .offset(x: x)
+        .frame(width: size.width, height: size.height, alignment: .leading)
+        .clipped()
+    }
+}
+
+/// What the live lesson path shows and does. Built by LessonContainer from the coordinator.
+struct LessonPathModel {
+    var parts: [LessonPathPart]
+    /// Index of the part on screen now.
+    var current: Int
+    /// Furthest step reached: parts starting after it are not open yet.
+    var furthestStep: Int
+    var canGoBack: Bool
+    var canGoForward: Bool
+    var canOpen: (LessonPathPart) -> Bool
+    var onBack: () -> Void
+    var onForward: () -> Void
+    var onOpen: (LessonPathPart) -> Void
+}
+
+/// Lesson path with symbols, for the Guardian: ‹ · one symbol per part · ›.
+/// Finished parts sage, the current part ringed in ink, parts reached before (after going back)
+/// ringed in sage, parts not reached yet dashed. Every other part opens on tap (skip or go back).
+struct LessonPathBar: View {
+    let model: LessonPathModel
+
+    var body: some View {
+        HStack(spacing: 10) {
+            step(systemName: "chevron.left", label: "Previous step", enabled: model.canGoBack, action: model.onBack)
+            HStack(spacing: 8) {
+                ForEach(model.parts) { part in
+                    PathSymbol(part: part, state: state(of: part),
+                               enabled: model.canOpen(part)) { model.onOpen(part) }
+                }
+            }
+            step(systemName: "chevron.right", label: "Skip to next step", enabled: model.canGoForward, action: model.onForward)
+        }
+        .padding(.horizontal, 10)
+        .frame(height: 68)
+        .background(Capsule().fill(RokkoColor.card.opacity(0.94))
+            .shadow(color: RokkoColor.ink.opacity(0.10), radius: 6, y: 3))
+        .animation(.easeInOut(duration: RokkoMotion.screenFade), value: model.current)
+    }
+
+    private func state(of part: LessonPathPart) -> PathSymbol.State {
+        if part.id < model.current { return .done }
+        if part.id == model.current { return .current }
+        return part.steps.lowerBound <= model.furthestStep ? .reached : .ahead
+    }
+
+    private func step(systemName: String, label: String, enabled: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 20, weight: .heavy))
+                .foregroundStyle(RokkoColor.ink)
+                .frame(width: 48, height: 48)
+                .background(Circle().fill(RokkoColor.tealWash))
+                .contentShape(Circle())
+        }
+        .buttonStyle(PressScaleStyle())
+        .opacity(enabled ? 1 : 0.3)
+        .disabled(!enabled)
+        .accessibilityLabel(label)
+    }
+}
+
+private struct PathSymbol: View {
+    enum State { case done, current, reached, ahead }
+    let part: LessonPathPart
+    let state: State
+    let enabled: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                switch state {
+                case .done:
+                    Circle().fill(RokkoColor.sageDone)
+                case .current:
+                    Circle().fill(RokkoColor.card)
+                    Circle().strokeBorder(RokkoColor.ink, lineWidth: 3)
+                case .reached:
+                    Circle().strokeBorder(RokkoColor.sageDone, lineWidth: 3)
+                case .ahead:
+                    Circle().strokeBorder(RokkoColor.cardEdge, style: StrokeStyle(lineWidth: 3, dash: [5, 4]))
+                }
+                Image(systemName: part.kind.symbol)
+                    .font(.system(size: state == .current ? 19 : 16, weight: .bold))
+                    .foregroundStyle(state == .ahead ? RokkoColor.inkSoft : RokkoColor.ink)
+            }
+            .frame(width: state == .current ? 46 : 40, height: state == .current ? 46 : 40)
+            .frame(width: 48, height: 48)   // touch target
+            .contentShape(Circle())
+        }
+        .buttonStyle(PressScaleStyle())
+        .disabled(!enabled)
+        .accessibilityLabel(part.kind.title)
+        .accessibilityValue(stateName)
+    }
+
+    private var stateName: String {
+        switch state {
+        case .done: "Finished"
+        case .current: "Now"
+        case .reached: "Seen"
+        case .ahead: "Not yet"
+        }
     }
 }
 

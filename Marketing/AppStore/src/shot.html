@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- One App Store screenshot (2752×2064): headline + the real app screen. ?img=…&t=… -->
+<html><head><meta charset="utf-8"><style>
+  @font-face { font-family: "Fredoka"; src: url("Fredoka-SemiBold.ttf"); font-weight: 600; }
+  html, body { margin: 0; width: 2752px; height: 2064px; overflow: hidden; }
+  body { background: linear-gradient(180deg, #DCE7EA 0%, #EEF2E6 70%, #F4F0E3 100%);
+         display: flex; flex-direction: column; align-items: center; }
+  h1 { font-family: "Fredoka"; font-weight: 600; color: #2D3A31; font-size: 132px; letter-spacing: -0.01em;
+       margin: 110px 0 0; text-align: center; line-height: 1.05; }
+  .frame { margin-top: 90px; width: 2200px; height: 1650px; border-radius: 64px; background: #2D3A31; padding: 34px;
+           box-sizing: content-box; box-shadow: 0 40px 90px rgba(45,58,49,0.25); }
+  .frame img { width: 2200px; height: 1650px; border-radius: 34px; display: block; object-fit: cover; }
+</style></head>
+<body>
+  <h1 id="t"></h1>
+  <div class="frame"><img id="i" alt=""></div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    document.getElementById('t').textContent = q.get('t');
+    document.getElementById('i').src = '../screens/' + q.get('img') + '.png';
+  </script>
+</body></html>

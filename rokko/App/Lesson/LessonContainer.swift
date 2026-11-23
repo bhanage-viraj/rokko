@@ -24,6 +24,12 @@ struct LessonContainer: View {
             LessonFrame(surface: c.isGuardianSurface ? .guardian : .child(calm: c.calm),
                         pathDone: path.done,
                         pathTotal: path.total,
+                        path: LessonPathModel(parts: c.pathSegments, current: path.done,
+                                              furthestStep: c.furthestIndex,
+                                              canGoBack: c.canGoBack, canGoForward: c.canGoForward,
+                                              canOpen: c.canOpen, onBack: c.goBack,
+                                              onForward: c.goForward, onOpen: c.open),
+                        scenePan: CGFloat(c.stepIndex),
                         caption: c.caption,
                         video: c.fullScreenVideo,
                         videoFinished: c.filmFinished,
@@ -44,23 +50,18 @@ struct LessonContainer: View {
                             }
                         },
                         onMoodDismiss: { c.moodSheetShown = false }) {
-                LessonStage(coordinator: c)
-                    .animation(.easeInOut(duration: RokkoMotion.screenFade), value: c.screen)
-                    .animation(.easeInOut(duration: RokkoMotion.screenFade), value: c.clipPlaying)
+                // Each step slides in from the side it comes from (forward: from the right),
+                // faster than the clearing behind it pans: depth. Calm / Reduce Motion: a fade.
+                ZStack {
+                    LessonStage(coordinator: c)
+                        .animation(.easeInOut(duration: RokkoMotion.screenFade), value: c.screen)
+                        .animation(.easeInOut(duration: RokkoMotion.screenFade), value: c.clipPlaying)
+                        .id(c.stepIndex)
+                        .transition(stepTransition(direction: c.lastMove, still: reduceMotion || c.calm))
+                }
+                .animation(.easeOut(duration: RokkoMotion.stepSlide), value: c.stepIndex)
             }
             .environment(\.lessonFrameMode, .live(c))
-            #if DEBUG
-            .overlay(alignment: .top) {
-                if c.screen == .round && !c.paused {
-                    Button("DEV · Skip exercise", action: c.devSkipRound)
-                        .font(RokkoFont.nunito(15, .heavy))
-                        .foregroundStyle(RokkoColor.card)
-                        .padding(.horizontal, 14).padding(.vertical, 8)
-                        .background(Capsule().fill(RokkoColor.teal))
-                        .padding(.top, 104)
-                }
-            }
-            #endif
             .overlay { if c.paused { PausedOverlay(onResume: { c.paused = false }, onLeave: c.leaveLesson) } }
         }
         .environment(\.rokkoCalm, c.calm)
@@ -74,6 +75,15 @@ struct LessonContainer: View {
     }
 }
 
+/// New step: slides in from `stepSlideShare` of the width on the side it comes from, fading in.
+/// The step leaving only fades (its direction is not known when it was drawn).
+private func stepTransition(direction: Int, still: Bool) -> AnyTransition {
+    if still { return .opacity }
+    let distance = RokkoLayout.canvas.width * RokkoMotion.stepSlideShare * CGFloat(direction)
+    return .asymmetric(insertion: .offset(x: distance).combined(with: .opacity),
+                       removal: .opacity)
+}
+
 /// The middle of the frame (1194 × 834 design points; the stage is y 112–680).
 private struct LessonStage: View {
     let coordinator: LessonCoordinator
@@ -84,8 +94,8 @@ private struct LessonStage: View {
             switch c.screen {
             case .step:
                 StepStage(coordinator: c)
-            case .piecesCheck:
-                PiecesCheckStage(settings: c.settings)
+            case .getReady:
+                GetReadyStage()
             case .blockIntro:
                 CastRow(animals: c.blockAnimals, team: "ivory").offset(y: 200)
             case .round:
@@ -98,7 +108,6 @@ private struct LessonStage: View {
                 switch c.charcoalStage {
                 case .animals: TwinRows(pieces: Piece.allCases, form: .character).id("animals")
                 case .pieces: TwinRows(pieces: Piece.allCases, form: .piece).id("pieces")
-                case .guardian: BlackPiecesStage()
                 }
             case .sittingFull:
                 SittingFullStage(onStop: c.stopForToday, onKeepGoing: c.keepGoing)
@@ -107,7 +116,7 @@ private struct LessonStage: View {
             case .breakRunning, .breakEnd:
                 BreakRunningStage(coordinator: c)
             case .summary:
-                SummaryStage(lines: c.summaryLines)
+                SummaryStage(summary: c.summary)
             }
         }
         .frame(width: 1194, height: 834, alignment: .topLeading)
@@ -136,7 +145,7 @@ private struct StepStage: View {
                 ZStack(alignment: .topLeading) {
                     StoryCircle(imageName: "piece_\(piece.rawValue)_ivory", size: 360).offset(x: 70, y: 160)
                     GuardianTurnPanel(content: .show(piece),
-                                      tipsMode: step.firstVisitSteps ? .full : c.settings.tipsMode)
+                                      tipsMode: .full)
                         .offset(x: 480, y: 128)
                 }
             }
@@ -151,7 +160,7 @@ private struct StepStage: View {
                 .frame(width: 400)
                 .offset(x: 40, y: 140)
                 .accessibilityHidden(true)
-                GuardianTurnPanel(content: .module(step.pieces), tipsMode: c.settings.tipsMode)
+                GuardianTurnPanel(content: .module(step.pieces), tipsMode: .full)
                     .offset(x: 480, y: 128)
             }
         case .playTogether:
@@ -373,40 +382,42 @@ struct PieceImage: View {
 }
 
 /// Guardian's turn after the black team intro: put one of each black piece out next to the white ones.
-private struct BlackPiecesStage: View {
-    @State private var selected: Set<OnboardingViewModel.Piece> = []
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 40) {
-            GuardianHeader(label: "Guardian", title: "Get the black pieces",
-                           detail: "Put one of each black piece on the table, next to the white ones. Tap each one when it is out.")
-            PiecesChecklist(selected: selected, black: true) { piece in
-                if selected.contains(piece) { selected.remove(piece) } else { selected.insert(piece) }
-            }
-        }
-        .frame(width: 1194 - 128, alignment: .leading)
-        .offset(x: 64, y: 130)
-    }
-}
-
 // MARK: - Guardian screens
 
-/// Once, before the lesson's first Guardian's turn, for families who chose "later" in setup.
-private struct PiecesCheckStage: View {
-    @Bindable var settings: AppSettings
-    @State private var selected: Set<OnboardingViewModel.Piece> = []
-
+/// Start of every sitting: the pieces the lesson needs, white and black, side by side.
+/// Nothing to tap here; Next carries on into the lesson.
+private struct GetReadyStage: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 40) {
-            GuardianHeader(label: "Guardian", title: "Get your pieces ready",
-                           detail: "Put the six white pieces on the table. Tap each one when it is out.")
-            PiecesChecklist(selected: selected) { piece in
-                if selected.contains(piece) { selected.remove(piece) } else { selected.insert(piece) }
-                if selected.count == OnboardingViewModel.Piece.allCases.count { settings.piecesReady = true }
+        VStack(alignment: .leading, spacing: 34) {
+            GuardianHeader(label: "Guardian", title: "Get these pieces ready",
+                           detail: "One of each, white and black, on the table next to the iPad.")
+            VStack(spacing: 18) {
+                row(black: false)
+                row(black: true)
             }
         }
         .frame(width: 1194 - 128, alignment: .leading)
-        .offset(x: 64, y: 130)
+        .offset(x: 64, y: 124)
+    }
+
+    private func row(black: Bool) -> some View {
+        HStack(spacing: 18) {
+            ForEach(Piece.allCases, id: \.self) { piece in
+                VStack(spacing: 6) {
+                    PieceImage(piece: piece, black: black)
+                        .frame(height: 112)
+                        .accessibilityHidden(true)
+                    Text(piece.displayName)
+                        .font(RokkoFont.fredoka(19, scales: true))
+                        .foregroundStyle(RokkoColor.bark)
+                }
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .rokkoCard(radius: 24, edge: RokkoColor.mistEdgeSoft, edgeWidth: 2)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(black ? "Black" : "White") \(piece.displayName)")
+            }
+        }
     }
 }
 
@@ -428,27 +439,132 @@ private struct SittingFullStage: View {
     }
 }
 
+/// End of the lesson, for the Guardian: one card per piece (picture, how well it is known in words,
+/// a 3-step meter and the real answers behind it), then colours / teams, days and breaks.
+/// Drawn in the stage (y 112–680 of the 1194 × 834 design).
 private struct SummaryStage: View {
-    let lines: [String]
+    let summary: LessonSummary
+
+    private let columns = Array(repeating: GridItem(.fixed(344), spacing: 20), count: 3)
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 28) {
-            GuardianHeader(label: "For the Guardian", title: "Lesson 1 is done")
-            VStack(alignment: .leading, spacing: 12) {
-                ForEach(lines, id: \.self) { line in
-                    HStack(spacing: 14) {
-                        Circle().fill(RokkoColor.sageDone).frame(width: 14, height: 14)
-                        Text(line)
-                    }
+        VStack(alignment: .leading, spacing: 22) {
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading, spacing: 10) {
+                    GuardianLabel(text: "Guardian")
+                    GuardianTitle(text: "Lesson 1 is done")
                 }
+                Spacer()
+                Text(intro)
+                    .font(RokkoFont.nunito(18, .semibold, scales: true))
+                    .foregroundStyle(RokkoColor.inkSoft)
+                    .multilineTextAlignment(.trailing)
             }
-            .font(RokkoFont.nunito(24, .semibold, scales: true))
-            .foregroundStyle(RokkoColor.ink)
-            .padding(28)
-            .frame(width: 720, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(RokkoColor.card))
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 16) {
+                ForEach(summary.pieces) { PieceSummaryCard(row: $0) }
+            }
+            HStack(spacing: 14) {
+                ForEach(summary.extras) { extra in
+                    SummaryFact(systemImage: extra.title == "White and black" ? "circle.lefthalf.filled" : "person.3.fill",
+                                title: extra.title, value: extra.level.words)
+                }
+                SummaryFact(systemImage: "calendar", title: "Days played", value: "\(summary.days)")
+                SummaryFact(systemImage: "cup.and.saucer.fill", title: "Breaks", value: "\(summary.breaks)")
+            }
         }
-        .offset(x: 64, y: 120)
+        .frame(width: 1072, alignment: .leading)
+        .offset(x: 61, y: 128)
+    }
+
+    private var intro: String {
+        summary.answers == 0 ? "No games played yet."
+                             : "From \(summary.answers) answers, kept on this iPad."
+    }
+}
+
+private struct PieceSummaryCard: View {
+    let row: LessonSummary.PieceRow
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Image("piece_\(row.piece.rawValue)_ivory")
+                .resizable().scaledToFit()
+                .frame(width: 64, height: 104)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(row.piece.displayName)
+                    .font(RokkoFont.fredoka(24, scales: true))
+                    .foregroundStyle(RokkoColor.ink)
+                HStack(spacing: 8) {
+                    LevelMeter(steps: row.level.steps)
+                    Text(row.level.words)
+                        .font(RokkoFont.nunito(17, .bold, scales: true))
+                        .foregroundStyle(RokkoColor.ink)
+                }
+                Text(detail)
+                    .font(RokkoFont.nunito(15, .semibold, scales: true))
+                    .foregroundStyle(RokkoColor.inkSoft)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 18)
+        .frame(width: 344, height: 136, alignment: .leading)
+        .rokkoCard(radius: 22, edge: RokkoColor.mistEdgeSoft, edgeWidth: 2)
+        .accessibilityElement(children: .combine)
+    }
+
+    private var detail: String {
+        guard row.tries > 0 else { return "Not played yet" }
+        var parts = ["\(row.tries) \(row.tries == 1 ? "try" : "tries")", "\(row.firstGo) first go"]
+        if row.withHelp > 0 { parts.append("\(row.withHelp) with a hint") }
+        return parts.joined(separator: " · ")
+    }
+}
+
+/// Three short bars: still learning · getting there · knows it well.
+private struct LevelMeter: View {
+    let steps: Int
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(1...3, id: \.self) { i in
+                Capsule()
+                    .fill(i <= steps ? RokkoColor.moss : RokkoColor.mistTrack)
+                    .frame(width: 18, height: 8)
+            }
+        }
+        .accessibilityHidden(true)
+    }
+}
+
+private struct SummaryFact: View {
+    let systemImage: String
+    let title: String
+    let value: String
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: systemImage)
+                .font(.system(size: 18, weight: .bold))
+                .foregroundStyle(RokkoColor.teal)
+                .frame(width: 40, height: 40)
+                .background(Circle().fill(RokkoColor.tealWash))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(RokkoFont.nunito(14, .bold, scales: true))
+                    .foregroundStyle(RokkoColor.inkSoft)
+                Text(value)
+                    .font(RokkoFont.nunito(18, .bold, scales: true))
+                    .foregroundStyle(RokkoColor.ink)
+            }
+        }
+        .padding(.horizontal, 16)
+        .frame(height: 66)
+        .rokkoCard(radius: 18, edge: RokkoColor.mistEdgeSoft, edgeWidth: 2)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -459,16 +575,33 @@ private struct PausedOverlay: View {
 
     var body: some View {
         ZStack {
-            RokkoColor.ink.opacity(0.35).ignoresSafeArea()
-            VStack(spacing: 22) {
-                PrimaryButton(title: "Resume", action: onResume).frame(width: 320)
+            // Everything behind (top bar, path, film still, bottom band) goes soft and quiet alike.
+            Rectangle().fill(.ultraThinMaterial).ignoresSafeArea()
+            RokkoColor.ink.opacity(0.18).ignoresSafeArea()
+            VStack(spacing: 28) {
+                // One big round play button: tap to carry on.
+                Button(action: onResume) {
+                    Image(systemName: "play.fill")
+                        .font(.system(size: 54, weight: .heavy))
+                        .foregroundStyle(RokkoColor.card)
+                        .offset(x: 5)   // optical centre of the triangle
+                        .frame(width: 140, height: 140)
+                        .background(Circle().fill(RokkoColor.leaf)
+                            .shadow(color: RokkoColor.ink.opacity(0.22), radius: 10, y: 5))
+                        .contentShape(Circle())
+                }
+                .buttonStyle(PressScaleStyle())
+                .accessibilityLabel("Resume")
                 Button("Leave lesson", action: onLeave)
                     .font(RokkoFont.nunito(20, .bold, scales: true))
                     .foregroundStyle(RokkoColor.teal)
-                    .frame(minHeight: 56)
+                    .frame(minWidth: 200, minHeight: 56)
+                    .contentShape(Rectangle())
             }
-            .padding(40)
-            .background(RoundedRectangle(cornerRadius: 40, style: .continuous).fill(RokkoColor.card))
+            .padding(.horizontal, 56)
+            .padding(.vertical, 40)
+            .background(RoundedRectangle(cornerRadius: 40, style: .continuous).fill(RokkoColor.card)
+                .shadow(color: RokkoColor.ink.opacity(0.18), radius: 20, y: 8))
         }
     }
 }

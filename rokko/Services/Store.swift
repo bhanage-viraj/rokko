@@ -38,9 +38,9 @@ final class AppSettings {
     var sound: Bool = true
     /// Raw value of `TipsMode`.
     var tipsModeRaw: String = TipsMode.full.rawValue
-    /// The guardian said all six white pieces are out (first-run setup, pieces step).
+    /// No longer used (the pieces checklist was removed, 23 Nov 2026); kept so saved stores still open.
     var piecesReady: Bool = false
-    /// The pieces checklist has been shown once inside the lesson (for families who chose "later").
+    /// No longer used (see `piecesReady`).
     var piecesReminderShown: Bool = false
     /// First-run setup finished.
     var onboardingDone: Bool = false
@@ -51,9 +51,6 @@ final class AppSettings {
         get { TipsMode(rawValue: tipsModeRaw) ?? .full }
         set { tipsModeRaw = newValue.rawValue }
     }
-
-    /// True when the lesson should show the pieces checklist before its first Guardian's turn.
-    var needsPiecesReminder: Bool { !piecesReady && !piecesReminderShown }
 }
 
 /// P(known) for one skill (ENGINE §1).
@@ -108,6 +105,9 @@ final class LessonProgress {
     var roundsWithWrong: [Bool] = []
     /// Answer slot of the last choice round, so the answer never sits in the same slot twice.
     var lastAnswerSlot: Int?
+    /// Furthest step reached (by Next). The Guardian can move back and forth up to here with the
+    /// lesson path; nil = `stepId` (saved before this existed).
+    var furthestStepId: String?
 
     init(lesson: Int, stepId: String) {
         self.lesson = lesson

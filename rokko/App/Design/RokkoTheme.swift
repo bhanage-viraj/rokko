@@ -37,6 +37,16 @@ enum RokkoColor {
     // Team tints for game art (SpriteKit colour blend). Charcoal is slate, never pure black.
     static let charcoalTint  = Color(hex: 0x46505A)   // black team: tints ivory art until the charcoal PNGs arrive
     static let shadeTint     = Color(hex: 0x8C8073)   // Type 3 level 6: neutral grey-brown, colour hidden
+
+    // Lesson map scenery (Guardian home only): soft, low-contrast layers behind the lesson cards.
+    static let sceneCloud       = Color(hex: 0xF1F5F3)   // clouds
+    static let sceneHillJungle  = Color(hex: 0xCFDDC6)   // Lesson 1 hills
+    static let sceneLeaf        = Color(hex: 0xA9C79B)   // Lesson 1 leaves
+    static let sceneHillMeadow  = Color(hex: 0xC9DADC)   // Lesson 2 hills
+    static let sceneSquareLight = Color(hex: 0xF6F3E8)   // Lesson 2 floating light squares
+    static let sceneSquareDark  = Color(hex: 0xBFCFB4)   // Lesson 2 floating dark squares
+    static let sceneRidge       = Color(hex: 0xC2CFD8)   // Lesson 3 mountains
+    static let sceneStone       = Color(hex: 0xD3D8D2)   // Lesson 3 stones
 }
 
 extension RokkoColor {
@@ -85,6 +95,17 @@ enum RokkoMotion {
     static let moodHoldSeconds: Double = 2
     /// Mood sheet closes this long after a pick.
     static let moodSheetCloseDelay: Double = 0.7
+
+    /// Mirror EngineConfig.json › motion.homeParallaxFar / Mid / CardArt: share of a lesson swipe
+    /// each scenery layer moves on the lesson map (the card itself moves 1.0).
+    static let homeParallaxFar: CGFloat = 0.25
+    static let homeParallaxMid: CGFloat = 0.55
+    static let homeParallaxCardArt: CGFloat = 0.12
+
+    /// Mirror EngineConfig.json › motion.stepSlideMs / stepSlideShare / stepParallaxBackground.
+    static let stepSlide: Double = 0.450
+    static let stepSlideShare: CGFloat = 0.3
+    static let stepParallaxBackground: CGFloat = 0.25
 }
 
 // MARK: - Layout
@@ -134,3 +155,17 @@ enum RokkoLayout {
     .background(RokkoColor.paper)
 }
 #endif
+
+// MARK: - Debug launch flags
+
+/// `-Key YES` launch arguments for screenshots and UI tests. Always false in Release builds,
+/// so a shipped app never opens a developer screen from a stray UserDefaults value.
+enum DebugFlag {
+    static func on(_ key: String) -> Bool {
+        #if DEBUG
+        UserDefaults.standard.bool(forKey: key)
+        #else
+        false
+        #endif
+    }
+}

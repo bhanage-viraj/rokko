@@ -21,6 +21,11 @@ One colour, one meaning. No red anywhere, including art.
 | `teal` | #4A7890 | Guardian labels, hold rings |
 | `bark` | #5B4636 | Character name labels |
 
+Lesson map scenery (Guardian home only, behind the lesson cards; soft and low-contrast):
+`sceneCloud` #F1F5F3 clouds · `sceneHillJungle` #CFDDC6 and `sceneLeaf` #A9C79B (Lesson 1) ·
+`sceneHillMeadow` #C9DADC, `sceneSquareLight` #F6F3E8, `sceneSquareDark` #BFCFB4 (Lesson 2) ·
+`sceneRidge` #C2CFD8 and `sceneStone` #D3D8D2 (Lesson 3).
+
 Brand (logo, launch): cream #F4F0E3, leaf #2F4A3E, honey #E2B24A, tile moss #A9B98C.
 Team colours: ivory and charcoal (slate, never pure black); gold anchors on both teams.
 Calm mode: same tokens; the clearing background stays but is blurred to soft colour (80 pt blur, −30% saturation, paper wash 45%); art saturation −30%.
@@ -60,3 +65,4 @@ idle · pressed (0.97) · faint glow (honey 30%) · strong glow (honey 70%, 8 pt
 
 ## Motion rules
 Screen change 300 ms cross-fade; card press 120 ms; correct 350 ms; try-again 300 ms; arrow bob 6 pt 1.2 s loop; transformation clip ~2.4 s; no flashes, shakes or fast spins; celebrations < 1 s. Reduce Motion and Calm: fades only.
+Lesson map parallax: swiping between lessons moves far scenery (hills, clouds) 25%, middle decorations 55%, the picture backdrop inside a card 12% against the card, and the card with its character 100% of the finger (`EngineConfig.json › motion.homeParallax*`). Driven only by the scroll position, never by a timer; one lesson per swipe. Reduce Motion and Calm: no parallax, the scenery cross-fades.

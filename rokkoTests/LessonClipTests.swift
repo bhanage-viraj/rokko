@@ -34,7 +34,7 @@ struct LessonClipTests {
         context.insert(LessonProgress(lesson: library.lesson.lesson, stepId: stepId))
         let c = LessonCoordinator(library: library, settings: settings, context: context, onExit: {})
         c.reduceMotion = reduceMotion
-        c.start()
+        c.start(getReady: false)
         return (c, container)
     }
 

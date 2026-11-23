@@ -47,6 +47,14 @@ struct RokkoRoot: View {
         .environment(\.rokkoCalm, settings?.calm ?? false)
         .onAppear {
             settings = Store.settings(in: context)
+            #if DEBUG
+            // `-RokkoLook standard|calm` sets the look on launch (screenshots).
+            switch UserDefaults.standard.string(forKey: "RokkoLook") {
+            case "standard": settings?.calm = false
+            case "calm": settings?.calm = true
+            default: break
+            }
+            #endif
         }
     }
 

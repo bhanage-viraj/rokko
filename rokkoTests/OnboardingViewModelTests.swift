@@ -15,19 +15,19 @@ struct OnboardingViewModelTests {
     // MARK: Step order and progress
 
     @Test func stepOrder() {
-        #expect(Step.allCases == [.welcome, .chess, .look, .tryGuardian, .tryCheckIn, .ready])
+        #expect(Step.allCases == [.welcome, .look, .tryGuardian, .tryCheckIn, .ready])
     }
 
-    @Test func progressCountsFourStepsAndSkipsWelcomeAndReady() {
+    @Test func progressCountsThreeStepsAndSkipsWelcomeAndReady() {
         let vm = OnboardingViewModel()
         #expect(vm.progressNumber == nil)
         #expect(vm.progressLabel == "About 1 minute")
         vm.next()
-        #expect(vm.step == .chess)
-        #expect(vm.progressLabel == "Step 1 of 4")
-        #expect(vm.progressShort == "1 of 4")
-        #expect(OnboardingViewModel(startAt: .look).progressShort == "2 of 4")
-        #expect(OnboardingViewModel(startAt: .tryCheckIn).progressLabel == "Step 4 of 4")
+        #expect(vm.step == .look)
+        #expect(vm.progressLabel == "Step 1 of 3")
+        #expect(vm.progressShort == "1 of 3")
+        #expect(OnboardingViewModel(startAt: .tryGuardian).progressShort == "2 of 3")
+        #expect(OnboardingViewModel(startAt: .tryCheckIn).progressLabel == "Step 3 of 3")
         let ready = OnboardingViewModel(startAt: .ready)
         #expect(ready.progressNumber == nil)
         #expect(ready.progressLabel == "Done")
@@ -35,8 +35,7 @@ struct OnboardingViewModelTests {
 
     @Test func walkingThroughEveryStepInOrder() {
         let vm = OnboardingViewModel()
-        vm.next()                            // welcome → chess
-        vm.chess = .yes; vm.next()           // → look
+        vm.next()                            // welcome → look
         vm.look = .standard; vm.next()       // → tryGuardian
         vm.tryGuardianDone = true; vm.next() // → tryCheckIn
         vm.practiceMood = .wobbly; vm.next() // → ready
@@ -71,8 +70,7 @@ struct OnboardingViewModelTests {
         let vm = OnboardingViewModel(startAt: .look)
         vm.look = .standard
         vm.back()
-        #expect(vm.step == .chess)
-        vm.chess = .aLittle
+        #expect(vm.step == .welcome)
         vm.next()
         #expect(vm.step == .look)
         #expect(vm.look == .standard)
@@ -114,11 +112,6 @@ struct OnboardingViewModelTests {
         look.look = .calm
         #expect(look.canContinue)
 
-        let chess = OnboardingViewModel(startAt: .chess)
-        #expect(!chess.canContinue)
-        chess.chess = .notYet
-        #expect(chess.canContinue)
-
         let tryGuardian = OnboardingViewModel(startAt: .tryGuardian)
         #expect(!tryGuardian.canContinue)
         tryGuardian.tryGuardianDone = true
@@ -132,42 +125,21 @@ struct OnboardingViewModelTests {
 
     // MARK: What gets saved
 
-    @Test func skipWaitsForChessAndLook() {
+    @Test func skipWaitsForTheLookAnswer() {
         let vm = OnboardingViewModel()
         #expect(!vm.canSkip)
         vm.skip()
-        #expect(vm.step == .welcome, "Skip does nothing before the two answers")
-        vm.next()
-        vm.chess = .notYet
-        #expect(!vm.canSkip)
-        vm.skip()
-        #expect(vm.step == .chess)
+        #expect(vm.step == .welcome, "Skip does nothing before the look answer")
         vm.next()
         vm.look = .calm
         #expect(vm.canSkip)
         vm.skip()
         #expect(vm.step == .ready)
-        #expect(vm.result == .init(calm: true, tipsMode: .full))
+        #expect(vm.result == .init(calm: true))
     }
 
-    @Test func skipKeepsAnswersAlreadyGiven() {
-        let vm = OnboardingViewModel(startAt: .chess)
-        vm.chess = .yes
-        vm.next()
-        vm.look = .standard
-        vm.skip()
-        #expect(vm.result == .init(calm: false, tipsMode: .short))
-    }
-
-    @Test(arguments: [
-        (OnboardingViewModel.ChessExperience.notYet, TipsMode.full),
-        (.aLittle, .short),
-        (.yes, .short),
-    ])
-    func chessAnswerSetsTipsMode(answer: OnboardingViewModel.ChessExperience, expected: TipsMode) {
-        let vm = OnboardingViewModel(startAt: .chess)
-        vm.chess = answer
-        #expect(vm.tipsMode == expected)
+    @Test func guardiansTurnsAlwaysShowFullSteps() {
+        #expect(OnboardingViewModel().tipsMode == .full)
     }
 
     @Test func lookAnswerSetsCalm() {
@@ -178,32 +150,27 @@ struct OnboardingViewModelTests {
         #expect(vm.result.calm == true)
     }
 
-    @Test func saveWritesSettingsAndLeavesPiecesForTheLesson() throws {
+    @Test func saveWritesSettings() throws {
         let container = try ModelContainer(for: AppSettings.self,
                                            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         let settings = Store.settings(in: container.mainContext)
         #expect(!settings.onboardingDone)
 
-        let vm = OnboardingViewModel(startAt: .chess)
-        vm.chess = .aLittle
-        vm.next()
+        let vm = OnboardingViewModel(startAt: .look)
         vm.look = .standard
         vm.skip()
         vm.save(to: settings)
 
         #expect(settings.onboardingDone)
         #expect(settings.calm == false)
-        #expect(settings.tipsMode == .short)
-        #expect(settings.piecesReady == false)
-        #expect(settings.needsPiecesReminder, "The lesson shows the pieces checklist once")
+        #expect(settings.tipsMode == .full)
     }
 
     @Test func summaryChips() {
         let vm = OnboardingViewModel()
-        vm.chess = .notYet
         vm.look = .calm
         vm.skip()
-        #expect(vm.summaryChips == ["Calm look", "Full tips"])
+        #expect(vm.summaryChips == ["Calm look"])
     }
 }
 

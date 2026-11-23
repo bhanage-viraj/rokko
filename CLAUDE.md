@@ -47,7 +47,7 @@ Tests/          RokkoEngineTests, RoundGeneratorTests, ContentValidationTests
 - Mood is set only by the Guardian. The engine may suggest (Guardian button glows), never act.
 - Adaptive changes happen only between rounds, one level step at a time.
 - No AI at runtime. Child-facing content is identical every time for the same seed.
-- No Skip button, no speaker/replay button, no round dots (removed in design).
+- No Skip button, no speaker/replay button, no round dots (removed in design). The Guardian can skip back and forth only through the lesson path in the top bar (DECISIONS, 23 Nov 2026).
 - Guardian screens are labelled with the Guardian symbol (`person.2.fill`, same as the Guardian button) + "Guardian" (`GuardianLabel`).
 
 ## Code rules

@@ -11,11 +11,11 @@ struct LessonMapView: View {
     let onStartLesson: () -> Void
 
     /// DEBUG: `-RokkoOpenSettings YES` opens the Guardian menu on launch.
-    @State private var menuShown = UserDefaults.standard.bool(forKey: "RokkoOpenSettings")
+    @State private var menuShown = DebugFlag.on("RokkoOpenSettings")
     /// Developer exercise browser. DEBUG: `-RokkoOpenExercises YES` opens it on launch.
-    @State private var exercisesShown = UserDefaults.standard.bool(forKey: "RokkoOpenExercises")
+    @State private var exercisesShown = DebugFlag.on("RokkoOpenExercises")
     /// Developer UI/UX check (one round per layout). DEBUG: `-RokkoOpenUIReview YES` opens it on launch.
-    @State private var uiReviewShown = UserDefaults.standard.bool(forKey: "RokkoOpenUIReview")
+    @State private var uiReviewShown = DebugFlag.on("RokkoOpenUIReview")
 
     var body: some View {
         DesignCanvas(fills: true) {
@@ -65,8 +65,10 @@ private struct HomeLesson: Identifiable {
     ]
 }
 
-/// Fills the whole screen: title, All Lessons and Settings across the top; one wide lesson card
-/// in the middle with the next one peeking in; page dots below. Swipe or tap › to move.
+/// Fills the whole screen: title and Settings across the top; one wide lesson card
+/// in the middle with the next one peeking in; page dots below. Swipe or tap a dot to move.
+/// Behind the cards each lesson has its own scenery (`HomeScenery`), which follows the finger
+/// at a slower speed than the cards for depth.
 private struct HomeLayout: View {
     let onSettings: () -> Void
     let onStartLesson: () -> Void
@@ -74,7 +76,9 @@ private struct HomeLayout: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.rokkoCalm) private var calm
     @State private var focused: Int? = 1
-    @State private var listShown = false
+    /// Written on every scroll frame; only `HomeScenery` reads it, so this body doesn't re-run.
+    @State private var progress = HomeScrollProgress()
+    @MotionStill private var still
 
     private let side: CGFloat = 56
     private let top: CGFloat = 156
@@ -87,39 +91,31 @@ private struct HomeLayout: View {
         let cardWidth = (canvas.width * 0.66).rounded()
         let cardHeight = min(canvas.height - top - 96, cardWidth * 0.72).rounded()
         let inset = (canvas.width - cardWidth) / 2
+        let pageWidth = cardWidth + gap
         ZStack(alignment: .topLeading) {
+            HomeScenery(progress: progress, lessonNumbers: lessons.map(\.number), pageWidth: pageWidth)
+
             VStack(alignment: .leading, spacing: 10) {
-                GuardianLabel(text: "For the Guardian")
+                GuardianLabel(text: "Guardian")
                 GuardianTitle(text: "Your lessons")
             }
             .offset(x: side, y: 40)
 
-            HStack(spacing: 16) {
-                Button { listShown = true } label: {
-                    HStack(spacing: 10) {
-                        Image(systemName: "list.bullet").font(.system(size: 20, weight: .bold))
-                        Text("All Lessons").font(RokkoFont.fredoka(20))
-                    }
-                    .foregroundStyle(RokkoColor.ink)
-                    .padding(.horizontal, 24)
-                    .frame(height: 56)
-                    .background(Capsule().fill(RokkoColor.card))
-                    .overlay(Capsule().strokeBorder(RokkoColor.mistEdge, lineWidth: 2))
-                }
-                .buttonStyle(PressScaleStyle())
-                GuardianIconButton(systemName: "gearshape.fill", label: "Settings", action: onSettings)
-            }
-            .frame(width: canvas.width - 40, alignment: .trailing)
+            GuardianIconButton(systemName: "gearshape.fill", label: "Settings", action: onSettings)
+                .frame(width: canvas.width - 40, alignment: .trailing)
             .offset(y: 26)
 
             ScrollView(.horizontal) {
                 HStack(spacing: gap) {
                     ForEach(lessons) { lesson in
                         LessonCard(lesson: lesson, width: cardWidth, height: cardHeight,
+                                   restMinX: inset, pageWidth: pageWidth, still: still,
                                    action: onStartLesson)
-                            .scrollTransition(.interactive, axis: .horizontal) { view, phase in
-                                view.scaleEffect(phase.isIdentity ? 1 : 0.84)
-                                    .opacity(phase.isIdentity ? 1 : 0.7)
+                            // Neighbours sit slightly smaller and quieter, but stay solid: a see-through
+                            // card lets the scenery show through its text.
+                            .scrollTransition(.interactive, axis: .horizontal) { [still] view, phase in
+                                view.scaleEffect(phase.isIdentity || still ? 1 : 0.92)
+                                    .saturation(phase.isIdentity ? 1 : 0.75)
                             }
                             .id(lesson.number)
                     }
@@ -128,39 +124,32 @@ private struct HomeLayout: View {
                 .padding(.vertical, 14)   // room for the card shadow
             }
             .contentMargins(.horizontal, inset, for: .scrollContent)
-            .scrollTargetBehavior(.viewAligned)
+            // One lesson per swipe however fast the flick; short or mostly-vertical drags snap back.
+            .scrollTargetBehavior(.viewAligned(limitBehavior: .alwaysByOne))
             .scrollPosition(id: $focused)
+            // Live offset (finger, momentum and the page-dot animation) → scenery position.
+            .onScrollGeometryChange(for: CGFloat.self) { geo in
+                geo.contentOffset.x + geo.contentInsets.leading
+            } action: { [progress] _, x in
+                progress.page = x / pageWidth
+            }
             .scrollIndicators(.hidden)
             .frame(width: canvas.width, height: cardHeight + 28)
             .offset(y: top - 14)
 
-            // ‹ and › sit in the gaps beside the middle card.
-            HStack {
-                ArrowButton(systemName: "chevron.left", label: "Previous lesson") { move(-1) }
-                    .opacity(current > 1 ? 1 : 0)
-                    .disabled(current <= 1)
-                Spacer()
-                ArrowButton(systemName: "chevron.right", label: "Next lesson") { move(1) }
-                    .opacity(current < lessons.count ? 1 : 0)
-                    .disabled(current >= lessons.count)
-            }
-            .frame(width: cardWidth + gap + 56)
-            .offset(x: inset - (gap + 56) / 2, y: top + cardHeight / 2 - 28)
-
+            // Page dots centred under the cards (HIG page control). Swipe or tap a dot to move.
             PageDots(count: lessons.count, current: current) { go(to: $0) }
                 .frame(width: canvas.width)
-                .offset(y: top + cardHeight + 34)
+                .offset(y: top + cardHeight + 30)
         }
-        .sheet(isPresented: $listShown) {
-            AllLessonsSheet(lessons: lessons, current: current) { number in
-                listShown = false
-                go(to: number)
-            }
+        #if DEBUG
+        // `-RokkoHomeLesson 2` opens the carousel on that lesson (screenshots). Set after the first
+        // layout: a scroll position set before the scroll view exists is ignored.
+        .task {
+            let n = UserDefaults.standard.integer(forKey: "RokkoHomeLesson")
+            if n > 1, n <= lessons.count { focused = n }
         }
-    }
-
-    private func move(_ step: Int) {
-        go(to: min(max(current + step, 1), lessons.count))
+        #endif
     }
 
     private func go(to number: Int) {
@@ -169,25 +158,6 @@ private struct HomeLayout: View {
         } else {
             withAnimation(.easeInOut(duration: RokkoMotion.screenFade)) { focused = number }
         }
-    }
-}
-
-private struct ArrowButton: View {
-    let systemName: String
-    let label: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemName)
-                .font(.system(size: 22, weight: .heavy))
-                .foregroundStyle(RokkoColor.leaf)
-                .frame(width: 56, height: 56)
-                .background(Circle().fill(RokkoColor.card)
-                    .shadow(color: RokkoColor.ink.opacity(0.12), radius: 6, y: 3))
-        }
-        .buttonStyle(PressScaleStyle())
-        .accessibilityLabel(label)
     }
 }
 
@@ -214,75 +184,32 @@ private struct PageDots: View {
     }
 }
 
-private struct AllLessonsSheet: View {
-    let lessons: [HomeLesson]
-    let current: Int
-    let select: (Int) -> Void
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            GuardianTitle(text: "All lessons")
-                .padding(.bottom, 8)
-            ForEach(lessons) { lesson in
-                Button { select(lesson.number) } label: {
-                    HStack(spacing: 18) {
-                        Text("\(lesson.number)")
-                            .font(RokkoFont.fredoka(24))
-                            .foregroundStyle(lesson.open ? RokkoColor.card : RokkoColor.teal)
-                            .frame(width: 52, height: 52)
-                            .background(Circle().fill(lesson.open ? RokkoColor.leaf : RokkoColor.tealWash))
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(lesson.title).font(RokkoFont.fredoka(22, scales: true))
-                                .foregroundStyle(RokkoColor.ink)
-                            Text(lesson.open ? lesson.detail : "Coming soon")
-                                .font(RokkoFont.nunito(17, .semibold, scales: true))
-                                .foregroundStyle(RokkoColor.inkSoft)
-                        }
-                        Spacer(minLength: 0)
-                        if lesson.number == current {
-                            Image(systemName: "checkmark").font(.system(size: 18, weight: .heavy))
-                                .foregroundStyle(RokkoColor.teal)
-                                .accessibilityLabel("Showing")
-                        }
-                    }
-                    .padding(16)
-                    .rokkoCard(radius: 22, edge: RokkoColor.mistEdgeSoft, edgeWidth: 2)
-                }
-                .buttonStyle(PressScaleStyle())
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(32)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(RokkoColor.mistBlue)
-        .presentationDetents([.medium])
-    }
-}
-
 private struct LessonCard: View {
     let lesson: HomeLesson
     let width: CGFloat
     let height: CGFloat
+    /// Card's left edge (scroll view space) when it is the one in the middle.
+    let restMinX: CGFloat
+    /// One swipe: the distance between two cards.
+    let pageWidth: CGFloat
+    /// Calm / Reduce Motion: no parallax inside the picture.
+    let still: Bool
     let action: () -> Void
 
     var body: some View {
         let inner: CGFloat = 18
         let artSide = height - inner * 2
+        let artWidth = min(artSide, width * 0.54)
         HStack(spacing: 0) {
-            art
-                .frame(width: min(artSide, width * 0.48), height: artSide)
+            art(width: artWidth, restMidX: restMinX + inner + artWidth / 2)
+                .frame(width: artWidth, height: artSide)
                 .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(inner)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 14) {
-                Text("LESSON \(lesson.number)")
-                    .font(RokkoFont.nunito(15, .black))
-                    .tracking(1.4)
-                    .foregroundStyle(RokkoColor.teal)
-                    .padding(.horizontal, 14).padding(.vertical, 7)
-                    .background(Capsule().fill(RokkoColor.tealWash))
+            VStack(alignment: .leading, spacing: 16) {
+                Spacer(minLength: 0)
                 Text(lesson.title)
-                    .font(RokkoFont.fredoka(36, scales: true))
+                    .font(RokkoFont.fredoka(40, scales: true))
                     .foregroundStyle(RokkoColor.ink)
                     .minimumScaleFactor(0.7)
                     .lineLimit(2)
@@ -290,26 +217,7 @@ private struct LessonCard: View {
                     .font(RokkoFont.nunito(20, .semibold, scales: true))
                     .foregroundStyle(RokkoColor.inkSoft)
                     .minimumScaleFactor(0.7)
-                Text("LEARNING OBJECTIVES")
-                    .font(RokkoFont.nunito(14, .black))
-                    .tracking(1.4)
-                    .foregroundStyle(RokkoColor.leaf)
-                    .padding(.horizontal, 14).padding(.vertical, 7)
-                    .background(Capsule().fill(RokkoColor.sageWash))
-                    .padding(.top, 4)
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(lesson.objectives, id: \.self) { goal in
-                        Label {
-                            Text(goal).font(RokkoFont.nunito(20, .semibold, scales: true))
-                                .foregroundStyle(RokkoColor.ink)
-                                .minimumScaleFactor(0.7)
-                        } icon: {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 20))
-                                .foregroundStyle(RokkoColor.moss)
-                        }
-                    }
-                }
+                Spacer(minLength: 0)
                 Spacer(minLength: 0)
                 Group {
                     if lesson.open {
@@ -332,18 +240,50 @@ private struct LessonCard: View {
             .padding(.leading, 8)
         }
         .frame(width: width, height: height)
+        // Lesson number in the card's top-right corner.
+        .overlay(alignment: .topTrailing) {
+            Text("LESSON \(lesson.number)")
+                .font(RokkoFont.nunito(15, .black))
+                .tracking(1.4)
+                .foregroundStyle(RokkoColor.teal)
+                .padding(.horizontal, 14).padding(.vertical, 7)
+                .background(Capsule().fill(RokkoColor.tealWash))
+                .padding(.top, 28).padding(.trailing, 32)
+        }
         .rokkoCard(radius: 36, edge: lesson.open ? RokkoColor.leaf : RokkoColor.mistEdge,
                    edgeWidth: lesson.open ? 4 : 3)
     }
 
-    @ViewBuilder private var art: some View {
+    /// The picture's backdrop drifts a little against the card (`homeParallaxCardArt`) while the
+    /// character moves with it, so the picture itself has depth.
+    private func backdrop<V: View>(width: CGFloat, restMidX: CGFloat,
+                                   @ViewBuilder _ content: () -> V) -> some View {
+        let factor = still ? 0 : RokkoMotion.homeParallaxCardArt
+        // Enough extra picture on each side to cover one full swipe of drift. Always the same size,
+        // so switching Calm / Standard (or Reduce Motion) only stops the drift and never re-scales
+        // the picture.
+        let reach = pageWidth * RokkoMotion.homeParallaxCardArt
+        return content()
+            .frame(width: width + reach * 2)
+            .visualEffect { [restMidX, factor, reach] view, proxy in
+                // How far the picture is from where it sits when its card is centred.
+                let moved = proxy.frame(in: .scrollView(axis: .horizontal)).midX - restMidX
+                return view.offset(x: max(-reach, min(reach, -moved * factor)))
+            }
+            .frame(width: width)
+            .clipped()
+    }
+
+    @ViewBuilder private func art(width: CGFloat, restMidX: CGFloat) -> some View {
         switch lesson.number {
         case 1:
             ZStack {
-                Image("bg_clearing").resizable().scaledToFill()
+                backdrop(width: width, restMidX: restMidX) { Image("bg_clearing").resizable().scaledToFill() }
+                // Smaller lion standing on the path, so the clearing around him shows.
                 Image(Animal.lion.imageName).resizable().scaledToFit()
-                    .padding(.horizontal, 40).padding(.vertical, 50)
-                    .offset(y: 20)
+                    .frame(width: width * 0.6)
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .padding(.bottom, 56)
             }
         case 2:
             ZStack {

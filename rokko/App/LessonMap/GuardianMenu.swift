@@ -1,6 +1,6 @@
 //
 //  GuardianMenu.swift
-//  Guardian menu: how the lesson feels, sound and Guardian's turn tips.
+//  Settings (Guardian): Calm / Standard and sound.
 //  Opened from the gear on the lesson map. Sized to its content.
 //  The developer screens (all exercises, UI/UX check) open only from DEBUG launch arguments.
 //
@@ -13,71 +13,49 @@ struct GuardianMenu: View {
     let onClose: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Header
+        VStack(alignment: .leading, spacing: 20) {
+            // Header: title and a round close button.
             HStack {
-                Text("Guardian menu")
+                Text("Settings")
                     .font(RokkoFont.fredoka(30, scales: true))
                     .foregroundStyle(RokkoColor.ink)
                     .accessibilityAddTraits(.isHeader)
                 Spacer()
-                Button("Done", action: onClose)
-                    .font(RokkoFont.nunito(20, .heavy, scales: true))
-                    .foregroundStyle(RokkoColor.teal)
-                    .frame(minWidth: 56, minHeight: 56)
-            }
-
-            MenuSection(title: "How the lesson feels") {
-                TwoWayPicker(selection: $settings.calm,
-                             options: [(true, "Calm"), (false, "Standard")])
-                    .padding(16)
-                MenuDivider()
-                Toggle(isOn: $settings.sound) {
-                    Text("Sound").font(RokkoFont.nunito(20, .semibold, scales: true))
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 18, weight: .heavy))
+                        .foregroundStyle(RokkoColor.ink)
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(RokkoColor.card))
+                        .overlay(Circle().strokeBorder(RokkoColor.mistEdge, lineWidth: 2))
+                        .frame(width: 56, height: 56)   // touch target
+                        .contentShape(Circle())
                 }
-                .tint(RokkoColor.teal)
-                .padding(.horizontal, 20)
-                .frame(minHeight: 64)
+                .buttonStyle(PressScaleStyle())
+                .accessibilityLabel("Close")
             }
 
-            MenuSection(title: "Guardian's turn") {
-                TwoWayPicker(selection: Binding(get: { settings.tipsMode },
-                                                set: { settings.tipsMode = $0 }),
-                             options: [(TipsMode.full, "Full steps"), (.short, "One line")])
-                    .padding(16)
-            }
+            TwoWayPicker(selection: $settings.calm,
+                         options: [(true, "Calm"), (false, "Standard")])
+                .accessibilityLabel("How the lesson feels")
 
+            Toggle(isOn: $settings.sound) {
+                Text("Sound").font(RokkoFont.nunito(20, .semibold, scales: true))
+            }
+            .tint(RokkoColor.teal)
+            .padding(.horizontal, 20)
+            .frame(minHeight: 60)
+            .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(RokkoColor.card))
         }
         .foregroundStyle(RokkoColor.ink)
-        .padding(32)
-        .frame(width: 560)
+        .padding(28)
+        .frame(width: 420)
         .background(RokkoColor.mistBlue)
         .presentationSizing(.fitted)
+        // The sheet's own background, so it never shows dark bands around the content.
+        .presentationBackground(RokkoColor.mistBlue)
+        .presentationCornerRadius(36)
         .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-    }
-}
-
-private struct MenuSection<Content: View>: View {
-    let title: String
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(title.uppercased())
-                .font(RokkoFont.nunito(14, .heavy, scales: true))
-                .tracking(1.1)
-                .foregroundStyle(RokkoColor.teal)
-                .padding(.leading, 4)
-            VStack(spacing: 0, content: content)
-                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(RokkoColor.card))
-        }
-        .padding(.top, 28)
-    }
-}
-
-private struct MenuDivider: View {
-    var body: some View {
-        Rectangle().fill(RokkoColor.mistEdgeSoft).frame(height: 1).padding(.leading, 20)
     }
 }
 

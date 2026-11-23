@@ -162,6 +162,18 @@ public struct EngineConfig: Decodable, Sendable {
         public let arrowBobPt: Double
         public let arrowBobMs: Double
         public let breatheSeconds: Double
+        /// Lesson map scenery: how far each layer moves per lesson swiped, as a share of the swipe.
+        /// Far hills and clouds, middle decorations, and the backdrop inside a card's picture
+        /// (the card and its character move with the finger, 1.0). None in Calm / Reduce Motion.
+        public let homeParallaxFar: Double
+        public let homeParallaxMid: Double
+        public let homeParallaxCardArt: Double
+        /// Lesson step change: the new step slides in over this long, from this share of the screen
+        /// width; the clearing behind it pans `stepParallaxBackground` of that distance (depth).
+        /// Calm / Reduce Motion: a plain cross-fade, the clearing stays still.
+        public let stepSlideMs: Double
+        public let stepSlideShare: Double
+        public let stepParallaxBackground: Double
     }
 
     public static func load(from url: URL) throws -> EngineConfig {

@@ -61,7 +61,7 @@ struct TryCheckInStep: View {
     let calm: Bool
 
     /// DEBUG: `-RokkoMoodSheet YES` opens the sheet on launch (for screenshots).
-    @State private var sheetShown = UserDefaults.standard.bool(forKey: "RokkoMoodSheet")
+    @State private var sheetShown = DebugFlag.on("RokkoMoodSheet")
 
     var body: some View {
         LessonFrame(surface: .child(calm: calm),

@@ -23,8 +23,8 @@ final class LessonCoordinator: LessonEventSink {
     enum Screen: Equatable {
         /// The step itself (film, meet, transform, Guardian's turn, play together, complete).
         case step
-        /// Lesson's first Guardian's turn, once: are the six pieces out?
-        case piecesCheck
+        /// Start of every sitting, before the lesson goes on: the Guardian gets the pieces out.
+        case getReady
         /// Game block intro line, before its first round.
         case blockIntro
         case round
@@ -46,6 +46,10 @@ final class LessonCoordinator: LessonEventSink {
     private let onExit: () -> Void
 
     private(set) var stepIndex: Int
+    /// Furthest step reached by Next; back-and-forth on the lesson path stays within it.
+    private(set) var furthestIndex: Int
+    /// Direction of the last step change (+1 forward, −1 back), for the step slide.
+    private(set) var lastMove = 1
     private(set) var screen: Screen = .step
     /// Caption of a story or Guardian line; game rounds caption themselves.
     private(set) var storyCaption: String?
@@ -59,7 +63,7 @@ final class LessonCoordinator: LessonEventSink {
     private(set) var guardianGlows = false
     var paused = false {
         didSet {
-            round?.scene.isPaused = paused
+            syncRoundSuspension()
             if paused { VoicePlayer.shared.pause() } else { VoicePlayer.shared.resume() }
             if paused { clipPlayer.pause() } else if clipPlaying, screen == .step { clipPlayer.resume() }
         }
@@ -119,22 +123,32 @@ final class LessonCoordinator: LessonEventSink {
         if let id = UserDefaults.standard.string(forKey: "RokkoLessonStep"), let i = library.lesson.index(of: id) { index = i }
         #endif
         stepIndex = index
+        furthestIndex = max(index, progress.furthestStepId.flatMap(library.lesson.index(of:)) ?? index)
     }
 
-    /// Opens the saved step. Called once, when the lesson is on screen (LessonContainer), never from
-    /// `init`: SwiftUI may build and throw away extra coordinators, and those must not play anything.
-    func start() {
+    /// Opens the lesson: first "Get these pieces ready", then (on Next) the saved step. Called once,
+    /// when the lesson is on screen (LessonContainer), never from `init`: SwiftUI may build and throw
+    /// away extra coordinators, and those must not play anything.
+    /// `getReady: false` goes straight into the step (tests, and DEBUG `-RokkoLessonStep`).
+    func start(getReady: Bool = true) {
         guard !started else { return }
         started = true
-        enterStep()
+        var showGetReady = getReady
         #if DEBUG
-        // `-RokkoCharcoalIntro animals|pieces|guardian` opens the black team intro at that stage.
+        if UserDefaults.standard.string(forKey: "RokkoLessonStep") != nil { showGetReady = false }
+        #endif
+        if showGetReady { screen = .getReady } else { enterStep() }
+        #if DEBUG
+        // `-RokkoCharcoalIntro animals|pieces` opens the black team intro at that stage.
         switch UserDefaults.standard.string(forKey: "RokkoCharcoalIntro") {
         case "animals": charcoalStage = .animals; screen = .charcoalIntro
         case "pieces": charcoalStage = .pieces; screen = .charcoalIntro
-        case "guardian": charcoalStage = .guardian; screen = .charcoalIntro
         default: break
         }
+        // `-RokkoStartRound YES` skips a game block's intro straight into its first round (screenshots).
+        if DebugFlag.on("RokkoStartRound"), screen == .blockIntro { startRound() }
+        // `-RokkoShowSummary YES` opens the end-of-lesson summary (screenshots).
+        if DebugFlag.on("RokkoShowSummary") { stopSpeaking(); screen = .summary }
         #endif
     }
 
@@ -164,33 +178,96 @@ final class LessonCoordinator: LessonEventSink {
 
     // MARK: Lesson path
 
-    /// The lesson path pill: one dot per part of the lesson (story, meet, games, break, …).
+    /// The lesson path pill: one symbol per part of the lesson (story, meet, games, break, …).
     var pathParts: (done: Int, total: Int) {
-        var parts: [String] = []
-        var current = 0
+        (pathSegments.firstIndex { $0.steps.contains(stepIndex) } ?? 0, pathSegments.count)
+    }
+
+    /// The parts of the lesson in order, each with the steps it covers.
+    var pathSegments: [LessonPathPart] {
+        var parts: [LessonPathPart] = []
+        var lastKey = ""
         var lastModule = 0
         for (i, s) in lesson.steps.enumerated() {
             let key: String
+            let kind: LessonPathPart.Kind
             switch s.kind {
-            case .film: key = "film"
-            case .meet, .transform, .guardianShow: key = "meet"
+            case .film: key = "film"; kind = .story
+            case .meet, .transform, .guardianShow: key = "meet"; kind = .meet
             case .gameBlock:
                 lastModule = s.module ?? lastModule
-                key = "game\(lastModule)"
+                key = "game\(lastModule)"; kind = .games
             // The module's Guardian's turn belongs to the games before it.
-            case .guardianModule, .charcoalIntro: key = "game\(lastModule)"
-            case .break: key = "break"
-            case .playTogether, .complete: key = "end"
+            case .guardianModule, .charcoalIntro: key = "game\(lastModule)"; kind = .games
+            case .break: key = "break"; kind = .rest
+            case .playTogether, .complete: key = "end"; kind = .finish
             }
-            if parts.last != key { parts.append(key) }
-            if i == stepIndex { current = parts.count - 1 }
+            if key != lastKey {
+                parts.append(LessonPathPart(id: parts.count, kind: kind, steps: i...i))
+                lastKey = key
+            } else if let last = parts.popLast() {
+                parts.append(LessonPathPart(id: last.id, kind: last.kind, steps: last.steps.lowerBound...i))
+            }
         }
-        return (current, parts.count)
+        return parts
+    }
+
+    // MARK: Back and forth (Guardian, lesson path)
+
+    /// The path works on every screen, breaks included: moving away from a break ends it
+    /// (its timer stops; it is not counted as taken).
+    private var canNavigate: Bool { true }
+
+    /// ‹ on the lesson path: the step before this one. Works while a clip plays (it stops it).
+    var canGoBack: Bool { canNavigate && stepIndex > 0 }
+
+    /// › on the lesson path: the next step. The Guardian may skip ahead (DECISIONS, 23 Nov 2026),
+    /// even past steps not reached yet and while a clip plays.
+    var canGoForward: Bool { canNavigate && stepIndex < lesson.steps.count - 1 }
+
+    /// Any other part of the path opens on tap, back or ahead.
+    func canOpen(_ part: LessonPathPart) -> Bool {
+        canNavigate && !part.steps.contains(stepIndex)
+    }
+
+    func goBack() {
+        guard canGoBack else { return }
+        go(to: stepIndex - 1)
+    }
+
+    func goForward() {
+        guard canGoForward else { return }
+        go(to: stepIndex + 1)
+    }
+
+    /// Opens the first step of a part the Guardian tapped on the lesson path.
+    func open(_ part: LessonPathPart) {
+        guard canOpen(part) else { return }
+        go(to: part.steps.lowerBound)
+    }
+
+    private func go(to index: Int) {
+        guard index != stepIndex, lesson.steps.indices.contains(index) else { return }
+        leaveBreakState()
+        lastMove = index > stepIndex ? 1 : -1
+        let leavingBlock = step.kind == .gameBlock
+        let resumesFurthest = index == furthestIndex
+        stepIndex = index
+        // Skipped ahead: the furthest step moves with it.
+        if index > furthestIndex {
+            furthestIndex = index
+            progress.furthestStepId = step.id
+        }
+        // A game block opened from the path is a fresh block (rounds already played were counted),
+        // except the block in progress at the furthest step, which picks up where it was.
+        if step.kind == .gameBlock, leavingBlock || !resumesFurthest { planner = PlannerState() }
+        enterStep(navigated: true)
     }
 
     // MARK: Steps
 
-    private func enterStep() {
+    /// `navigated`: opened with the lesson path, not reached by Next.
+    private func enterStep(navigated: Bool = false) {
         stopSpeaking()
         clipTask?.cancel()
         clipPlayer.stop()
@@ -210,13 +287,13 @@ final class LessonCoordinator: LessonEventSink {
         case .transform:
             playClip(step.clip) { [weak self] in self?.speak(self?.step.voice ?? []) }
         case .guardianShow:
-            if settings.needsPiecesReminder { screen = .piecesCheck }
+            break
         case .guardianModule, .complete:
             if step.kind == .complete { speak(step.voice) }
         case .playTogether:
             speak(step.voice)
         case .gameBlock:
-            enterBlock()
+            enterBlock(navigated: navigated)
         case .charcoalIntro:
             playClip(step.clip) { [weak self] in self?.speak(self?.step.voice ?? []) }
         case .break:
@@ -227,7 +304,12 @@ final class LessonCoordinator: LessonEventSink {
 
     private func advanceStep() {
         guard stepIndex + 1 < lesson.steps.count else { exit(); return }
+        lastMove = 1
         stepIndex += 1
+        if stepIndex > furthestIndex {
+            furthestIndex = stepIndex
+            progress.furthestStepId = step.id
+        }
         enterStep()
     }
 
@@ -240,10 +322,8 @@ final class LessonCoordinator: LessonEventSink {
         case .step:
             if step.kind == .complete { stopSpeaking(); screen = .summary; return }
             advanceStep()
-        case .piecesCheck:
-            settings.piecesReminderShown = true
-            save()
-            screen = .step
+        case .getReady:
+            enterStep()
         case .blockIntro:
             startRound()
         case .round:
@@ -256,8 +336,6 @@ final class LessonCoordinator: LessonEventSink {
                 speak([VoiceKeys.charcoalPieces])
             case .pieces:
                 stopSpeaking()
-                charcoalStage = .guardian
-            case .guardian:
                 progress.charcoalIntroSeen = true
                 save()
                 buildRound()
@@ -301,8 +379,7 @@ final class LessonCoordinator: LessonEventSink {
             case .guardianShow, .guardianModule, .playTogether: return .done
             default: return .next
             }
-        case .piecesCheck, .breakRunning, .summary: return .done
-        case .charcoalIntro where charcoalStage == .guardian: return .done
+        case .breakRunning, .summary: return .done
         default: return .next
         }
     }
@@ -314,8 +391,8 @@ final class LessonCoordinator: LessonEventSink {
 
     var isGuardianSurface: Bool {
         switch screen {
-        case .piecesCheck, .sittingFull, .breakPicker, .summary: return true
-        case .charcoalIntro: return charcoalStage == .guardian
+        case .getReady, .sittingFull, .breakPicker, .summary: return true
+        case .charcoalIntro: return false
         case .step: return [.guardianShow, .guardianModule, .playTogether].contains(step.kind)
         default: return false
         }
@@ -326,7 +403,10 @@ final class LessonCoordinator: LessonEventSink {
         exit()
     }
 
+    @ObservationIgnored private var exited = false
+
     private func exit() {
+        exited = true
         stopSpeaking()
         clipTask?.cancel()
         clipPlayer.stop()
@@ -376,13 +456,15 @@ final class LessonCoordinator: LessonEventSink {
 
     private func speak(_ keys: [String]) {
         stopSpeaking()
-        let lines = keys.compactMap { library.caption($0) }
+        // Index by key, so a key without a caption never shifts the captions of the lines after it.
+        let captions = keys.map { library.caption($0) }
+        let lines = captions.compactMap { $0 }
         guard let first = lines.first else { return }
         storyCaption = first
         // Recorded lines: each caption shows while its line plays.
         let played = VoicePlayer.shared.play(keys, gapSeconds: config.story.voiceGapMs / 1000,
                                              onLine: { [weak self] i in
-                                                 if i < lines.count { self?.storyCaption = lines[i] }
+                                                 if captions.indices.contains(i), let line = captions[i] { self?.storyCaption = line }
                                              })
         guard !played, lines.count > 1 else { return }
         // No recording yet: lines follow each other on a timer.
@@ -442,8 +524,15 @@ final class LessonCoordinator: LessonEventSink {
     private var gate: EngineConfig.Gate? { step.gate.flatMap { config.gates[$0] } }
     private func known(_ s: Skill) -> Double { learner.known(s) }
 
-    private func enterBlock() {
-        if library.planner.blockEnds(module: module, gate: gate, state: planner, known: known) {
+    private func enterBlock(navigated: Bool = false) {
+        // Opened again from the lesson path after its gate was met: show the block and wait for
+        // Next (nothing moves on by itself); otherwise a resumed, finished block moves on.
+        if navigated, let intro = step.intro {
+            screen = .blockIntro
+            speak([intro])
+            return
+        }
+        if !navigated, library.planner.blockEnds(module: module, gate: gate, state: planner, known: known) {
             // Resumed after the gate was already met.
             endBlock()
             return
@@ -480,7 +569,7 @@ final class LessonCoordinator: LessonEventSink {
     private var charcoalIntro: LessonStep? { lesson.inserted.values.first { $0.kind == .charcoalIntro } }
 
     /// What the black team intro is showing.
-    enum CharcoalStage { case animals, pieces, guardian }
+    enum CharcoalStage { case animals, pieces }
     private(set) var charcoalStage: CharcoalStage = .animals
 
     private func nextRoundShowsBlack() -> Bool {
@@ -564,14 +653,6 @@ final class LessonCoordinator: LessonEventSink {
         advanceStep()
     }
 
-    #if DEBUG
-    /// Developer only: ends this round now (no BKT update for what is left) and moves on.
-    func devSkipRound() {
-        guard screen == .round else { return }
-        finishRound()
-    }
-    #endif
-
     /// Sitting full: "Stop here for today" (resume in this block next time) or "Keep going".
     func stopForToday() { exit() }
 
@@ -596,7 +677,8 @@ final class LessonCoordinator: LessonEventSink {
             breakIsPlanned = false
             Task { @MainActor [weak self] in
                 try? await Task.sleep(for: .seconds(RokkoMotion.moodSheetCloseDelay))
-                self?.openBreakPicker()
+                guard let self, !self.exited else { return }
+                self.openBreakPicker()
             }
         }
         save()
@@ -604,13 +686,22 @@ final class LessonCoordinator: LessonEventSink {
 
     // MARK: Breaks (FR-28, FR-29)
 
+    private var onBreak: Bool { [.breakPicker, .breakRunning, .breakEnd].contains(screen) }
+
+    /// The round (scene, hint timers, its voice lines) holds still while paused or on a break.
+    private func syncRoundSuspension() {
+        let hold = paused || onBreak
+        round?.scene.isPaused = hold
+        round?.isSuspended = hold
+    }
+
     private func openBreakPicker() {
-        if screen != .breakPicker && screen != .breakRunning && screen != .breakEnd { screenBeforeBreak = screen }
-        round?.scene.isPaused = true
+        if !onBreak { screenBeforeBreak = screen }
         clipPlayer.pause()
         stopSpeaking()
         breakMinutes = config.breaks.defaultMinutes
         screen = .breakPicker
+        syncRoundSuspension()
     }
 
     private func startBreak() {
@@ -665,6 +756,16 @@ final class LessonCoordinator: LessonEventSink {
         speak([VoiceKeys.breakEnd])
     }
 
+    /// Drops a break in progress without finishing it (the Guardian moved on with the path).
+    private func leaveBreakState() {
+        breakTask?.cancel()
+        breakTask = nil
+        breakEnds = nil
+        breakStarted = nil
+        breakIsPlanned = false
+        screenBeforeBreak = nil
+    }
+
     private func leaveBreak() {
         stopSpeaking()
         if breakIsPlanned {
@@ -675,8 +776,8 @@ final class LessonCoordinator: LessonEventSink {
         // Back exactly where the Guardian asked for the break.
         let back = screenBeforeBreak ?? .step
         screenBeforeBreak = nil
-        round?.scene.isPaused = false
         screen = back
+        syncRoundSuspension()
         if back == .step, clipPlaying { clipPlayer.resume() }
         if back == .step, step.kind == .meet || step.kind == .transform { speak(step.voice) }
         if back == .blockIntro, let intro = step.intro { speak([intro]) }
@@ -684,28 +785,38 @@ final class LessonCoordinator: LessonEventSink {
 
     // MARK: Summary (words only, FR-32)
 
-    var summaryLines: [String] {
+    /// The Guardian's report at the end of the lesson, from what is saved on this iPad: each skill's
+    /// BKT estimate (in words) and the recorded answers (SessionEvents) behind it.
+    var summary: LessonSummary {
         let mastered = config.levels.mastered
         let midway = config.gates["module2"]?.min ?? 0.6
-        var lines = Piece.allCases.map { piece -> String in
-            let p = known(Skill(piece))
-            if p >= mastered { return "Knows the \(piece.displayName) well" }
-            if p >= midway { return "Is getting to know the \(piece.displayName)" }
-            return "Still learning the \(piece.displayName)"
+        func level(_ p: Double) -> LessonSummary.Level {
+            p >= mastered ? .knows : (p >= midway ? .growing : .learning)
         }
-        if config.gates["lessonComplete"]?.skills.contains(.colour) == true {
-            lines.append(known(.colour) >= mastered ? "Tells the white and black teams apart" : "Still learning the two teams")
+        let events = (try? context.fetch(FetchDescriptor<SessionEvent>())) ?? []
+        let bySkill = Dictionary(grouping: events, by: \.skillRaw)
+        func counts(_ skill: Skill) -> (tries: Int, firstGo: Int, withHelp: Int) {
+            let rows = (bySkill[skill.rawValue] ?? []).filter { $0.outcome != "ignored" }
+            return (rows.count,
+                    rows.filter { $0.outcome == "correct" && $0.hintLevel == 0 }.count,
+                    rows.filter { $0.hintLevel > 0 }.count)
         }
-        // Team make-up only when the shelf game is played (it is the only game that teaches it).
-        if config.gates["lessonComplete"]?.skills.contains(.teamMakeup) == true {
-            lines.append(known(.teamMakeup) >= mastered ? "Knows the pieces of a team" : "Still learning what is in a team")
+        let pieces = Piece.allCases.map { piece -> LessonSummary.PieceRow in
+            let c = counts(Skill(piece))
+            return .init(piece: piece, level: level(known(Skill(piece))),
+                         tries: c.tries, firstGo: c.firstGo, withHelp: c.withHelp)
         }
-        switch progress.breaksTaken {
-        case 0: lines.append("No breaks taken")
-        case 1: lines.append("Took one break")
-        default: lines.append("Took \(progress.breaksTaken) breaks")
+        let complete = config.gates["lessonComplete"]?.skills ?? []
+        var extras: [LessonSummary.Extra] = []
+        if complete.contains(.colour) {
+            extras.append(.init(title: "White and black", level: level(known(.colour)), tries: counts(.colour).tries))
         }
-        return lines
+        if complete.contains(.teamMakeup) {
+            extras.append(.init(title: "A whole team", level: level(known(.teamMakeup)), tries: counts(.teamMakeup).tries))
+        }
+        let days = Set(events.map { Calendar.current.startOfDay(for: $0.time) }).count
+        return LessonSummary(pieces: pieces, extras: extras, answers: events.count,
+                             days: days, breaks: progress.breaksTaken)
     }
 
     // MARK: Saving
@@ -749,4 +860,88 @@ enum BreakActivity: String, CaseIterable, Identifiable {
         case .ownIdea: nil
         }
     }
+}
+
+/// One part of the lesson path: a run of steps of the same kind.
+struct LessonPathPart: Identifiable, Equatable {
+    enum Kind: Equatable {
+        case story, meet, games, rest, finish
+
+        /// SF Symbol on the path.
+        var symbol: String {
+            switch self {
+            case .story: "play.rectangle.fill"
+            case .meet: "pawprint.fill"
+            case .games: "puzzlepiece.fill"
+            case .rest: "cup.and.saucer.fill"
+            case .finish: "flag.checkered"
+            }
+        }
+
+        /// VoiceOver name for the Guardian.
+        var title: String {
+            switch self {
+            case .story: "Story"
+            case .meet: "Meet the animals"
+            case .games: "Games"
+            case .rest: "Break"
+            case .finish: "Play together"
+            }
+        }
+    }
+
+    let id: Int
+    let kind: Kind
+    let steps: ClosedRange<Int>
+}
+
+/// What the end-of-lesson report shows (Guardian only; the child never sees it).
+struct LessonSummary {
+    enum Level {
+        case learning, growing, knows
+
+        var words: String {
+            switch self {
+            case .learning: "Still learning"
+            case .growing: "Getting there"
+            case .knows: "Knows it well"
+            }
+        }
+
+        /// Filled steps on the 3-step meter.
+        var steps: Int {
+            switch self {
+            case .learning: 1
+            case .growing: 2
+            case .knows: 3
+            }
+        }
+    }
+
+    struct PieceRow: Identifiable {
+        let piece: Piece
+        let level: Level
+        /// Answers counted (fast taps the engine ignores are left out).
+        let tries: Int
+        /// Right on the first go, no hint.
+        let firstGo: Int
+        /// Answers that needed a hint.
+        let withHelp: Int
+        var id: Piece { piece }
+    }
+
+    struct Extra: Identifiable {
+        let title: String
+        let level: Level
+        let tries: Int
+        var id: String { title }
+    }
+
+    let pieces: [PieceRow]
+    let extras: [Extra]
+    /// All recorded answers.
+    let answers: Int
+    /// Days with at least one answer.
+    let days: Int
+    let breaks: Int
 }

@@ -12,31 +12,10 @@ import Observation
 final class OnboardingViewModel {
 
     enum Step: Int, CaseIterable, Sendable {
-        case welcome, chess, look, tryGuardian, tryCheckIn, ready
+        case welcome, look, tryGuardian, tryCheckIn, ready
     }
 
     enum Look: String, Sendable { case calm, standard }
-
-    enum ChessExperience: String, CaseIterable, Sendable {
-        case notYet, aLittle, yes
-
-        var title: String {
-            switch self {
-            case .notYet: "Not yet"
-            case .aLittle: "A little"
-            case .yes: "Yes"
-            }
-        }
-
-        /// Piece shown on the option tile: the more you play, the bigger the piece.
-        var imageName: String {
-            switch self {
-            case .notYet: "piece_pawn_ivory"
-            case .aLittle: "piece_knight_ivory"
-            case .yes: "piece_king_ivory"
-            }
-        }
-    }
 
     enum Piece: String, CaseIterable, Identifiable, Sendable {
         case king, rook, knight, queen, bishop, pawn   // story order
@@ -48,14 +27,12 @@ final class OnboardingViewModel {
     /// What first-run setup writes to SwiftData.
     struct Result: Equatable, Sendable {
         var calm: Bool
-        var tipsMode: TipsMode
     }
 
     // MARK: State
 
     private(set) var step: Step = .welcome
     var look: Look?
-    var chess: ChessExperience?
     /// tryGuardian: the guardian tapped Next on the Guardian's turn.
     var tryGuardianDone = false
     /// tryCheckIn: picked in the practice mood sheet. Not saved.
@@ -65,13 +42,13 @@ final class OnboardingViewModel {
 
     // MARK: Progress
 
-    /// Steps counted in "Step N of 4" (welcome and ready sit outside).
-    static let countedSteps: [Step] = [.chess, .look, .tryGuardian, .tryCheckIn]
+    /// Steps counted in "Step N of 3" (welcome and ready sit outside).
+    static let countedSteps: [Step] = [.look, .tryGuardian, .tryCheckIn]
 
-    /// 1…4 for counted steps, nil for welcome and ready.
+    /// 1…3 for counted steps, nil for welcome and ready.
     var progressNumber: Int? { Self.countedSteps.firstIndex(of: step).map { $0 + 1 } }
 
-    /// "2 of 4": short progress, for VoiceOver and compact spots.
+    /// "2 of 3": short progress, for VoiceOver and compact spots.
     var progressShort: String {
         progressNumber.map { "\($0) of \(Self.countedSteps.count)" } ?? ""
     }
@@ -83,8 +60,8 @@ final class OnboardingViewModel {
 
     var showsBack: Bool { step != .welcome && step != .ready }
     var showsSkip: Bool { step != .ready }
-    /// Skip only works once the two answers that change the app are in: chess experience and look.
-    var canSkip: Bool { showsSkip && chess != nil && look != nil }
+    /// Skip only works once the answer that changes the app is in: the look.
+    var canSkip: Bool { showsSkip && look != nil }
     var showsTopBar: Bool { step != .ready }
 
     /// Steps that show the real app (below the setup bar), with a coach bubble.
@@ -96,7 +73,6 @@ final class OnboardingViewModel {
         switch step {
         case .welcome, .ready: true
         case .look: look != nil
-        case .chess: chess != nil
         case .tryGuardian: tryGuardianDone
         case .tryCheckIn: practiceMood != nil
         }
@@ -134,7 +110,7 @@ final class OnboardingViewModel {
     /// Pause before auto-advancing: long enough to see the result (and read the mood reply).
     var autoAdvanceDelay: Double { 2.6 }
 
-    /// Jumps to ready, once chess and look are answered (the practice steps can be skipped).
+    /// Jumps to ready, once the look is answered (the practice steps can be skipped).
     func skip() {
         guard canSkip else { return }
         step = .ready
@@ -142,24 +118,19 @@ final class OnboardingViewModel {
 
     // MARK: Answers → saved values
 
-    var tipsMode: TipsMode {
-        switch chess {
-        case .aLittle, .yes: .short
-        case .notYet, nil: .full
-        }
-    }
+    /// Guardian's turns always show their full steps (the tips choice was removed, 23 Nov 2026).
+    var tipsMode: TipsMode { .full }
 
     var result: Result {
-        Result(calm: (look ?? .calm) == .calm,
-               tipsMode: tipsMode)
+        Result(calm: (look ?? .calm) == .calm)
     }
 
-    /// Writes the result and marks setup done. Pieces aren't asked here: the lesson shows the
-    /// pieces checklist once before its first Guardian's turn (AppSettings.needsPiecesReminder).
+    /// Writes the result and marks setup done. Pieces aren't asked here: every lesson opens with
+    /// "Get these pieces ready".
     func save(to settings: AppSettings) {
         let r = result
         settings.calm = r.calm
-        settings.tipsMode = r.tipsMode
+        settings.tipsMode = .full
         settings.onboardingDone = true
     }
 
@@ -170,7 +141,6 @@ final class OnboardingViewModel {
 
     var summaryChips: [String] {
         let r = result
-        return [r.calm ? "Calm look" : "Standard look",
-                r.tipsMode == .full ? "Full tips" : "Short tips"]
+        return [r.calm ? "Calm look" : "Standard look"]
     }
 }

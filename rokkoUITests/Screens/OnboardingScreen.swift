@@ -12,7 +12,7 @@ struct OnboardingScreen {
 
     // MARK: Elements
 
-    /// The big "Next" / "Start Lesson 1" pill on the page steps (welcome, chess, ready).
+    /// The big "Next" / "Start Lesson 1" pill on the page steps (welcome, ready).
     var continueButton: XCUIElement { app.buttons["onboarding.continue"] }
     /// The lesson frame's Next, used by the full-screen steps (look, tryGuardian).
     var lessonNextButton: XCUIElement { app.buttons["lesson.next"] }
@@ -22,11 +22,10 @@ struct OnboardingScreen {
     var progress: XCUIElement { app.descendants(matching: .any)["onboarding.progress"] }
 
     var welcomeTitle: XCUIElement { app.staticTexts["Learn chess, side by side."] }
-    var chessTitle: XCUIElement { app.staticTexts["Do you play chess?"] }
     var lookQuestion: XCUIElement { app.anything(containing: "How do busy screens feel?") }
     var readyTitle: XCUIElement { app.staticTexts["You're ready."] }
 
-    /// "Not yet", "A little", "Yes" (chess) or "Calm", "Standard" (look).
+    /// "Calm", "Standard" (look).
     func option(_ title: String) -> XCUIElement { app.buttons[title] }
 
     // MARK: Actions
@@ -36,19 +35,6 @@ struct OnboardingScreen {
     func waitForWelcome(file: StaticString = #filePath, line: UInt = #line) -> Self {
         XCTAssertTrue(welcomeTitle.waitForExistence(timeout: RokkoUITestCase.screenTimeout),
                       "Welcome page never appeared", file: file, line: line)
-        return self
-    }
-
-    @discardableResult
-    func goToChess() -> Self {
-        continueButton.tap()
-        XCTAssertTrue(chessTitle.waitForExistence(timeout: 3), "Chess question did not appear")
-        return self
-    }
-
-    @discardableResult
-    func chooseChess(_ answer: String) -> Self {
-        option(answer).tap()
         return self
     }
 

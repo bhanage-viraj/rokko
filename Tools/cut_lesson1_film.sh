@@ -5,12 +5,12 @@
 #
 #   Tools/cut_lesson1_film.sh [source.mp4]
 #
-# Source default: Media/Source/Lesson1_The_Day_the_Jungle_Changed_v6.mp4
+# Source default: Media/Source/Lesson1_The_Day_the_Jungle_Changed_v7.mp4
 # Output:         rokko/Resources/Video/L1_<nn>_<name>.mp4 (ids match Content/Lesson1/manifest.json)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-SRC="${1:-Media/Source/Lesson1_The_Day_the_Jungle_Changed_v6.mp4}"
+SRC="${1:-Media/Source/Lesson1_The_Day_the_Jungle_Changed_v7.mp4}"
 OUT="rokko/Resources/Video"
 mkdir -p "$OUT"
 
