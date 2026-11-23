@@ -16,10 +16,16 @@ struct OnboardingTopBar: View {
 
     var body: some View {
         HStack(spacing: 22) {
-            GuardianIconButton(systemName: "chevron.left", label: "Back") { model.back() }
-                .opacity(model.showsBack ? 1 : 0)
-                .disabled(!model.showsBack)
-                .accessibilityHidden(!model.showsBack)
+            // First page: the slot keeps its place, but no Back button exists (not even a hidden one,
+            // which VoiceOver and UI tests can still find).
+            if model.showsBack {
+                GuardianIconButton(systemName: "chevron.left", label: "Back") { model.back() }
+            } else {
+                GuardianIconButton(systemName: "chevron.left", label: "Back") {}
+                    .hidden()
+                    .disabled(true)
+                    .accessibilityHidden(true)
+            }
 
             HStack(spacing: 8) {
                 ForEach(Array(OnboardingViewModel.countedSteps.enumerated()), id: \.offset) { index, _ in

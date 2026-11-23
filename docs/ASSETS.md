@@ -79,7 +79,7 @@ Still frame from each animal's transformation clip (the moment the piece shape i
 | `pip_glide.png` | have |
 
 ## 7. Video: not in this list
-**Opening film (delivered 17 Nov, v5 19 Nov):** "The Day the Jungle Changed", 1920×1080, 24 fps, cut into 8 clips by `Tools/cut_lesson1_film.sh` from `Media/Source/Lesson1_The_Day_the_Jungle_Changed_v6.mp4` (source not shipped). v6 is animated from the original character art split into rig layers (`Tools/film/rokkoparts.py`), keyframed in Figma (file "Rokko – Lesson 1 Animals (animation)") and played by `Tools/film/rokkoplayer.py` and living scenery (`Tools/film/life.py`: wind, light, pollen, butterflies); scene times are the same as v2, so the subtitle files are unchanged:
+**Opening film (delivered 17 Nov, v6 19 Nov):** "The Day the Jungle Changed", 1920×1080, 24 fps, cut into 8 clips by `Tools/cut_lesson1_film.sh` from `Media/Source/Lesson1_The_Day_the_Jungle_Changed_v6.mp4` (source not shipped). v6 is animated from the original character art split into rig layers (`Tools/film/rokkoparts.py`), keyframed in Figma (file "Rokko – Lesson 1 Animals (animation)") and played by `Tools/film/rokkoplayer.py` and living scenery (`Tools/film/life.py`: wind, light, pollen, butterflies); scene times are the same as v2, so the subtitle files are unchanged:
 `Resources/Video/L1_01_story.mp4`, `L1_02_kings`, `L1_03_queens`, `L1_04_elephants`, `L1_05_kangaroos`, `L1_06_horses`, `L1_07_squirrels`, `L1_08_ending` (.mp4). One file serves Calm and Standard.
 Subtitles: `Content/Lesson1/Subtitles/<clip>.subtitles.json` (times relative to the clip start), named in `manifest.json › subtitles`.
 

@@ -4,8 +4,8 @@
 //  blocks (RoundPlanner → LevelSelector → RoundGenerator → RoundController), BKT, mood, breaks and
 //  saving. Nothing advances on its own: every step waits for the Guardian's tap.
 //
-//  Videos are not delivered yet: a clip's slot stays blank for `story.clipPlaceholderSeconds`
-//  (ClipSlot), then the step carries on as if it had played.
+//  Clips (manifest.json) play in ClipPlayer; Calm and Reduce Motion get the calm file. A clip the
+//  manifest names but the bundle lacks waits `story.clipPlaceholderSeconds` (0 = goes straight on).
 //
 
 import AVFoundation
@@ -340,10 +340,13 @@ final class LessonCoordinator: LessonEventSink {
 
     private func playClip(_ id: String?, then: (() -> Void)?) {
         clipTask?.cancel()
+        // Again on a transformation: its line must not talk over the replayed clip.
+        stopSpeaking()
         clipPlaying = true
         clipSubtitles = id.flatMap(library.subtitles(for:))
         // Delivered clip: play it; the lesson waits for its end (and then for Next).
-        if let id, let url = library.clipURL(id, calm: calm) {
+        // Calm mode, a wobbly mood and iOS Reduce Motion all get the calm file (a plain cross-fade).
+        if let id, let url = library.clipURL(id, calm: calm || reduceMotion) {
             let still = library.manifest.clip(id)?.endStill
             clipPlayer.play(url, muted: !settings.sound) { [weak self] in
                 guard let self else { return }

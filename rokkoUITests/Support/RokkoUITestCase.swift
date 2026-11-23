@@ -20,15 +20,17 @@ class RokkoUITestCase: XCTestCase {
     /// - Parameters:
     ///   - screen: `"lessonMap"` or `"lesson"` to jump straight there (DEBUG launch argument).
     ///   - onboardingStep: an `OnboardingViewModel.Step` name, e.g. `"look"`, to open setup at that step.
+    ///   - lessonStep: a lesson1.json step id, e.g. `"transform_king"`, to open the lesson there (with `screen: "lesson"`).
     @MainActor
     @discardableResult
-    func launchApp(screen: String? = nil, onboardingStep: String? = nil) -> XCUIApplication {
+    func launchApp(screen: String? = nil, onboardingStep: String? = nil, lessonStep: String? = nil) -> XCUIApplication {
         XCUIDevice.shared.orientation = .landscapeLeft   // Rokko is landscape only
         let app = XCUIApplication()
         // "-Key Value" pairs land in UserDefaults inside the app (see rokkoApp.isUITesting).
         app.launchArguments += ["-RokkoUITesting", "YES"]
         if let screen { app.launchArguments += ["-RokkoScreen", screen] }
         if let onboardingStep { app.launchArguments += ["-RokkoOnboardingStep", onboardingStep] }
+        if let lessonStep { app.launchArguments += ["-RokkoLessonStep", lessonStep] }
         app.launch()
         return app
     }

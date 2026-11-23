@@ -4,6 +4,7 @@
 //  in docs/EXERCISES.md. Run after editing any JSON.
 //
 
+import AVFoundation
 import Foundation
 import Testing
 @testable import RokkoContent
@@ -299,6 +300,27 @@ struct FilmTests {
             }
             let still = try #require(clip.endStill, "\(clip.id): no endStill")
             #expect(still > 0 && still < (clip.seconds ?? 0), "\(clip.id): endStill outside the clip")
+        }
+    }
+
+    /// manifest.json against the real files: a film clip's "seconds" is its length (3 decimals), the
+    /// transformation's is the Standard file's, and "endStill" falls inside every version of the clip.
+    @Test func manifestTimesMatchTheVideoFiles() async throws {
+        let roundingSlack = 0.002   // 3 decimals, and AVFoundation rounds ~1 ms off ffprobe; a stale value is ≥ 1 frame off
+        let manifest = try LessonStepTests.manifest
+        let lesson = try LessonStepTests.lesson
+        let ids = Set(lesson.steps.filter { $0.kind == .film || $0.kind == .transform }.compactMap(\.clip))
+        for clip in manifest.clips where ids.contains(clip.id) {
+            let seconds = try #require(clip.seconds, "\(clip.id): no seconds")
+            let still = try #require(clip.endStill, "\(clip.id): no endStill")
+            for (version, file) in clip.files {
+                let url = Self.video.appendingPathComponent(file)
+                let length = try await AVURLAsset(url: url).load(.duration).seconds
+                #expect(still < length, "\(clip.id) \(version): endStill \(still) is past the end of \(file) (\(length) s)")
+                if version == "standard" {
+                    #expect(abs(length - seconds) <= roundingSlack, "\(clip.id): seconds \(seconds), but \(file) is \(length) s")
+                }
+            }
         }
     }
 

@@ -8,7 +8,7 @@ on the clip's audio and writes, for each cue, the stretches of speech inside it:
 
 The app reveals a line word by word across these stretches only, so words appear as they are said
 and wait through the pauses. Also writes each clip's "endStill": the last bright frame before the
-fade, shown (dimmed, with "Finished") when the clip has ended.
+fade, shown (dimmed, with "Finished") when the clip has ended, and its real "seconds" (ffprobe).
 
     python3 -I Tools/subtitle_speech_spans.py
 Re-run after replacing a clip or editing subtitle times.
@@ -26,7 +26,7 @@ VIDEO = ROOT / "rokko/Resources/Video"
 NOISE_DB = -35      # quieter than this counts as a pause
 MIN_PAUSE = 0.12    # shorter dips are breaths inside a word
 MIN_SPEECH = 0.08   # drop speech slivers shorter than this
-BRIGHT_SHARE = 0.9  # endStill: last frame at least this bright vs the closing scene
+FADE_STEP = 0.98   # endStill: inside the closing fade each frame is darker than this share of the one before
 
 
 def mmss(s: str) -> float:
@@ -58,14 +58,26 @@ def speech_in(a: float, b: float, quiet: list[tuple[float, float]]) -> list[list
     return spans or [[round(a, 3), round(b, 3)]]
 
 
+def duration_of(path: Path) -> float:
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
+                         capture_output=True, text=True).stdout
+    return round(float(out), 3)
+
+
 def end_still(path: Path, duration: float) -> float:
     err = subprocess.run(["ffmpeg", "-hide_banner", "-sseof", "-6", "-i", str(path), "-an",
                           "-vf", "signalstats,metadata=print:key=lavfi.signalstats.YAVG", "-f", "null", "-"],
                          capture_output=True, text=True).stderr
     ts = [float(x) for x in re.findall(r"pts_time:([0-9.]+)", err)]
     ys = [float(x) for x in re.findall(r"YAVG=([0-9.]+)", err)]
-    peak = max(ys)
-    last = max(t for t, y in zip(ts, ys) if y >= BRIGHT_SHARE * peak)
+    # From the last frame, skip any flat dark tail, then walk back through the fade:
+    # the frame just before it is the still.
+    i = len(ys) - 1
+    while i > 0 and ys[i] < 0.5 * max(ys) and ys[i] >= FADE_STEP * ys[i - 1]:
+        i -= 1
+    while i > 0 and ys[i] < FADE_STEP * ys[i - 1]:
+        i -= 1
+    last = ts[i]
     return round(max(0.0, duration - 6 + last), 3)
 
 
@@ -77,6 +89,7 @@ def main() -> int:
         video = VIDEO / clip["files"]["standard"]
         if not sub or not video.exists():
             continue
+        clip["seconds"] = duration_of(video)   # the real file, never a stale number
         clip["endStill"] = end_still(video, clip["seconds"])
         path = CONTENT / "Subtitles" / sub
         doc = json.loads(path.read_text())

@@ -14,7 +14,7 @@
       "seconds": 76.583,
       "subtitles": "L1_01_story.subtitles.json",
       "status": "delivered",
-      "endStill": 76.166
+      "endStill": 76.125
     },
     {
       "id": "L1_02_kings",
@@ -22,10 +22,10 @@
         "calm": "L1_02_kings.mp4",
         "standard": "L1_02_kings.mp4"
       },
-      "seconds": 37.583,
+      "seconds": 37.542,
       "subtitles": "L1_02_kings.subtitles.json",
       "status": "delivered",
-      "endStill": 37.083
+      "endStill": 37.084
     },
     {
       "id": "L1_03_queens",
@@ -58,7 +58,7 @@
       "seconds": 14.333,
       "subtitles": "L1_05_kangaroos.subtitles.json",
       "status": "delivered",
-      "endStill": 13.833
+      "endStill": 13.875
     },
     {
       "id": "L1_06_horses",
@@ -66,10 +66,10 @@
         "calm": "L1_06_horses.mp4",
         "standard": "L1_06_horses.mp4"
       },
-      "seconds": 14.417,
+      "seconds": 14.375,
       "subtitles": "L1_06_horses.subtitles.json",
       "status": "delivered",
-      "endStill": 14.0
+      "endStill": 13.917
     },
     {
       "id": "L1_07_squirrels",
@@ -80,7 +80,7 @@
       "seconds": 24.167,
       "subtitles": "L1_07_squirrels.subtitles.json",
       "status": "delivered",
-      "endStill": 23.75
+      "endStill": 23.709
     },
     {
       "id": "L1_08_ending",
@@ -88,10 +88,10 @@
         "calm": "L1_08_ending.mp4",
         "standard": "L1_08_ending.mp4"
       },
-      "seconds": 16.583,
+      "seconds": 16.542,
       "subtitles": "L1_08_ending.subtitles.json",
       "status": "delivered",
-      "endStill": 16.166
+      "endStill": 16.084
     },
     {
       "id": "L1_TR_KING",
