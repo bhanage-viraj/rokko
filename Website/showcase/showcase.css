@@ -196,3 +196,7 @@ html:not(.kiosk) .panel { scroll-snap-align: start; }
 .board b { top: calc(100% + var(--u) * 1.4); }
 .p2 { background: #1B231F url("../media/story-poster.jpg") center / cover; }
 @media (max-aspect-ratio: 1/1) { .finale > .beat:first-child h1 { white-space: normal; } }
+/* Relevant zooms: the question bar on the game, the Calm / Standard setting */
+.kb-question { --o: 8% 96%; --z: 2.2; }
+.kb-calm { --o: 50% 46%; --z: 2.3; }
+.kb-question { --o: 0% 100%; --z: 2; }
