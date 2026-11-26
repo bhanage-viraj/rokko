@@ -4,129 +4,154 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rokko — showcase</title>
-  <meta name="description" content="Rokko in five screens: chess for autistic children through story, touch and a real board.">
+  <meta name="description" content="Rokko in five chapters: chess for autistic children through story, touch and a real board.">
   <link rel="icon" href="../assets/favicon.png">
   <link rel="stylesheet" href="showcase.css">
 </head>
 <!--
-  Five monitors, left to right:  showcase/?screen=1  …  showcase/?screen=5   (one panel each, full screen)
-  One monitor:                    showcase/?screen=all  (shows each panel in turn)
-  In a browser:                   showcase/             (all five panels as a scrolling page)
-  Keys in kiosk mode: 1–5 switch panel, F full screen, A cycle all. Works offline from the folder.
+  Booth wall, five monitors left to right:  showcase/?screen=1 … showcase/?screen=5   (press F for full screen)
+  One monitor:                                showcase/?screen=all  (plays the five chapters in turn)
+  Browser:                                    showcase/             (the five chapters as full-screen pages)
+  Every screen runs the same 24-second clock, so the whole wall tells the story together.
+  Each chapter is a sequence of beats: <… class="beat" data-at="s" data-until="s">, seconds into the cycle.
+  Keys: 1–5 chapter, A all, F full screen. Works offline from the folder.
 -->
 <body>
-  <!-- 1 · Rokko -->
+
+  <!-- 1 · Once upon a time / Every day -->
   <section class="panel p1" data-screen="1">
-    <div class="copy">
-      <div class="brand"><img src="../assets/icon.png" alt="">rokko</div>
-      <span class="spine">Once upon a time…</span>
-      <h1>…a child who learns by seeing, touching and doing.</h1>
-      <p class="lede">And a grown-up who wanted to share chess with them.</p>
-      <p class="lede everyday"><b>Every day…</b> chess looked like rules on a screen: fast, loud and played alone.</p>
-      <ul class="trio"><li><span>📖</span>Story</li><li><span>👆</span>Touch</li><li><span>♟️</span>Real board</li></ul>
+    <div class="scenery" aria-hidden="true">
+      <i class="hill h1"></i><i class="hill h2"></i><i class="hill h3"></i>
+      <i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
+      <i class="sq s1"></i><i class="sq s2"></i><i class="sq s3"></i><i class="sq s4"></i><i class="sq s5"></i>
     </div>
-    <div class="ipad tilt"><video src="../media/reel.mp4" poster="../media/reel-poster.jpg" autoplay muted loop playsinline></video></div>
-    <span class="step">1 / 5</span>
+    <div class="center">
+      <div class="beat" data-at="0.4" data-until="11.5">
+        <p class="spine">Once upon a time…</p>
+        <h1 class="words">…there was a child who learned by <em>seeing</em>, <em>touching</em> and <em>doing</em>.</h1>
+      </div>
+      <div class="beat" data-at="6" data-until="11.5">
+        <p class="big-line words">And a grown-up who wanted to share chess with them.</p>
+      </div>
+      <div class="beat" data-at="12" data-until="18.5">
+        <p class="spine">Every day…</p>
+        <h1 class="words">…chess looked like rules on a screen.</h1>
+        <p class="big-line words muted">Fast. Loud. Played alone.</p>
+      </div>
+      <div class="beat logo-beat" data-at="19" data-until="24">
+        <div class="logo-mark"><i class="lr"></i><i class="lk"></i></div>
+        <p class="wordmark">rokko</p>
+        <p class="big-line words">Chess, taught the way your child learns.</p>
+      </div>
+    </div>
+    <span class="chapter">1 / 5</span>
   </section>
 
-  <!-- 2 · Story -->
-  <section class="panel p2" data-screen="2">
-    <div class="copy">
-      <span class="spine">One day…</span>
-      <h2>…they opened Rokko, and a story began.</h2>
-      <p class="lede">A jungle where six animals become the six chess pieces. Pictures and a story come first, so the names and rules have something to hold on to.</p>
-      <ul class="ticks"><li>Captions match every spoken word</li><li>Each piece appears from its story</li></ul>
+  <!-- 2 · One day: the film, full bleed -->
+  <section class="panel p2 dark" data-screen="2">
+    <video class="bleed beat" data-at="0" data-until="13" data-restart src="../media/story.mp4" poster="../media/story-poster.jpg" muted playsinline loop></video>
+    <video class="bleed beat" data-at="12.6" data-until="24" data-restart src="../media/transform.mp4" poster="../media/transform-poster.jpg" muted playsinline loop></video>
+    <div class="shade"></div>
+    <div class="caption">
+      <div class="beat" data-at="0.8" data-until="12.4">
+        <p class="spine">One day…</p>
+        <h1 class="words">…they opened Rokko, and a story began.</h1>
+      </div>
+      <div class="beat" data-at="13.2" data-until="23.6">
+        <p class="spine">In the jungle…</p>
+        <h1 class="words">…six animals become the six chess pieces.</h1>
+        <p class="big-line words">Pictures and a story first. Then the names and rules have something to hold on to.</p>
+      </div>
     </div>
-    <div class="stack">
-      <div class="ipad"><video src="../media/story.mp4" poster="../media/story-poster.jpg" autoplay muted loop playsinline></video></div>
-      <div class="ipad small"><video src="../media/transform.mp4" poster="../media/transform-poster.jpg" autoplay muted loop playsinline></video></div>
-    </div>
-    <span class="step">2 / 5</span>
+    <span class="chapter">2 / 5</span>
   </section>
 
-  <!-- 3 · Touch -->
+  <!-- 3 · Because of that: games to touch -->
   <section class="panel p3" data-screen="3">
-    <div class="copy">
-      <span class="spine">Because of that…</span>
-      <h2>…the story became games to touch.</h2>
-      <p class="lede">Small games: find the piece, match it, build a team. One thing on screen at a time, the same question every time, spoken help when it's needed.</p>
-      <ul class="ticks"><li>No scores, no buzzers, no red</li><li>A try that doesn't fit gently sinks back</li><li>Help fades as your child grows sure</li></ul>
-    </div>
-    <div class="ipad fade">
-      <img src="../media/6_round.jpg" alt="A game: Find the King">
-      <img src="../media/4_meet.jpg" alt="Meeting a piece">
-      <img src="../media/3_film.jpg" alt="The story with captions">
-    </div>
-    <span class="step">3 / 5</span>
-  </section>
-
-  <!-- 4 · Real board + Why Rokko -->
-  <section class="panel p4" data-screen="4">
-    <div class="copy">
-      <span class="spine">And because of that…</span>
-      <h2>…they held the real pieces, at their own pace.</h2>
-      <p class="lede">Between games, the grown-up hands over the real piece. Your child holds it and sets it on the board. And Rokko follows the child:</p>
-      <ul class="ticks">
-        <li>Harder only when ready, one small step at a time</li>
-        <li>Help that fades: a clue, a pointer, then the answer</li>
-        <li>A wobbly day? Rokko eases off</li>
-      </ul>
-    </div>
-    <div class="ipad"><img src="../media/5_show.jpg" alt="Guardian's turn: Show the real King"></div>
-    <span class="step">4 / 5</span>
-  </section>
-
-  <!-- 5 · Adapts + beta -->
-  <section class="panel p5" data-screen="5">
-    <div class="copy">
-      <span class="spine">Until finally…</span>
-      <h2>…they sat side by side, at a real board.</h2>
-      <div class="why">
-        <h3>That's why it's called Rokko.</h3>
-        <p>From <strong>castling</strong>, the only move where two pieces move together in one turn. The king steps toward the rook, and the rook crosses over to stand beside him and keep him safe. Russian: <em>rokirovka</em>. Italian: <em>arrocco</em>.</p>
-        <p class="pull">The child is the king. The grown-up is the rook. They move together.</p>
-        <div class="castle" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span>
-          <i class="rook"></i><i class="king"></i>
+    <div class="split">
+      <div class="copy">
+        <div class="beat" data-at="0.4" data-until="23.6">
+          <p class="spine">Because of that…</p>
+          <h1 class="words">…the story became games to touch.</h1>
+        </div>
+        <ul class="points">
+          <li class="beat" data-at="7" data-until="23.6"><b>One question,</b> every time. “Find the King.”</li>
+          <li class="beat" data-at="10" data-until="23.6"><b>No scores,</b> no buzzers, no red.</li>
+          <li class="beat" data-at="13" data-until="23.6"><b>Help that fades:</b> a clue, a pointer, the answer.</li>
+        </ul>
+      </div>
+      <div class="device beat" data-at="0" data-until="24">
+        <div class="screen">
+          <img class="kb beat kb-cards" data-at="0" data-until="12.4" src="../media/6_round.jpg" alt="A game: Find the King">
+          <img class="kb beat kb-meet" data-at="12" data-until="24" src="../media/4_meet.jpg" alt="Meet the lion">
+          <i class="tap beat" data-at="4.5" data-until="7.5" aria-hidden="true"></i>
         </div>
       </div>
     </div>
-    <div class="beta">
-      <img class="qr" src="../media/testflight-qr.png" alt="QR code for the Rokko TestFlight beta">
-      <span class="next">The next chapter is yours.</span>
-      <h3>Try the beta</h3>
-      <p>Scan with your iPad camera,<br>or visit</p>
-      <a href="https://testflight.apple.com/join/FBrUsJDh">testflight.apple.com/join/FBrUsJDh</a>
+    <span class="chapter">3 / 5</span>
+  </section>
+
+  <!-- 4 · And because of that: the real board, at their pace -->
+  <section class="panel p4" data-screen="4">
+    <div class="split flip">
+      <div class="device beat" data-at="0" data-until="24">
+        <div class="screen">
+          <img class="kb beat kb-show" data-at="0" data-until="12.4" src="../media/5_show.jpg" alt="Show the real King">
+          <img class="kb beat kb-ready" data-at="12" data-until="24" src="../media/2_ready.jpg" alt="Get these pieces ready">
+        </div>
+      </div>
+      <div class="copy">
+        <div class="beat" data-at="0.4" data-until="11.6">
+          <p class="spine">And because of that…</p>
+          <h1 class="words">…they held the real pieces.</h1>
+          <p class="big-line words">The grown-up hands over the King. The child feels the cross on top.</p>
+        </div>
+        <div class="beat" data-at="12" data-until="23.6">
+          <p class="spine">At their own pace.</p>
+          <h1 class="words">Rokko follows the child.</h1>
+          <ul class="points">
+            <li class="beat" data-at="14" data-until="23.6"><b>Harder</b> only when ready.</li>
+            <li class="beat" data-at="16" data-until="23.6"><b>A wobbly day?</b> Rokko eases off.</li>
+            <li class="beat" data-at="18" data-until="23.6"><b>Nothing leaves</b> the iPad.</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <span class="step">5 / 5</span>
+    <span class="chapter">4 / 5</span>
+  </section>
+
+  <!-- 5 · Until finally: castling, and the next chapter -->
+  <section class="panel p5 dark" data-screen="5">
+    <div class="finale">
+      <div class="beat" data-at="0.4" data-until="13.6">
+        <p class="spine">Until finally…</p>
+        <h1 class="words">…they sat side by side, at a real board.</h1>
+      </div>
+      <div class="board beat" data-at="1.5" data-until="13.6" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <i class="rook"><b>Grown-up</b></i><i class="king"><b>Child</b></i>
+      </div>
+      <div class="beat" data-at="8.5" data-until="13.6">
+        <p class="big-line words">Castling: the only move where two pieces move together. The child is the king. The grown-up is the rook.</p>
+      </div>
+      <div class="beat end" data-at="14" data-until="24">
+        <div class="name">
+          <p class="spine">That's why it's called</p>
+          <p class="wordmark">rokko</p>
+          <p class="big-line muted">from <em>rokirovka</em> and <em>arrocco</em>: castling</p>
+        </div>
+        <div class="qr-card beat" data-at="16" data-until="24">
+          <img src="../media/testflight-qr.png" alt="QR code for the Rokko TestFlight beta">
+          <p class="next">The next chapter is yours.</p>
+          <p class="cta">Get the iPad beta on TestFlight</p>
+          <p class="url">iPad only · scan with your camera</p>
+        </div>
+      </div>
+    </div>
+    <span class="chapter">5 / 5</span>
   </section>
 
   <nav class="web-nav"><a href="../">← rokko website</a></nav>
-
-  <script>
-    // Kiosk mode: ?screen=1…5 shows one panel full screen; ?screen=all shows each in turn.
-    const panels = [...document.querySelectorAll('.panel')];
-    const param = new URLSearchParams(location.search).get('screen');
-    const CYCLE_SECONDS = 20;
-    let timer = null;
-
-    function show(n) {
-      document.body.classList.add('kiosk');
-      panels.forEach(p => p.classList.toggle('on', p.dataset.screen === String(n)));
-      panels.forEach(p => p.querySelectorAll('video').forEach(v => p.classList.contains('on') ? v.play().catch(() => {}) : v.pause()));
-    }
-    function cycle() {
-      let i = 0; show(1); clearInterval(timer);
-      timer = setInterval(() => { i = (i + 1) % panels.length; show(i + 1); }, CYCLE_SECONDS * 1000);
-    }
-    if (param === 'all') cycle();
-    else if (param && panels[param - 1]) show(param);
-
-    document.addEventListener('keydown', e => {
-      if (e.key >= '1' && e.key <= '5') { clearInterval(timer); show(e.key); history.replaceState(null, '', '?screen=' + e.key); }
-      if (e.key === 'a' || e.key === 'A') { cycle(); history.replaceState(null, '', '?screen=all'); }
-      if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
-    });
-  </script>
+  <script src="showcase.js"></script>
 </body>
 </html>

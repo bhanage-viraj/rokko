@@ -1,9 +1,9 @@
 // Rokko website motion. Mirrors the app's home screen (RokkoMotion):
-// parallax far 0.25 / mid 0.55, card art drift 0.12, neighbouring cards at 0.92 scale and 0.75 saturation.
+// parallax far 0.25 / mid 0.55, neighbouring cards at 0.92 scale and 0.75 saturation.
 // Reduce Motion: no parallax or scaling, fades only.
 (() => {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const NEIGHBOUR_SCALE = 0.92, NEIGHBOUR_SATURATION = 0.75, CARD_ART = 0.12;
+  const NEIGHBOUR_SCALE = 0.92, NEIGHBOUR_SATURATION = 0.75;
 
   // Reveal sections as they arrive (screen fade)
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
@@ -55,8 +55,6 @@
         const t = Math.min(1, Math.abs(d));
         s.style.transform = `scale(${1 - (1 - NEIGHBOUR_SCALE) * t})`;
         s.style.filter = `saturate(${1 - (1 - NEIGHBOUR_SATURATION) * t})`;
-        const img = s.querySelector('.art img');
-        if (img && innerWidth > 700) img.style.transform = `translate3d(${-d * s.clientWidth * CARD_ART}px, 0, 0)`;
       });
       current = best;
       [...dots.children].forEach((b, i) => b.setAttribute('aria-selected', i === best));

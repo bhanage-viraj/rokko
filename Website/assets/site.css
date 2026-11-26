@@ -377,3 +377,5 @@ footer a { color: var(--ink-soft); }
   .sticky-cta { opacity: 0; pointer-events: none; transition: transform 450ms var(--ease), opacity var(--fade) var(--ease); }
   .sticky-cta.show { opacity: 1; pointer-events: auto; }
 }
+/* Carousel: show the whole app screen, never crop it */
+.slide .art img { width: 100%; margin-left: 0; transform: none !important; }
