@@ -149,6 +149,8 @@ final class LessonCoordinator: LessonEventSink {
         if DebugFlag.on("RokkoStartRound"), screen == .blockIntro { startRound() }
         // `-RokkoShowSummary YES` opens the end-of-lesson summary (screenshots).
         if DebugFlag.on("RokkoShowSummary") { stopSpeaking(); screen = .summary }
+        // `-RokkoMoodSheet YES` opens the mood check, as after the 2 s hold on the Guardian button (screenshots).
+        if DebugFlag.on("RokkoMoodSheet") { moodSheetShown = true }
         #endif
     }
 
