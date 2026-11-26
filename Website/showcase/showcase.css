@@ -202,5 +202,67 @@ html:not(.kiosk) .panel { scroll-snap-align: start; }
 .kb-question { --o: 0% 100%; --z: 2; }
 
 /* No zooming: app screens and the film are shown whole and still */
-.kb, .kb.on { animation: none !important; transform: none !important; }
+.kb, .kb.on { animation: none !important; }
+.p3 .kb { transform: none; }
 .bleed, .bleed.on { transform: none !important; }
+
+
+/* ======================================================================
+   A different entrance for each chapter (gentle: no flashes, shakes or spins)
+   ====================================================================== */
+:root { --spring: cubic-bezier(.34, 1.56, .64, 1); }
+
+/* 2 · Captions wipe on, left to right, like subtitles being written */
+.p2 .words .w { transform: none; filter: none; opacity: 1; clip-path: inset(0 100% 0 0);
+  transition: clip-path 650ms var(--ease); transition-delay: calc(var(--i) * 110ms); }
+.p2 .on .words .w { clip-path: inset(0 0 0 0); }
+.p2 .spine { transform: translateX(calc(var(--u) * -4)); opacity: 0; transition: transform 900ms var(--out), opacity 700ms var(--ease); }
+.p2 .on > .spine { transform: none; opacity: 1; }
+.p2 .caption > .beat::before { content: ""; display: block; width: calc(var(--u) * 8); height: calc(var(--u) * .5); border-radius: 999px;
+  background: var(--honey); margin-bottom: calc(var(--u) * 2); transform: scaleX(0); transform-origin: left; transition: transform 900ms var(--out) 200ms; }
+.p2 .caption > .beat.on::before { transform: scaleX(1); }
+
+/* 3 · The iPad glides in from the right; words drop in; points pop with a spring */
+.p3 .device { transform: translateX(45vw) rotate(5deg); transition: opacity 900ms var(--ease), transform 1400ms var(--out); }
+.p3 .device.on { transform: rotate(-1deg); }
+.p3 .words .w { transform: translateY(-.6em); filter: none; }
+.p3 .on .words .w { transform: none; }
+.p3 .points li { transform: scale(.5); transform-origin: left center; transition: opacity 500ms var(--ease), transform 700ms var(--spring); }
+.p3 .points li.on { transform: none; }
+
+/* 4 · The iPad swings in in 3D; the screen changes with a sideways slide; words flip up */
+.p4 .split { perspective: 1800px; }
+.p4 .device { transform: rotateY(-38deg) translateX(-8vw); transform-origin: left center; transition: opacity 900ms var(--ease), transform 1500ms var(--out); }
+.p4 .device.on { transform: rotate(1deg); }
+.p4 .kb { transform: translateX(12%); transition: opacity 700ms var(--ease), transform 900ms var(--out); }
+.p4 .kb.on { transform: none; }
+.p4 .words { perspective: 600px; }
+.p4 .words .w { transform: rotateX(-80deg); transform-origin: 50% 100%; filter: none; }
+.p4 .on .words .w { transform: none; }
+.p4 .points li { transform: translateX(calc(var(--u) * 5)); transition: opacity 600ms var(--ease), transform 900ms var(--out); }
+.p4 .points li.on { transform: none; }
+
+/* 5 · Words grow in; the board builds square by square; the QR card tips up */
+.p5 .words .w { transform: scale(.3); filter: none; transition: opacity 500ms var(--ease), transform 800ms var(--spring); transition-delay: calc(var(--i) * 70ms); }
+.p5 .on .words .w { transform: none; }
+.board { transform: none; border-color: transparent; transition: opacity 600ms var(--ease), border-color 600ms var(--ease) 1.4s; }
+.board.on { border-color: var(--honey); }
+.board span { transform: scaleY(0); transform-origin: bottom; transition: transform 600ms var(--spring); }
+.board.on span { transform: none; }
+.board.on span:nth-child(1) { transition-delay: 0ms; } .board.on span:nth-child(2) { transition-delay: 150ms; }
+.board.on span:nth-child(3) { transition-delay: 300ms; } .board.on span:nth-child(4) { transition-delay: 450ms; }
+.board.on span:nth-child(5) { transition-delay: 600ms; }
+.board i::before { transform: scale(0); transition: transform 700ms var(--spring) 1.2s; }
+.board.on i::before { transform: none; }
+.p5 .end { perspective: 1400px; }
+.p5 .qr-card { transform: rotateX(70deg) translateY(calc(var(--u) * 6)); transform-origin: 50% 100%; transition: opacity 700ms var(--ease), transform 1300ms var(--out); }
+.p5 .qr-card.on { transform: none; }
+.p5 .name .wordmark { transform: translateY(calc(var(--u) * 3)); opacity: 0; transition: transform 1200ms var(--out) 300ms, opacity 900ms var(--ease) 300ms; }
+.p5 .end.on .name .wordmark { transform: none; opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .p2 .words .w { clip-path: none !important; }
+  .p2 .spine, .p2 .caption > .beat::before, .p3 .device, .p4 .device, .p4 .kb, .p3 .points li, .p4 .points li,
+  .board span, .board i::before, .p5 .qr-card, .p5 .words .w, .p4 .words .w, .p3 .words .w { transform: none !important; }
+  .p5 .name .wordmark { transform: none !important; }
+}
