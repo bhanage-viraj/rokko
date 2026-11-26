@@ -214,3 +214,14 @@ footer a { color: var(--ink-soft); }
 }
 /* Big screens */
 @media (min-width: 1800px) { html { font-size: 112%; } body.product { font-size: 21px; } .wrap { max-width: 1520px; } }
+
+/* Story Spine chapter markers (the frame) */
+.spine { display: block; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(20px, 2vw, 26px); color: var(--honey);
+  letter-spacing: 0.01em; margin-bottom: 10px; }
+.spine--dark { color: var(--teal); }
+.statement .spine { margin-bottom: 14px; }
+.everyday { padding: 96px 0; }
+.everyday h2 { font-size: clamp(34px, 4vw, 52px); }
+.spine-break { margin: 110px 0 -20px; text-align: center; }
+.spine-break p { font-family: "Fredoka", sans-serif; font-size: clamp(26px, 3vw, 38px); color: var(--leaf); margin: 0; }
+.why-title { font-size: 26px; color: var(--teal); margin: 6px 0 16px; }

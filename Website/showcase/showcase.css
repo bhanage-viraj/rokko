@@ -126,3 +126,23 @@ h2 { font-size: calc(var(--u) * 4.4); color: var(--leaf); }
 .p4 .why { margin-top: calc(var(--u) * 1.8); padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
 .p4 .why p { font-size: calc(var(--u) * 1.2); }
 .p4 .castle { height: calc(var(--u) * 4.4); margin-top: calc(var(--u) * 1.2); }
+
+/* Story Spine (the frame) */
+.spine { display: block; font-family: "Fredoka", sans-serif; font-size: calc(var(--u) * 2.2); color: var(--teal); margin-bottom: calc(var(--u) * 1.2); }
+.p1 .spine { color: var(--honey); }
+.p5 .spine { color: var(--honey); }
+.everyday { border-top: calc(var(--u) * 0.18) solid var(--card-edge); padding-top: calc(var(--u) * 1.6); }
+.everyday b { font-family: "Fredoka", sans-serif; font-weight: 600; color: var(--teal); }
+.p1 h1 { font-size: calc(var(--u) * 4.6); }
+.p5 .why { background: rgba(251, 248, 239, 0.08); border-color: rgba(251, 248, 239, 0.2); }
+.p5 .why h3 { color: var(--honey); }
+.p5 .why p { color: rgba(251, 248, 239, 0.85); }
+.p5 .why .pull { color: var(--card); }
+.p5 .castle { border-color: var(--honey); }
+.p5 .castle span:nth-child(odd) { background: #3C5A4C; } .p5 .castle span:nth-child(even) { background: #4E6E5C; }
+.p5 .castle .rook::before { background: var(--card); }
+.next { display: block; font-family: "Fredoka", sans-serif; font-size: calc(var(--u) * 1.5); color: var(--teal); margin-bottom: calc(var(--u) * 0.4); }
+.p4 .ticks li { font-size: calc(var(--u) * 1.4); }
+.p1 .brand { margin-bottom: calc(var(--u) * 1.8); }
+.p1 .lede { margin-top: calc(var(--u) * 1.4); }
+.p1 .trio { margin-top: calc(var(--u) * 2.2); }
