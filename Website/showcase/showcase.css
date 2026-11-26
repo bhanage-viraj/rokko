@@ -1,0 +1,128 @@
+/* Rokko showcase: five full-screen panels for a monitor wall, and a scrolling page in a browser. */
+@font-face { font-family: "Fredoka"; src: url("../assets/Fredoka-SemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Nunito"; src: url("../assets/Nunito.ttf") format("truetype"); font-weight: 200 1000; }
+
+:root {
+  --paper: #F4F0E3; --mist: #DCE7EA; --card: #FBF8EF; --card-edge: #DAD3BD; --leaf: #2F4A3E; --ink: #2D3A31;
+  --ink-soft: #5D6A5F; --honey: #E2B24A; --moss: #5E9A5A; --sage: #C3D5AC; --sage-wash: #EEF2E6; --teal: #4A7890; --teal-wash: #E6EFF1;
+  /* One unit scales everything to the screen: 1/100 of the width, capped by height for a 16:9 panel. */
+  --u: min(1vw, 1.7778vh);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: "Nunito", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .brand { font-family: "Fredoka", system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.08; margin: 0; }
+a { color: var(--teal); font-weight: 800; }
+
+/* Panel: 16:9 layout, copy left, device right */
+.panel { position: relative; min-height: 100vh; display: grid; grid-template-columns: 1fr 1.15fr; align-items: center;
+  gap: calc(var(--u) * 5); padding: calc(var(--u) * 5) calc(var(--u) * 6); overflow: hidden; }
+.panel:nth-of-type(even) { background: var(--mist); }
+.p4 { background: var(--sage-wash) !important; }
+.p5 { background: var(--leaf) !important; color: var(--card); grid-template-columns: 1.3fr 1fr; }
+
+.brand { display: flex; align-items: center; gap: calc(var(--u) * 1.2); font-size: calc(var(--u) * 3.4); color: var(--leaf); margin-bottom: calc(var(--u) * 3); }
+.brand img { width: calc(var(--u) * 5); height: calc(var(--u) * 5); border-radius: calc(var(--u) * 1.2); }
+h1 { font-size: calc(var(--u) * 5.6); color: var(--leaf); }
+h2 { font-size: calc(var(--u) * 4.4); color: var(--leaf); }
+.p5 h2 { color: var(--card); }
+.lede { font-size: calc(var(--u) * 1.75); line-height: 1.5; color: var(--ink-soft); margin: calc(var(--u) * 2) 0 0; max-width: 36ch; }
+.tag { display: inline-block; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em; font-size: calc(var(--u) * 1.05);
+  color: var(--teal); background: var(--teal-wash); padding: calc(var(--u) * 0.5) calc(var(--u) * 1.1); border-radius: 999px; margin-bottom: calc(var(--u) * 2); }
+.p5 .tag { background: rgba(251, 248, 239, 0.14); color: var(--honey); }
+.step { position: absolute; right: calc(var(--u) * 2.5); bottom: calc(var(--u) * 2); font-weight: 900; font-size: calc(var(--u) * 1);
+  letter-spacing: 0.1em; color: var(--ink-soft); opacity: 0.6; }
+.p5 .step { color: var(--card); }
+
+.trio { list-style: none; padding: 0; margin: calc(var(--u) * 3.5) 0 0; display: flex; gap: calc(var(--u) * 1.4); }
+.trio li { display: flex; align-items: center; gap: calc(var(--u) * 0.9); background: var(--card); border: calc(var(--u) * 0.22) solid var(--card-edge);
+  border-radius: 999px; padding: calc(var(--u) * 0.7) calc(var(--u) * 1.6) calc(var(--u) * 0.7) calc(var(--u) * 0.7);
+  font-family: "Fredoka", sans-serif; font-size: calc(var(--u) * 1.8); color: var(--leaf); }
+.trio span { width: calc(var(--u) * 3.6); height: calc(var(--u) * 3.6); border-radius: 50%; display: grid; place-items: center;
+  background: var(--sage-wash); font-size: calc(var(--u) * 1.8); }
+
+.ticks { list-style: none; padding: 0; margin: calc(var(--u) * 2.4) 0 0; display: grid; gap: calc(var(--u) * 1); }
+.ticks li { position: relative; padding-left: calc(var(--u) * 3); font-weight: 800; font-size: calc(var(--u) * 1.5); }
+.ticks li::before { content: "✓"; position: absolute; left: 0; top: 0.1em; width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%;
+  background: var(--moss); color: var(--card); font-size: calc(var(--u) * 1.1); display: grid; place-items: center; }
+
+/* iPad frame */
+.ipad { position: relative; aspect-ratio: 4 / 3; width: 100%; background: #1E2622; border-radius: calc(var(--u) * 2.6); padding: calc(var(--u) * 1);
+  box-shadow: 0 calc(var(--u) * 2.4) calc(var(--u) * 5) rgba(30, 40, 34, 0.28); }
+.ipad > img, .ipad > video { position: absolute; inset: calc(var(--u) * 1); width: calc(100% - var(--u) * 2); height: calc(100% - var(--u) * 2);
+  object-fit: cover; border-radius: calc(var(--u) * 1.7); background: var(--mist); }
+.tilt { transform: rotate(-1.5deg); }
+.stack { position: relative; padding-bottom: 14%; }
+.stack .small { position: absolute; width: 46%; right: -3%; bottom: 0; transform: rotate(2.5deg); padding: calc(var(--u) * 0.7); border-radius: calc(var(--u) * 1.8); }
+.stack .small > video { inset: calc(var(--u) * 0.7); width: calc(100% - var(--u) * 1.4); height: calc(100% - var(--u) * 1.4); border-radius: calc(var(--u) * 1.2); }
+
+/* Panel 3: screens cross-fade */
+.fade > img { opacity: 0; animation: fade 15s infinite; }
+.fade > img:nth-child(2) { animation-delay: 5s; }
+.fade > img:nth-child(3) { animation-delay: 10s; }
+@keyframes fade { 0% { opacity: 0; } 4%, 33% { opacity: 1; } 38%, 100% { opacity: 0; } }
+
+/* Panel 4: Why Rokko + castling */
+.why { margin-top: calc(var(--u) * 2.6); background: var(--card); border: calc(var(--u) * 0.22) solid var(--card-edge); border-radius: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.4); }
+.why h3 { font-size: calc(var(--u) * 2); color: var(--leaf); }
+.why p { font-size: calc(var(--u) * 1.3); line-height: 1.5; margin: calc(var(--u) * 0.8) 0 0; color: var(--ink-soft); }
+.why .pull { font-family: "Fredoka", sans-serif; font-size: calc(var(--u) * 1.75); color: var(--leaf); line-height: 1.25;
+  border-left: calc(var(--u) * 0.4) solid var(--honey); padding-left: calc(var(--u) * 1.2); }
+.castle { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); height: calc(var(--u) * 5.2); margin-top: calc(var(--u) * 1.6);
+  border-radius: calc(var(--u) * 1); overflow: hidden; border: calc(var(--u) * 0.25) solid var(--leaf); }
+.castle span:nth-child(odd) { background: var(--card); } .castle span:nth-child(even) { background: var(--sage); }
+.castle i { position: absolute; top: 50%; width: 20%; display: grid; place-items: center; transform: translateY(-50%); }
+.castle i::before { content: ""; border-radius: 50%; aspect-ratio: 1; }
+.castle .rook::before { height: calc(var(--u) * 3.8); background: var(--leaf); }
+.castle .king::before { height: calc(var(--u) * 2.5); background: var(--honey); }
+.castle .rook { left: 0; animation: rook 6s cubic-bezier(.4, 0, .2, 1) infinite; }
+.castle .king { left: 80%; animation: king 6s cubic-bezier(.4, 0, .2, 1) infinite; }
+@keyframes king { 0%, 15% { left: 80%; } 35%, 85% { left: 40%; } 100% { left: 80%; } }
+@keyframes rook { 0%, 22% { left: 0; } 45%, 85% { left: 20%; } 100% { left: 0; } }
+
+/* Panel 5 */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.4); margin-top: calc(var(--u) * 3); }
+.cards div { background: rgba(251, 248, 239, 0.08); border: calc(var(--u) * 0.18) solid rgba(251, 248, 239, 0.18); border-radius: calc(var(--u) * 1.6);
+  padding: calc(var(--u) * 1.6) calc(var(--u) * 1.8); }
+.cards b { display: block; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: calc(var(--u) * 1.8); margin-bottom: calc(var(--u) * 0.5); }
+.cards span { font-size: calc(var(--u) * 1.35); opacity: 0.85; }
+.beta { justify-self: center; text-align: center; background: var(--card); color: var(--ink); border-radius: calc(var(--u) * 2.6);
+  padding: calc(var(--u) * 2.6) calc(var(--u) * 3); box-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 4) rgba(0, 0, 0, 0.25); }
+.qr { width: calc(var(--u) * 19); height: calc(var(--u) * 19); image-rendering: pixelated; display: block; margin: 0 auto calc(var(--u) * 1.6); }
+.beta h3 { font-size: calc(var(--u) * 3); color: var(--leaf); }
+.beta p { font-size: calc(var(--u) * 1.35); color: var(--ink-soft); margin: calc(var(--u) * 0.8) 0; }
+.beta a { font-size: calc(var(--u) * 1.3); word-break: break-all; }
+
+.web-nav { position: fixed; left: 16px; top: 14px; z-index: 5; }
+.web-nav a { background: var(--card); border: 2px solid var(--card-edge); padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 15px; }
+
+/* Kiosk: one panel, exactly the screen, no cursor, no scroll */
+.kiosk { overflow: hidden; cursor: none; }
+.kiosk .panel { display: none; height: 100vh; }
+.kiosk .panel.on { display: grid; animation: in 0.8s ease-out; }
+.kiosk .web-nav { display: none; }
+@keyframes in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .castle .rook, .castle .king, .kiosk .panel.on { animation: none; }
+  .castle .rook { left: 20%; } .castle .king { left: 40%; }
+}
+
+/* Browser on a portrait or small screen: stack */
+@media (max-aspect-ratio: 5/4) {
+  :root { --u: min(1.9vw, 1vh); }
+  .panel, .p5 { grid-template-columns: 1fr; min-height: auto; padding: 72px 6vw; }
+  .kiosk .panel { height: auto; min-height: 100vh; }
+  .cards { grid-template-columns: 1fr; }
+}
+
+/* Fit tweaks */
+.trio li { white-space: nowrap; }
+.p4 { padding-top: calc(var(--u) * 3.5); padding-bottom: calc(var(--u) * 3.5); }
+.p4 h2 { font-size: calc(var(--u) * 3.8); }
+.p4 .lede { font-size: calc(var(--u) * 1.5); margin-top: calc(var(--u) * 1.4); }
+.p4 .tag { margin-bottom: calc(var(--u) * 1.4); }
+.p4 .why { margin-top: calc(var(--u) * 1.8); padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
+.p4 .why p { font-size: calc(var(--u) * 1.2); }
+.p4 .castle { height: calc(var(--u) * 4.4); margin-top: calc(var(--u) * 1.2); }

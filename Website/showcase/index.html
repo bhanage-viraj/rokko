@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rokko — showcase</title>
+  <meta name="description" content="Rokko in five screens: chess for autistic children through story, touch and a real board.">
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="showcase.css">
+</head>
+<!--
+  Five monitors, left to right:  showcase/?screen=1  …  showcase/?screen=5   (one panel each, full screen)
+  One monitor:                    showcase/?screen=all  (shows each panel in turn)
+  In a browser:                   showcase/             (all five panels as a scrolling page)
+  Keys in kiosk mode: 1–5 switch panel, F full screen, A cycle all. Works offline from the folder.
+-->
+<body>
+  <!-- 1 · Rokko -->
+  <section class="panel p1" data-screen="1">
+    <div class="copy">
+      <div class="brand"><img src="../assets/icon.png" alt="">rokko</div>
+      <h1>Chess, taught the way your child learns.</h1>
+      <p class="lede">An iPad app for autistic children, aged 6 to 10, and the grown-up beside them.</p>
+      <ul class="trio"><li><span>📖</span>Story</li><li><span>👆</span>Touch</li><li><span>♟️</span>Real board</li></ul>
+    </div>
+    <div class="ipad tilt"><video src="../media/reel.mp4" poster="../media/reel-poster.jpg" autoplay muted loop playsinline></video></div>
+    <span class="step">1 / 5</span>
+  </section>
+
+  <!-- 2 · Story -->
+  <section class="panel p2" data-screen="2">
+    <div class="copy">
+      <span class="tag">1 · A story to see</span>
+      <h2>Every piece starts as a story.</h2>
+      <p class="lede">Many autistic children learn best through pictures and stories. A short film gives each chess piece a character and a reason, so the names and rules have something to hold on to.</p>
+      <ul class="ticks"><li>Captions match every spoken word</li><li>Each piece appears from its story</li></ul>
+    </div>
+    <div class="stack">
+      <div class="ipad"><video src="../media/story.mp4" poster="../media/story-poster.jpg" autoplay muted loop playsinline></video></div>
+      <div class="ipad small"><video src="../media/transform.mp4" poster="../media/transform-poster.jpg" autoplay muted loop playsinline></video></div>
+    </div>
+    <span class="step">2 / 5</span>
+  </section>
+
+  <!-- 3 · Touch -->
+  <section class="panel p3" data-screen="3">
+    <div class="copy">
+      <span class="tag">2 · Games to touch</span>
+      <h2>Learning by tapping, dragging and doing.</h2>
+      <p class="lede">Small games: find the piece, match it, build a team. One thing on screen at a time, the same question every time, spoken help when it's needed.</p>
+      <ul class="ticks"><li>No scores, no buzzers, no red</li><li>A try that doesn't fit gently sinks back</li><li>Help fades as your child grows sure</li></ul>
+    </div>
+    <div class="ipad fade">
+      <img src="../media/6_round.jpg" alt="A game: Find the King">
+      <img src="../media/4_meet.jpg" alt="Meeting a piece">
+      <img src="../media/3_film.jpg" alt="The story with captions">
+    </div>
+    <span class="step">3 / 5</span>
+  </section>
+
+  <!-- 4 · Real board + Why Rokko -->
+  <section class="panel p4" data-screen="4">
+    <div class="copy">
+      <span class="tag">3 · A board to hold</span>
+      <h2>Side by side, at a real board.</h2>
+      <p class="lede">Between games, the grown-up hands over the real piece. Your child holds it, feels its shape and sets it on the board. No chess knowledge needed to lead.</p>
+      <div class="why">
+        <h3>Why “Rokko”?</h3>
+        <p>From <strong>castling</strong>, the only move where two pieces move together in one turn: the king steps toward the rook, and the rook crosses over to stand beside him and keep him safe. Russian: <em>rokirovka</em>. Italian: <em>arrocco</em>.</p>
+        <p class="pull">The child is the king. The grown-up is the rook. They move together.</p>
+        <div class="castle" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <i class="rook"></i><i class="king"></i>
+        </div>
+      </div>
+    </div>
+    <div class="ipad"><img src="../media/5_show.jpg" alt="Guardian's turn: Show the real King"></div>
+    <span class="step">4 / 5</span>
+  </section>
+
+  <!-- 5 · Adapts + beta -->
+  <section class="panel p5" data-screen="5">
+    <div class="copy">
+      <span class="tag">Made for each child</span>
+      <h2>It adapts to your child.</h2>
+      <div class="cards">
+        <div><b>🌱 Their pace</b><span>Harder only when ready, one small step at a time.</span></div>
+        <div><b>🤝 Help that fades</b><span>A clue, a pointer, then the answer.</span></div>
+        <div><b>🌤️ Their day</b><span>A wobbly day? Rokko eases off.</span></div>
+        <div><b>🔒 Nothing leaves the iPad</b><span>No ads, no accounts, no internet.</span></div>
+      </div>
+    </div>
+    <div class="beta">
+      <img class="qr" src="../media/testflight-qr.png" alt="QR code for the Rokko TestFlight beta">
+      <h3>Try the beta</h3>
+      <p>Scan with your iPad camera,<br>or visit</p>
+      <a href="https://testflight.apple.com/join/FBrUsJDh">testflight.apple.com/join/FBrUsJDh</a>
+    </div>
+    <span class="step">5 / 5</span>
+  </section>
+
+  <nav class="web-nav"><a href="../">← rokko website</a></nav>
+
+  <script>
+    // Kiosk mode: ?screen=1…5 shows one panel full screen; ?screen=all shows each in turn.
+    const panels = [...document.querySelectorAll('.panel')];
+    const param = new URLSearchParams(location.search).get('screen');
+    const CYCLE_SECONDS = 20;
+    let timer = null;
+
+    function show(n) {
+      document.body.classList.add('kiosk');
+      panels.forEach(p => p.classList.toggle('on', p.dataset.screen === String(n)));
+      panels.forEach(p => p.querySelectorAll('video').forEach(v => p.classList.contains('on') ? v.play().catch(() => {}) : v.pause()));
+    }
+    function cycle() {
+      let i = 0; show(1); clearInterval(timer);
+      timer = setInterval(() => { i = (i + 1) % panels.length; show(i + 1); }, CYCLE_SECONDS * 1000);
+    }
+    if (param === 'all') cycle();
+    else if (param && panels[param - 1]) show(param);
+
+    document.addEventListener('keydown', e => {
+      if (e.key >= '1' && e.key <= '5') { clearInterval(timer); show(e.key); history.replaceState(null, '', '?screen=' + e.key); }
+      if (e.key === 'a' || e.key === 'A') { cycle(); history.replaceState(null, '', '?screen=all'); }
+      if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+    });
+  </script>
+</body>
+</html>
