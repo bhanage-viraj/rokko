@@ -200,3 +200,7 @@ html:not(.kiosk) .panel { scroll-snap-align: start; }
 .kb-question { --o: 8% 96%; --z: 2.2; }
 .kb-calm { --o: 50% 46%; --z: 2.3; }
 .kb-question { --o: 0% 100%; --z: 2; }
+
+/* No zooming: app screens and the film are shown whole and still */
+.kb, .kb.on { animation: none !important; transform: none !important; }
+.bleed, .bleed.on { transform: none !important; }
