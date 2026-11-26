@@ -76,10 +76,10 @@ h2 { font-size: calc(var(--u) * 4.4); color: var(--leaf); }
 .castle i::before { content: ""; border-radius: 50%; aspect-ratio: 1; }
 .castle .rook::before { height: calc(var(--u) * 3.8); background: var(--leaf); }
 .castle .king::before { height: calc(var(--u) * 2.5); background: var(--honey); }
-.castle .rook { left: 0; animation: rook 6s cubic-bezier(.4, 0, .2, 1) infinite; }
+.castle .rook { z-index: 2; left: 0; animation: rook 6s cubic-bezier(.4, 0, .2, 1) infinite; }
 .castle .king { left: 80%; animation: king 6s cubic-bezier(.4, 0, .2, 1) infinite; }
-@keyframes king { 0%, 15% { left: 80%; } 35%, 85% { left: 40%; } 100% { left: 80%; } }
-@keyframes rook { 0%, 22% { left: 0; } 45%, 85% { left: 20%; } 100% { left: 0; } }
+@keyframes king { 0%, 10% { left: 80%; } 28%, 85% { left: 40%; } 100% { left: 80%; } }
+@keyframes rook { 0%, 30% { left: 0; transform: translateY(-50%) scale(1); } 42% { transform: translateY(-50%) scale(1.12); } 55%, 85% { left: 60%; transform: translateY(-50%) scale(1); } 100% { left: 0; transform: translateY(-50%) scale(1); } }
 
 /* Panel 5 */
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.4); margin-top: calc(var(--u) * 3); }
@@ -106,7 +106,7 @@ h2 { font-size: calc(var(--u) * 4.4); color: var(--leaf); }
 
 @media (prefers-reduced-motion: reduce) {
   .castle .rook, .castle .king, .kiosk .panel.on { animation: none; }
-  .castle .rook { left: 20%; } .castle .king { left: 40%; }
+  .castle .rook { left: 60%; } .castle .king { left: 40%; }
 }
 
 /* Browser on a portrait or small screen: stack */

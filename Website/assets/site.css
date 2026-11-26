@@ -178,15 +178,15 @@ footer a { color: var(--ink-soft); }
 .castle-rook::before { width: 78%; aspect-ratio: 1; background: var(--leaf); }
 .castle-king::before { width: 52%; aspect-ratio: 1; background: var(--honey); }
 .castle-rook b, .castle-king b { position: absolute; top: 108%; font-size: 15px; color: var(--leaf); white-space: nowrap; }
-.castle-rook { left: 0; transform: translateY(-50%); animation: rook 6s cubic-bezier(.4,0,.2,1) infinite; }
+.castle-rook { z-index: 2; left: 0; transform: translateY(-50%); animation: rook 6s cubic-bezier(.4,0,.2,1) infinite; }
 .castle-king { left: 80%; transform: translateY(-50%); animation: king 6s cubic-bezier(.4,0,.2,1) infinite; }
-@keyframes king { 0%, 15% { left: 80%; } 35%, 85% { left: 40%; } 100% { left: 80%; } }
-@keyframes rook { 0%, 22% { left: 0; } 45%, 85% { left: 20%; } 100% { left: 0; } }
+@keyframes king { 0%, 10% { left: 80%; } 28%, 85% { left: 40%; } 100% { left: 80%; } }
+@keyframes rook { 0%, 30% { left: 0; transform: translateY(-50%) scale(1); } 42% { transform: translateY(-50%) scale(1.12); } 55%, 85% { left: 60%; transform: translateY(-50%) scale(1); } 100% { left: 0; transform: translateY(-50%) scale(1); } }
 .castle { padding-bottom: 40px; }
 .castle-caption { margin-top: 48px; color: var(--ink-soft); font-size: 16px; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   .castle-rook, .castle-king { animation: none; }
-  .castle-rook { left: 20%; } .castle-king { left: 40%; }
+  .castle-rook { left: 60%; } .castle-king { left: 40%; }
 }
 
 .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 40px; }
