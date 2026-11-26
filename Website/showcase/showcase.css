@@ -266,3 +266,30 @@ html:not(.kiosk) .panel { scroll-snap-align: start; }
   .board span, .board i::before, .p5 .qr-card, .p5 .words .w, .p4 .words .w, .p3 .words .w { transform: none !important; }
   .p5 .name .wordmark { transform: none !important; }
 }
+
+/* Chapter 4: hold the Guardian button (2 s ring), then the mood check fades in over the same page */
+.p4 .kb, .p4 .kb.on { transform: none; }
+.p4 .mood-shot { transition: opacity 600ms var(--ease); }
+.hold { position: absolute; left: 94.8%; top: 6.6%; width: calc(var(--u) * 6); height: calc(var(--u) * 6);
+  margin: calc(var(--u) * -3); border-radius: 50%; z-index: 2;
+  background: conic-gradient(var(--honey) calc(var(--p) * 1turn), rgba(255, 255, 255, .35) 0);
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%); mask: radial-gradient(circle, transparent 58%, #000 60%); }
+@property --p { syntax: "<number>"; inherits: false; initial-value: 0; }
+.hold.on { animation: hold-fill 2s linear forwards; }
+@keyframes hold-fill { from { --p: 0; } to { --p: 1; } }
+@media (prefers-reduced-motion: reduce) { .hold.on { animation: none; --p: 1; } }
+
+/* Chapter 4 · long press: its own surface; the iPad rises in, the screen stays still */
+.p6 { background: linear-gradient(160deg, #E6EFF1, #D5E3E8); }
+.p6 h1 { font-size: calc(var(--u) * 4.6); }
+.p6 .kb, .p6 .kb.on { transform: none; }
+.p6 .mood-shot { transition: opacity 600ms var(--ease); }
+.p6 .device { transform: translateY(40vh) rotate(-1deg); transition: opacity 900ms var(--ease), transform 1400ms var(--out); }
+.p6 .device.on { transform: rotate(-1deg); }
+.p6 .words .w { transform: translateY(.45em); filter: blur(6px); }
+.p6 .on .words .w { transform: none; filter: none; }
+.p6 .points li { transform: translateY(calc(var(--u) * 2)); transition: opacity 600ms var(--ease), transform 800ms var(--out); }
+.p6 .points li.on { transform: none; }
+/* Real piece: the screen does not slide */
+.p4 .kb, .p4 .kb.on { transform: none; }
+@media (prefers-reduced-motion: reduce) { .p6 .device, .p6 .points li, .p6 .words .w { transform: none !important; filter: none !important; } }
